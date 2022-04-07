@@ -1,0 +1,1456 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Thoughts on SLC is</title><link>https://slc.is/categories/thoughts/</link><description>Recent content in Thoughts on SLC is</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 05 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://slc.is/categories/thoughts/index.xml" rel="self" type="application/rss+xml"/><item><title>r/place</title><link>https://slc.is/archive/place/</link><pubDate>Tue, 05 Apr 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/place/</guid><description>&lt;img src="https://slc.is/images/place.png" alt="Featured image of post r/place" />&lt;p>On 28 March 2022, a reboot of Place was announced. It began on 1 April 2022, and lasted for four days, including two expansions across the experiment. As of Sunday night, 3 April, nearly 72 million tiles were placed by over 6 million users, at a pace of more than 2.5 million tiles placed per hour; it was a sixfold increase in the number of users on Reddit between the two experiments, including a 4.5-fold increase in tiles being placed. Unlike in 2017, individual subreddits immediately began to coordinate pixel art, and large communities were formed on Discord and Twitch in attempts to create, defend, and destroy territory. Different communities collaborated and formed alliances through Discord as well as subreddits. Large streamers on Twitch also participated by instructing thousands (in some cases hundreds of thousands) of their viewers to mark their logos and symbols. On both the second and third days, Reddit doubled the canvas size and expanded the color palette. On the final day, before the 2022 Place reboot ended, users were suddenly restricted to placing white pixels; therefore, the entire canvas was gradually filled with a white void, returning it to its original blank state.&lt;/p>
+&lt;p>There were many griefs and reprisals from various factions, with Twitch streamer xQcOW (a.k.a. Félix Lengyel) being particularly impactful (at one point peaking with more than 233,000 live concurrent viewers, a personal record). He received death threats for griefing, saying that he had received more death threats in a single hour than he had received in six years of streaming.&lt;/p>
+&lt;p>Place was immediately used to express support for Ukraine in the ongoing Russo-Ukrainian War. Ukrainian president Volodymyr Zelenskyy was depicted with sunglasses, and it was suspected that Russian bots were used in a vain attempt to deface Zelenskyy&amp;rsquo;s visage, although this attack was thwarted.&lt;/p>
+&lt;p>References to popular culture and Internet memes were commonly visible. Similar to 2017, much of the artwork was nationalistic. These often combined flags with their country&amp;rsquo;s landmarks, celebrities, technology, or popular exports. This was particularly evident in the case of France, the United States, and Germany, while Dutch and Turkish Redditors collaborated to make real life paintings and a mural of Barış Manço. A flag of Canada was the subject of humor with regards to the difficulties of the design of the maple leaf.&lt;/p>
+&lt;p>2022 also saw the return of the Blue Corner, the void, the rainbow road, LGBT flags, and the green lattice (although all in diminished capacity). There was another prominent promotion for the 2007 video game osu!.&lt;/p>
+&lt;p>The experiment was praised for creating a sense of collectivism at a time when the Internet was to a great extent fractured and polarized. However, censorship and admin abuse were noted, with one piece of art depicting a scantily clad woman, encouraged by Twitch streamer xQc, being censored. Bot usage was also again criticized. The Washington Post compared Place to The Million Dollar Homepage, a one-million-pixel website where each pixel was sold for a dollar in 2005.&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Place_%28Reddit%29" target="_blank" rel="noopener"
+>Wikipedia&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>The Meanest Color</title><link>https://slc.is/archive/meancolor/</link><pubDate>Thu, 24 Mar 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/meancolor/</guid><description>&lt;img src="https://slc.is/images/purple.webp" alt="Featured image of post The Meanest Color" />&lt;p>Have you ever wanted to know what the most mean color is? Red might come to mind — a fiery and belligerent color. But I&amp;rsquo;ll do one better! I&amp;rsquo;ll give you the color vector that&amp;rsquo;s closest to every other color vector.&lt;/p>
+&lt;p>Here, the most average and mean color can be determined with &lt;a class="link" href="https://radimrehurek.com/gensim/index.html" target="_blank" rel="noopener"
+>word2vec&lt;/a> and vector averaging.&lt;/p>
+&lt;h1 id="process">Process&lt;/h1>
+&lt;ol>
+&lt;li>Load the word2vec model&lt;/li>
+&lt;li>Load the list of colors&lt;/li>
+&lt;li>Sum the vectors of each color together&lt;/li>
+&lt;li>Divide by the number of colors&lt;/li>
+&lt;li>Find the color vector with the largest cosine similarity to that vector&lt;/li>
+&lt;/ol>
+&lt;h1 id="python">Python&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="n">gensim&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">numpy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">gensim.downloader&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">queen_values&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">gensim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">downloader&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">()[&lt;/span>&lt;span class="s1">&amp;#39;models&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">keys&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">model&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">gensim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">downloader&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">t&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_similar&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">positive&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;king&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;woman&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">negative&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;man&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">v&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">t&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;queen&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">queen_values&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">v&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">t&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">except&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">pass&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;pre>&lt;code>('queen', 0.7786749005317688)
+('queen', 0.7118193507194519)
+('queen', 0.8523604273796082)
+('queen', 0.7698540687561035)
+('queen', 0.6978678107261658)
+('queen', 0.6713277101516724)
+('meets', 0.8841924071311951)
+('prince', 0.759779691696167)
+('queen', 0.7052316069602966)
+('queen', 0.6820898056030273)
+&lt;/code>&lt;/pre>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">best_model&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">queen_values&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">queen_values&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reverse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">best_model&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">model&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">gensim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">downloader&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">best_model&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;pre>&lt;code> glove-wiki-gigaword-50
+&lt;/code>&lt;/pre>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">colors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;white&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;black&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;silver&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;red&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;maroon&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;purple&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;orange&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;brown&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;beige&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;yellow&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;gold&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;tan&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;green&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;lime&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;olive&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;blue&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;cyan&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;teal&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;indigo&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;lavender&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;pink&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;violet&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;magenta&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;fuchsia&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># start by averaging grays&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">avg_vector&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;gray&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;grey&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">color&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">colors&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">avg_vector&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># divide by the number of colors&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">avg_vector&lt;/span> &lt;span class="o">/=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">colors&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">avg_colors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">color&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">colors&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sim&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">numpy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dot&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">avg_vector&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">/&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="n">numpy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">linalg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">norm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">avg_vector&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">numpy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">linalg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">norm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">]))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">avg_colors&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sim&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">color&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">avg_colors&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">avg_colors&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reverse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\t\t&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">avg_colors&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;pre>&lt;code>purple 0.92791396
+pink 0.9113098
+blue 0.9093884
+yellow 0.88690674
+red 0.872676
+green 0.8654766
+orange 0.84672266
+black 0.83403736
+white 0.8287787
+lavender 0.81729794
+maroon 0.7757962
+fuchsia 0.7409902
+brown 0.7358376
+olive 0.73582804
+magenta 0.68170786
+violet 0.6786235
+silver 0.6677471
+beige 0.66110957
+lime 0.6299113
+indigo 0.5789356
+gold 0.56747013
+tan 0.5436225
+teal 0.517831
+cyan 0.5167587
+&lt;/code>&lt;/pre>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>There isn&amp;rsquo;t any purpose for this post, but it&amp;rsquo;s interesting to know that the meanest color is &lt;strong>purple&lt;/strong>. I mostly wanted to start thinking about fun ways to use word2vec. I think I&amp;rsquo;d like to make a tool to assist writers in some way. I&amp;rsquo;m not sure what I&amp;rsquo;ll do with it, but I&amp;rsquo;m sure it&amp;rsquo;ll be fun.&lt;/p></description></item><item><title>My First Car</title><link>https://slc.is/archive/my-first-car/</link><pubDate>Sun, 19 Dec 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/my-first-car/</guid><description>&lt;img src="https://slc.is/images/truck.webp" alt="Featured image of post My First Car" />&lt;p>I&amp;rsquo;ve always been curious about how to repair cars since debugging tends to follow similar thought processes. Today, I finally got my first car, a 1988 Toyota Pickup affectionately known as Lil&amp;rsquo; Mo. I&amp;rsquo;m excited to learn how to work on its famous &lt;!-- raw HTML omitted -->22R-E&lt;!-- raw HTML omitted --> engine and handle wiring for the electronics.&lt;/p>
+&lt;p>Music is my biggest priority after safety, so having a bangin&amp;rsquo; stereo is a must. After that, the appearance of the truck is important since I tend to get smiles or thumbs up when driving it. Not to mention the four people within a month offering to buy it! After handling these easier fixes, I&amp;rsquo;ll move onto engine work.&lt;/p>
+&lt;h2 id="license-plate-holders">License Plate Holders&lt;/h2>
+&lt;p>I replaced the old holders with reflective ones. The visibility of the pickup isn&amp;rsquo;t the best, so hopefully this&amp;rsquo;ll decrease the chances of being rear-ended!&lt;/p>
+&lt;h2 id="lights">Lights&lt;/h2>
+&lt;p>I started relatively simple: replace the rear and front lights. They were far too dim, so the updated lights are LED except for the headlights. I did upgrade the headlights so they&amp;rsquo;re bright, still. I do think I&amp;rsquo;ll move to LED headlights just to minimize battery usage.&lt;/p>
+&lt;p>The process was enjoyable since it seems the cars were made to be worked on in the &amp;rsquo;80s. Every screw was easily accessible and, if I were to change the lights a second time, I&amp;rsquo;m sure I could do it in under and hour.&lt;/p>
+&lt;h2 id="reflective-tape">Reflective Tape&lt;/h2>
+&lt;p>It seems like most of the upgrades relate to safety. I guess that&amp;rsquo;s to be expected with a car without traction control, &lt;!-- raw HTML omitted -->ABS&lt;!-- raw HTML omitted -->, and even airbags. I used red tape on the back, so it looks like a third rear light. Then, I put white tape along the sides to blend into the paint. Finally for the doors, I placed the tape so it&amp;rsquo;s hidden when the door is closed but shows when they&amp;rsquo;re open to other cars.&lt;/p>
+&lt;p>I didn&amp;rsquo;t want to detract from the appearance of the truck. It&amp;rsquo;s great having a near-mint condition pickup from the &amp;rsquo;80s in 2022, so I wanted to preserve that aesthetic while bringing its safety more up to modern standards… although it&amp;rsquo;s still a long shot from being called safe.&lt;/p>
+&lt;h2 id="stereo">Stereo&lt;/h2>
+&lt;p>The truck has two speakers, and one wouldn&amp;rsquo;t make any sound. After working through every wire from the passenger-side speaker, I figured the issue was in the stereo itself. I picked up a Panasonic at Best Buy and began setting it up. Despite &lt;a class="link" href="https://www.crutchfield.com/car/outfitmycar/mycar.aspx" target="_blank" rel="noopener"
+>Crutchfield&lt;/a> saying I didn&amp;rsquo;t need any fit kit, I actually required one to set the storage and stereo correctly. Once I had a new stereo and fixed a few fuses, I confirmed both old speakers worked, albeit poorly.&lt;/p>
+&lt;p>I ordered a universal fit kit for my pickup and some 4&amp;quot; Polk speakers, and waited. Two days later I was able to replace the old speakers and position the stereo and new storage box (the kit came with one) perfectly. The only issue was the new speakers also sounded terrible! The heat sink on the stereo also got way too hot, so the issue was most definitely wiring. Somehow, the previous wiring job was sending negative right and negative left to the left speaker and positive left and positive right to the right one. Additionally, the wiring was set up for four speakers, so the stereo was pushing double the wattage to each speaker.&lt;/p>
+&lt;p>After sorting that all out with a circuit diagram, the whole system looks &lt;!-- raw HTML omitted -->OEM&lt;!-- raw HTML omitted -->, but the Bluetooth streaming and quality is a leap forward thirty years. I drove Lil&amp;rsquo; Mo around and enjoyed the music for quite a bit. Subwoofers are on the list, but I don&amp;rsquo;t need huge diameters. Preferably they can be powered by the stereo so I won&amp;rsquo;t need to do too much wiring.&lt;/p>
+&lt;h2 id="windshield-wipers">Windshield Wipers&lt;/h2>
+&lt;p>The current blades are pretty old and the rubber is cracking. I ordered a windshield wiper conversion kit to use more standard of sizes and better blades!&lt;/p>
+&lt;h2 id="mud-flaps">Mud Flaps&lt;/h2>
+&lt;p>One of the mud flaps has a chunk of rubber taken out of it, so I&amp;rsquo;ll get a new one &lt;!-- raw HTML omitted -->ASAP&lt;!-- raw HTML omitted -->. Actually, the cut-out might&amp;rsquo;ve been to prevent the flap from melting on the exhaust pipe. If that&amp;rsquo;s the case, I&amp;rsquo;ll leave it, but I&amp;rsquo;d like to have new flaps otherwise.&lt;/p>
+&lt;h2 id="rims-and-wheels">Rims and Wheels&lt;/h2>
+&lt;p>The rims are corroded and definitely show 30 years of wear. I&amp;rsquo;m opting for a temporary solution of repainting the rims, but I&amp;rsquo;d like to get larger rims in the near future. The speedometer is fast by around 5 &lt;!-- raw HTML omitted -->MPH&lt;!-- raw HTML omitted -->, so larger wheels should bring that error down. Additionally, they&amp;rsquo;ll make it easier to buy performance tires in a more common size.&lt;/p>
+&lt;p>It took around six hours to paint all four wheels. The longest part was definitely cleaning the rims, but the coating looks great. I&amp;rsquo;m getting close to being done with external work!&lt;/p></description></item><item><title>Delete Me Guides</title><link>https://slc.is/archive/delete-me-guides/</link><pubDate>Sun, 05 Dec 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/delete-me-guides/</guid><description>&lt;img src="https://slc.is/images/deleteme.webp" alt="Featured image of post Delete Me Guides" />&lt;p>I&amp;rsquo;m going to create a simple program that will delete personal information like deleteme. It&amp;rsquo;ll be open-source and able to run whenever you please. I&amp;rsquo;ll use the guides from &lt;a class="link" href="https://joindeleteme.com/help/deleteme-help-topics/opt-out-guide/" target="_blank" rel="noopener"
+>deleteme&lt;/a> to help identify services and their links.&lt;/p>
+&lt;p>I have each link listed below, but you can run the code below to download every document.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-national-do-not-call-registry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-national-do-not-call-registry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-alc/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-alc/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-allbiz/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-allbiz/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-ancestry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-ancestry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-arrestfacts/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-arrestfacts/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-background-checks-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-background-checks-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-california-notaries/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-california-notaries/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-checkpeople-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-checkpeople-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-clustrmaps/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-clustrmaps/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminal-screen/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminal-screen/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminal-watch-dog/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminal-watch-dog/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminalpages-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminalpages-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminalsearches-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-criminalsearches-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-data-gemba/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-data-gemba/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-data-records/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-data-records/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-deathrecords-org/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-deathrecords-org/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-dentists-california/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-dentists-california/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-detective-unlimited/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-detective-unlimited/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-directmail-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-directmail-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-divorcerecords-org/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-divorcerecords-org/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-dob-search/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-dob-search/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-docusearch/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-docusearch/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-easybackgrounds-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-easybackgrounds-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-email-411/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-email-411/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-email-finder/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-email-finder/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-email-tracer/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-email-tracer/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-emerges/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-emerges/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-enformion/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-enformion/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-epsilon/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-epsilon/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-equifax/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-equifax/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-everify/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-everify/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-experian/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-experian/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-family-tree-search/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-family-tree-search/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-federal-data/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-federal-data/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-fico/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-fico/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-find-local-people/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-find-local-people/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-find-people-search/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-find-people-search/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-find-who-calls-you/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-find-who-calls-you/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-firearms-california/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-firearms-california/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-florida-profile-pages/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-florida-profile-pages/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-florida-residents-directory/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-florida-residents-directory/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-background-check/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-background-check/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-cell-search/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-cell-search/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-people-directory/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-people-directory/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-public-profile/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-free-public-profile/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-full-name-directory/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-full-name-directory/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-genealogy-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-genealogy-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-geni/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-geni/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-gov-background-checks/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-gov-background-checks/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-gov-registry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-gov-registry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-government-registry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-government-registry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-hauziz/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-hauziz/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-hero-searches/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-hero-searches/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-homemetry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-homemetry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-i-behavior/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-i-behavior/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-infopages/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-infopages/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-infopay/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-infopay/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-inforegistry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-inforegistry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-information-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-information-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-information-enterprises/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-information-enterprises/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-inforver/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-inforver/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-innovis/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-innovis/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-instant-background-report/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-instant-background-report/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-instant-people-finder/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-instant-people-finder/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-integrascan/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-integrascan/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-integrity-aristotle/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-integrity-aristotle/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-intel-registry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-intel-registry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-inteligator/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-inteligator/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-intelius/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-intelius/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-intellicorp/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-intellicorp/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-iq-data/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-iq-data/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-jail-alert/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-jail-alert/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-jailbase/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-jailbase/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-kiwi-searches/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-kiwi-searches/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-lexis-nexis/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-lexis-nexis/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-liveramp/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-liveramp/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-locate-family/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-locate-family/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-locate-people/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-locate-people/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-manta/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-manta/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-marriage-records/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-marriage-records/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-mashpanel/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-mashpanel/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-melissa-data/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-melissa-data/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-michigan-resident-database/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-michigan-resident-database/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-million-phone/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-million-phone/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-mugshots-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-mugshots-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-my-yellow-pages/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-my-yellow-pages/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-mylife/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-mylife/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-national-database/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-national-database/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-neighbor-who/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-neighbor-who/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-new-england-facts/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-new-england-facts/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-north-carolina-resident-database/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-north-carolina-resident-database/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-number-investigator/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-number-investigator/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-numberville/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-numberville/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-ohio-resident-database/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-ohio-resident-database/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-ok-caller/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-ok-caller/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-oklahoma-voters/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-oklahoma-voters/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-open-public-records/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-open-public-records/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-opt-out-prescreen/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-opt-out-prescreen/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-oracle/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-oracle/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-background-check/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-background-check/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-by-phone/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-by-phone/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-find/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-find/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-finder-online/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-finder-online/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-finder/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-finder/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search-expert/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search-expert/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search-org/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search-org/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search-site/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search-site/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-search/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-spy/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-spy/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-us/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-us/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-verified/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-verified/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-whiz/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-whiz/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-wise/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-wise/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-yellowbook/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-yellowbook/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-yellowpages/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-people-yellowpages/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-peoples-check/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-peoples-check/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-detective/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-detective/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-owner-us/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-owner-us/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-owner/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-owner/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-registry/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phone-registry/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phonebooks-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-phonebooks-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-pipl/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-pipl/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-private-number-checker/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-private-number-checker/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-privaterecords/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-privaterecords/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-pub360/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-pub360/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-data-check/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-data-check/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-info-services/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-info-services/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-record-results/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-record-results/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-record-site/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-record-site/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-record-spy/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-record-spy/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-records-directory/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-records-directory/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-seek/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-public-seek/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-publicrecords-onlinesearches-com/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-publicrecords-onlinesearches-com/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-radaris/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-radaris/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-rapsheets-org/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-rapsheets-org/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-real-phone-lookup/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-real-phone-lookup/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-records-authority/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-records-authority/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-records-finder/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-records-finder/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-rehold/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-rehold/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reunion/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reunion/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-genie/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-genie/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-mobile/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-mobile/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-number-database/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-number-database/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-phone-check/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-phone-check/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-records/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-reverse-records/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-rootsweb/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-rootsweb/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-sales-spider-media/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-sales-spider-media/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-secure-public-records/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-secure-public-records/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-sentry-link/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-sentry-link/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-smart-background-checks/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-smart-background-checks/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-spoke/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-spoke/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-spy-dialer/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-spy-dialer/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-spyfly/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-spyfly/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-state-records/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-state-records/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-stud-or-dud/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-stud-or-dud/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-super-pages/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-super-pages/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-telephone-directories/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-telephone-directories/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-tenant-screening-usa/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-tenant-screening-usa/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-tenn-help/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-tenn-help/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-tower-data/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-tower-data/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-transunion/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-transunion/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-true-caller/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-true-caller/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-trusignal/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-trusignal/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-trustoria/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-trustoria/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-united-states-phone-book/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-united-states-phone-book/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-us-phone-book/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-us-phone-book/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-usa-background/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-usa-background/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-usa-reverse-phone/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-usa-reverse-phone/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-uspeople-info/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-uspeople-info/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-verify-them/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-verify-them/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-verispy/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-verispy/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-veromi/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-veromi/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-visual-who/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-visual-who/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-voter-lists/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-voter-lists/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-voter-records/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-voter-records/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-web-investigator/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-web-investigator/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-webstigate/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-webstigate/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-whitepages-plus/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-whitepages-plus/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-whitepagizle/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-whitepagizle/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-from-zoominfo/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-from-zoominfo/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-instant-data-tower-data/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-instant-data-tower-data/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/how-to-remove-yourself-true-rep/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/how-to-remove-yourself-true-rep/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://joindeleteme.com/help/kb/remove-yourself-from-number-2-name/" target="_blank" rel="noopener"
+>https://joindeleteme.com/help/kb/remove-yourself-from-number-2-name/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;h2 id="code-to-download-guides">Code to download guides&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">requests&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">bs4&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">BeautifulSoup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">pdfkit&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">time&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">sleep&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">link&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://joindeleteme.com/help/deleteme-help-topics/opt-out-guide/page/&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">page&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">link&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">guides&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">set&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="n">page&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ok&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">i&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">soup&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">BeautifulSoup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">page&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;html.parser&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hrefs&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">attrs&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;href&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">soup&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">find_all&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;a&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="s1">&amp;#39;href&amp;#39;&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">attrs&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="ow">and&lt;/span> &lt;span class="s1">&amp;#39;https://joindeleteme.com/help/kb/&amp;#39;&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">attrs&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;href&amp;#39;&lt;/span>&lt;span class="p">]]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">guides&lt;/span> &lt;span class="o">|=&lt;/span> &lt;span class="nb">set&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">hrefs&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sleep&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">page&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">link&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">enumerate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">guides&lt;/span>&lt;span class="p">)):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">. &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pdfkit&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">from_url&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="s1">&amp;#39;.pdf&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sleep&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;a class="link" href="https://slc.is/data/deleteme.pdf" >Combined Guides&lt;/a>&lt;/p></description></item><item><title>Minecraft Seeds</title><link>https://slc.is/archive/minecraft-seeds/</link><pubDate>Mon, 15 Nov 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/minecraft-seeds/</guid><description>&lt;img src="https://slc.is/images/mcTitle.webp" alt="Featured image of post Minecraft Seeds" />&lt;h2 id="title-screen">Title Screen:&lt;/h2>
+&lt;ul>
+&lt;li>Version: Beta 1.7.3&lt;/li>
+&lt;li>Seed: 2151901553968352745 or 8091867987493326313&lt;/li>
+&lt;li>Player X: 61.48&lt;/li>
+&lt;li>Player Y: 75&lt;/li>
+&lt;li>Player Z: -68.73&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;h2 id="packpng">Pack.png:&lt;/h2>
+&lt;p>&lt;img src="https://slc.is/images/mcPack.webp"
+loading="lazy"
+alt="pack.png"
+>&lt;/p>
+&lt;ul>
+&lt;li>Version: Alpha 1.2.2 [Java]&lt;/li>
+&lt;li>Seed: 3257840388504953787&lt;/li>
+&lt;li>Player X: 116&lt;/li>
+&lt;li>Player Y: -31&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;h2 id="skull-on-fire">Skull on Fire:&lt;/h2>
+&lt;p>&lt;img src="https://slc.is/images/mcSkull.webp"
+loading="lazy"
+alt="Skull Painting"
+>&lt;/p>
+&lt;ul>
+&lt;li>Version: Alpha 1.1.2_01 [Java]&lt;/li>
+&lt;li>Seed: -1044887956651363087 or -6984854390176336655&lt;/li>
+&lt;li>Player X: -249.65&lt;/li>
+&lt;li>Player Y: 91&lt;/li>
+&lt;li>Player Z: -29.04&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;h2 id="speedrunning">Speedrunning:&lt;/h2>
+&lt;ul>
+&lt;li>Version: 1.17.41&lt;/li>
+&lt;li>Seed: 376166226&lt;/li>
+&lt;li>Player X: 0&lt;/li>
+&lt;li>Player Y: 0&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;h2 id="interesting-seeds">Interesting Seeds:&lt;/h2>
+&lt;p>7 Wonders:&lt;/p>
+&lt;ul>
+&lt;li>Seed: 1866338692667258164&lt;/li>
+&lt;li>Player X: 0&lt;/li>
+&lt;li>Player Y: 0&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted --></description></item><item><title>Short and Sweet Google Interview Process</title><link>https://slc.is/archive/short-and-sweet-google-interview-process/</link><pubDate>Wed, 29 Sep 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/short-and-sweet-google-interview-process/</guid><description>&lt;img src="https://slc.is/images/google.webp" alt="Featured image of post Short and Sweet Google Interview Process" />&lt;p>I&amp;rsquo;ll use this post as a progress report of the Google Internship application process. The only unique thing I did in regards with the initial application was specifying my interest in the ChromeOS team. In addition, I submitted a bug report to the ChromeOS team and mentioned my application. I don&amp;rsquo;t know if this helped move me forward, but it was something different I did compared to previous applications.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;h1 id="snapshot-survey">Snapshot Survey&lt;/h1>
+&lt;p>&lt;strong>The survey autosaves&lt;/strong>, so use the answer history to indicate confidence in some and confliction in other answers.&lt;/p>
+&lt;h1 id="coding-exercise">Coding Exercise&lt;/h1>
+&lt;ol>
+&lt;li>Leave comments on code&lt;/li>
+&lt;li>Use descriptive variables names&lt;/li>
+&lt;li>Make test cases
+&lt;ul>
+&lt;li>I wrote a message to the Googlers in my tests&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Leave feedback on the form
+&lt;ul>
+&lt;li>They say to not include identifiable information, but the Google account is associated with the form, so it can only help&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h1 id="candidate-questionnaire">Candidate Questionnaire&lt;/h1>
+&lt;p>There isn&amp;rsquo;t much room for unique answering strategies here, but the time to show your stuff in writing has finally come. For all long-answer sections, be sure to fill it out thoroughly. Use Grammarly to verify writing style and leave feedback at the end per usual.&lt;/p>
+&lt;h1 id="phone-interviews">Phone Interviews&lt;/h1>
+&lt;p>I solved each question proposed in the interviews, but didn&amp;rsquo;t have time to complete their second parts. The questions were straightforward but added a slight twist on common data structures. Once I completed the first question in the interviews, I opted to stop coding and instead talk to the interviewer. Hopefully that was the right move, and I&amp;rsquo;ll find out within two weeks whether I move to hosting.&lt;/p>
+&lt;p>My first interview was stronger than my second, so &lt;a class="link" href="" >as expected&lt;/a>, I got scheduled for a third interview.&lt;/p>
+&lt;p>The hosting round, where you match with Google teams, comes quickly and is on a first-come basis. Because of this, completing your phone interviews as quickly as possible is very important. The sooner you can progress to hosting the better in terms of obtaining an internship, &lt;em>in my opinion&lt;/em>.&lt;/p>
+&lt;hr>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;h3 id="skills">Skills&lt;/h3>
+&lt;ol>
+&lt;li>Code Analysis&lt;/li>
+&lt;li>Construct and Traverse&lt;/li>
+&lt;li>Implement system routines&lt;/li>
+&lt;li>Mine data&lt;/li>
+&lt;li>Transform datasets&lt;/li>
+&lt;/ol>
+&lt;h3 id="algorithms">Algorithms&lt;/h3>
+&lt;!-- raw HTML omitted -->
+&lt;ul>
+&lt;li>Runtime + Space complexity
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/time-complexity-and-space-complexity/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/time-complexity-and-space-complexity/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://stackabuse.com/big-o-notation-and-algorithm-analysis-with-python-examples/" target="_blank" rel="noopener"
+>https://stackabuse.com/big-o-notation-and-algorithm-analysis-with-python-examples/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.baeldung.com/cs/p-np-np-complete-np-hard" target="_blank" rel="noopener"
+>https://www.baeldung.com/cs/p-np-np-complete-np-hard&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.cs.utah.edu/~germain/PPS/Topics/recursion.html" target="_blank" rel="noopener"
+>https://www.cs.utah.edu/~germain/PPS/Topics/recursion.html&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/recursion/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/recursion/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ul>
+&lt;li>Memorization
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/dynamic-programming/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/dynamic-programming/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/data_structures_algorithms/divide_and_conquer.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/data_structures_algorithms/divide_and_conquer.htm&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://realpython.com/sorting-algorithms-python/" target="_blank" rel="noopener"
+>https://realpython.com/sorting-algorithms-python/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/greedy-algorithms/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/greedy-algorithms/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.techiedelight.com/depth-first-search-dfs-vs-breadth-first-search-bfs/" target="_blank" rel="noopener"
+>https://www.techiedelight.com/depth-first-search-dfs-vs-breadth-first-search-bfs/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ul>
+&lt;li>Inorder, Postorder, Preorder
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://towardsdatascience.com/4-types-of-tree-traversal-algorithms-d56328450846" target="_blank" rel="noopener"
+>https://towardsdatascience.com/4-types-of-tree-traversal-algorithms-d56328450846&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;h3 id="data-structures">Data Structures&lt;/h3>
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/data_structures_algorithms/linked_list_algorithms.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/data_structures_algorithms/linked_list_algorithms.htm&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/implementation-of-dynamic-array-in-python/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/implementation-of-dynamic-array-in-python/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://codezup.com/create-own-custom-array-implementation-python/" target="_blank" rel="noopener"
+>https://codezup.com/create-own-custom-array-implementation-python/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/data_structures_algorithms/stack_algorithm.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/data_structures_algorithms/stack_algorithm.htm&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/data_structures_algorithms/dsa_queue.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/data_structures_algorithms/dsa_queue.htm&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/priority-queue-set-1-introduction/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/priority-queue-set-1-introduction/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://wikipedia.org/wiki/Set_%28abstract_data_type%29" target="_blank" rel="noopener"
+>https://wikipedia.org/wiki/Set_(abstract_data_type)&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/data_structures_algorithms/hash_data_structure.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/data_structures_algorithms/hash_data_structure.htm&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://replit.com/@splch/Hash-Table" target="_blank" rel="noopener"
+>https://replit.com/@splch/Hash-Table&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ul>
+&lt;li>Binary, N-ary, Trie-
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.cs.cmu.edu/~clo/www/CMU/DataStructures/Lessons/lesson4_1.htm" target="_blank" rel="noopener"
+>https://www.cs.cmu.edu/~clo/www/CMU/DataStructures/Lessons/lesson4_1.htm&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>Balanced
+&lt;ul>
+&lt;li>Red/Black + Splay + AVL
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://web.stanford.edu/class/archive/cs/cs166/cs166.1146/lectures/02/Small02.pdf" target="_blank" rel="noopener"
+>https://web.stanford.edu/class/archive/cs/cs166/cs166.1146/lectures/02/Small02.pdf&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/difference-between-min-heap-and-max-heap/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/difference-between-min-heap-and-max-heap/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ul>
+&lt;li>Objects + Pointers, Matrix, Adjacency List
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.upgrad.com/blog/graphs-in-data-structure/" target="_blank" rel="noopener"
+>https://www.upgrad.com/blog/graphs-in-data-structure/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;h3 id="operating-systems">Operating Systems&lt;/h3>
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/operating_system/os_processes.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/operating_system/os_processes.htm&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/4_Threads.html" target="_blank" rel="noopener"
+>https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/4_Threads.html&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Lock_%28computer_science%29" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Lock_(computer_science)&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/semaphores-in-operating-system" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/semaphores-in-operating-system&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/monitors-in-process-synchronization/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/monitors-in-process-synchronization/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.geeksforgeeks.org/introduction-of-deadlock-in-operating-system/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/introduction-of-deadlock-in-operating-system/&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.guru99.com/what-is-livelock-example.html" target="_blank" rel="noopener"
+>https://www.guru99.com/what-is-livelock-example.html&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://wikipedia.org/wiki/Context_switch" target="_blank" rel="noopener"
+>https://wikipedia.org/wiki/Context_switch&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.guru99.com/process-scheduling.html" target="_blank" rel="noopener"
+>https://www.guru99.com/process-scheduling.html&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;h3 id="discrete-math">Discrete Math&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Discrete_mathematics" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Discrete_mathematics&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/discrete_mathematics/discrete_mathematics_counting_theory.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/discrete_mathematics/discrete_mathematics_counting_theory.htm&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/discrete_mathematics/discrete_mathematics_probability.htm" target="_blank" rel="noopener"
+>https://www.tutorialspoint.com/discrete_mathematics/discrete_mathematics_probability.htm&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.math.ucla.edu/~pak/hidden/papers/Quotes/Wilson-what.pdf" target="_blank" rel="noopener"
+>https://www.math.ucla.edu/~pak/hidden/papers/Quotes/Wilson-what.pdf&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.cs.utexas.edu/~isil/cs311h/lecture-combinatorics2-6up.pdf" target="_blank" rel="noopener"
+>https://www.cs.utexas.edu/~isil/cs311h/lecture-combinatorics2-6up.pdf&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;hr>
+&lt;h1 id="timeline">Timeline&lt;/h1>
+&lt;h2 id="software-engineering-intern-bachelors-winter-2022">Software Engineering Intern, Bachelors, Winter 2022&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Date&lt;/th>
+&lt;th>Event&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>July 31&lt;!-- raw HTML omitted -->st&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Applied to Google&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>September 29&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Passed Résumé Review&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>October 4&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Completed Snapshot Survey and Coding Exercise&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>October 5&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Passed Survey and Exercise Stage&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>October 6&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Scheduled Phone Interviews&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>October 11&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Completed Phone Interviews&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>October 14&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Scheduled Third Phone Interview&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>October 20&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Completed Third Phone Interview&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>October 29&lt;!-- raw HTML omitted -->th&lt;!-- raw HTML omitted -->, 2021&lt;/td>
+&lt;td>Failed Phone Interviews&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>QR Quine</title><link>https://slc.is/archive/qr-quine/</link><pubDate>Sat, 25 Sep 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/qr-quine/</guid><description>&lt;img src="https://slc.is/images/qrQuine.webp" alt="Featured image of post QR Quine" />&lt;p>&lt;img src="https://slc.is/images/qrQuine.webp"
+loading="lazy"
+alt="QR Quine"
+>&lt;/p>
+&lt;p>I was hoping to encode the &lt;!-- raw HTML omitted -->b64&lt;!-- raw HTML omitted --> string of a &lt;!-- raw HTML omitted -->QR&lt;!-- raw HTML omitted --> code into another QR code. The catch was that the encoded QR code would match the encoded string of the QR code. When you scan the QR code, it would return itself.&lt;/p>
+&lt;p>Sadly, this is most likely &lt;a class="link" href="https://stackoverflow.com/q/5536323" target="_blank" rel="noopener"
+>impossible&lt;/a>, though I might still try to create a search function for it. Instead, I optimized Alok&amp;rsquo;s &lt;a class="link" href="https://www.quaxio.com/qrquine" target="_blank" rel="noopener"
+>approach&lt;/a> a bit with Javascript&amp;rsquo;s arrow syntax. Minor things like that enabled me to create an HTML-validated QR quine.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">data&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="nx">text&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">html&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="o">&amp;lt;!&lt;/span>&lt;span class="nx">DOCTYPE&lt;/span> &lt;span class="nx">html&lt;/span>&lt;span class="o">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nx">html&lt;/span> &lt;span class="nx">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nx">en&lt;/span>&lt;span class="o">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nx">head&lt;/span>&lt;span class="o">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nx">title&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="nx">q&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/title&amp;gt;&amp;lt;canvas id=C&amp;gt;&amp;lt;script&amp;gt;P=(r,c,v)=&amp;gt;{I[A*r+c]=v;return!(v&amp;amp;&amp;amp;C.getContext(&amp;#39;2d&amp;#39;).fillRect(c*3,r*3,3,3))};S=(i,j)=&amp;gt;{for(r=O;r&amp;lt;8;r++)for(c=O;c&amp;lt;8;c++)j+c&amp;gt;O&amp;amp;&amp;amp;j+c&amp;lt;A&amp;amp;&amp;amp;P(i+r,j+c,0&amp;lt;r&amp;amp;&amp;amp;(r&amp;lt;7&amp;amp;&amp;amp;!(c%6))||((c+1)%8&amp;amp;&amp;amp;!(r%6)||1&amp;lt;r&amp;amp;&amp;amp;(r&amp;lt;5&amp;amp;&amp;amp;(1&amp;lt;c&amp;amp;&amp;amp;c&amp;lt;5))))};N=(a,b)=&amp;gt;{if(a[L]&amp;lt;b[L])return a;o=a[0]/b[0];for(i=0;i&amp;lt;b[L];a[i++]^=z){m=b[i];n=o;for(z=0;m;n&amp;gt;255&amp;amp;&amp;amp;(n^=285))m&amp;amp;1&amp;amp;&amp;amp;(z^=n),n&amp;lt;&amp;lt;=1,m&amp;gt;&amp;gt;=1}a.shift();return N(a,b)};C.height=C.width=(A=133)*3;I=[];X=O=-1;L=&amp;#39;length&amp;#39;;S(0,0);S(A-7,0);S(i=0,A-7);for(B=[6,30,54,78,102,126];i&amp;lt;6;i++)for(j=0;j&amp;lt;6;j++)if(!I[A*B[i]+B[j]])for(r=-2;r&amp;lt;3;r++)for(c=-2;c&amp;lt;3;c++)P(B[i]+r,B[j]+c,r&amp;amp;&amp;amp;!(r%2)||c&amp;amp;&amp;amp;!(c%2)||!r&amp;amp;&amp;amp;!c);for(i=8;i&amp;lt;A-8;P(6,i++,j))j=!(i%2),P(i,6,j);for(i=0;i&amp;lt;15;i++)j=29427&amp;gt;&amp;gt;i&amp;amp;1,i&amp;lt;6&amp;amp;&amp;amp;P(i,8,j)||i&amp;lt;8&amp;amp;&amp;amp;P(i+1,8,j)||P(118+i,8,j),i&amp;lt;8&amp;amp;&amp;amp;P(8,A-i-1,j)||i&amp;lt;9&amp;amp;&amp;amp;P(8,15-i,j)||P(8,14-i,j);P(A-8,8,1);for(i=0;i&amp;lt;18;P(i%3+A-11,i++/3|0,k))k=119615&amp;gt;&amp;gt;i&amp;amp;1,P(i/3|0,i%3+A-11,k);for(D=[4,i=0,6,0,6];i&amp;lt;1542;D=D.concat([j&amp;gt;&amp;gt;4,j&amp;amp;15]))j=unescape(location.href).charCodeAt(i++);D.push(r=0);for(E=3262;D[L]&amp;lt;E;D=D.concat([1,1]))D=D.concat([14,12]);F=[];for(Z=k=r=0;r&amp;lt;14;r++){i=116+(r&amp;gt;6);l=[];for(j=0;j&amp;lt;i;F[r+j*14-(j&amp;gt;115?7:0)]=l[j++])l[j]=(D[k++]&amp;lt;&amp;lt;4)|D[k++];l=l.concat(new Array(30));for(j=0;j&amp;lt;30;j++)F[r+j*14+1631]=N(l,[1,212,246,77,73,195,192,75,98,5,70,103,177,22,217,138,51,181,246,72,25,18,46,228,74,216,195,11,106,130,150])[j]}Y=7;for(x=i=A-1;i&amp;gt;0;i-=2){for(i==6&amp;amp;&amp;amp;i--;x&amp;gt;O&amp;amp;&amp;amp;x&amp;lt;A;x+=X)for(j=0;j&amp;lt;2;j++)if(I[A*x+i-j]==B[9])k=Z&amp;lt;F[L]&amp;amp;&amp;amp;F[Z]&amp;gt;&amp;gt;Y&amp;amp;1,P(x,i-j,x%2?k:!k),--Y&amp;lt;0&amp;amp;&amp;amp;(Z++,Y=7);x-=X;X=-X}&amp;lt;/script&amp;gt;&amp;lt;/canvas&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://slc.is/images/qrJsQuine.webp"
+loading="lazy"
+alt="JavaScript QR Quine"
+>&lt;/p>
+&lt;p>When this text is pasted into a browser&amp;rsquo;s URL, it loads a QR code containing the same link. Here, a QR code is generated, but this is just a little better than having a QR code link to itself.&lt;/p>
+&lt;!-- raw HTML omitted --></description></item><item><title>The Last Single-Letter Domain</title><link>https://slc.is/archive/the-last-single-letter-domain/</link><pubDate>Wed, 22 Sep 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/the-last-single-letter-domain/</guid><description>&lt;img src="https://www.isnic.is/en/tolur/image?name=stafafjoldi" alt="Featured image of post The Last Single-Letter Domain" />&lt;p>&lt;a class="link" href="https://%c3%bd.is" target="_blank" rel="noopener"
+>ý.is&lt;/a> is now taken. This morning, I began rummaging through the NCIS&amp;rsquo; &lt;a class="link" href="https://www.isnic.is/en/domain/rules#2" target="_blank" rel="noopener"
+>Domain Rules&lt;/a> and found a list of all allowed single characters.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">a b c d e f g h i j k l m n o p q r s t u v w x y z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- 0 1 2 3 4 5 6 7 8 9
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">á æ é í ð ó ö ú ý þ
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>After a few searches and &lt;!-- raw HTML omitted -->CAPTCHA&lt;!-- raw HTML omitted -->s, I was surprised to that &lt;code>ý&lt;/code> was available! I didn&amp;rsquo;t wait long before paying that €31.90 fee 😂 It&amp;rsquo;s very interesting that there was a single-letter domain left considering most of the others were registered in the early 2000s. I checked the WhoIs history, too, and nobody has owned it previously. Either way, I&amp;rsquo;m happy I have the shortest possible domain name now!&lt;/p>
+&lt;p>I have no concrete idea for what I&amp;rsquo;ll do with &lt;a class="link" href="https://%c3%bd.is" target="_blank" rel="noopener"
+>ý.is&lt;/a>, but I think a personal &lt;!-- raw HTML omitted -->URL&lt;!-- raw HTML omitted --> shortener would be useful. I doubt bots are testing these characters for spam, so basically any email from this domain would be rarely targeted. Having some email forwarding service attached to the domain could be helpful in this sense. This isn&amp;rsquo;t a domain that others can visit due to the &lt;code>ý&lt;/code> character being so infrequently used. Anything I end up using this domain for will most likely be personal.&lt;/p>
+&lt;p>I&amp;rsquo;ll try to think of some reasons it&amp;rsquo;d be useful to have a Latin character in a URL, but in the meantime I&amp;rsquo;ll enjoy owning a rare domain.&lt;/p></description></item><item><title>Searching for Interactive Code</title><link>https://slc.is/archive/searching-for-interactive-code/</link><pubDate>Fri, 03 Sep 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/searching-for-interactive-code/</guid><description>&lt;img src="https://slc.is/images/replit.webp" alt="Featured image of post Searching for Interactive Code" />&lt;p>I want readers to execute code I use anywhere in my blog. Recently, I added code that scrapes &lt;a class="link" href="https://slc.is/#Every%20Bang%20in%20DuckDuckGo" >DuckDuckGo&amp;rsquo;s !bangs&lt;/a>; however, the reader would need to run the code on their own machine. It&amp;rsquo;d be helpful if they could have executable code embedded in the post.&lt;/p>
+&lt;p>I searched the internet for popular online &lt;!-- raw HTML omitted -->IDE&lt;!-- raw HTML omitted -->s and found those listed below. I wanted to compare features and languages to determine which I should use in my blog (if any).&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Name&lt;/th>
+&lt;th>Website&lt;/th>
+&lt;th style="text-align:center">Languages&lt;/th>
+&lt;th style="text-align:center">HTTP Requests&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Replit&lt;/td>
+&lt;td>replit.com&lt;/td>
+&lt;td style="text-align:center">63&lt;/td>
+&lt;td style="text-align:center">Yes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Trinket&lt;/td>
+&lt;td>trinket.io&lt;/td>
+&lt;td style="text-align:center">10&lt;/td>
+&lt;td style="text-align:center">Yes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>JDoodle&lt;/td>
+&lt;td>jdoodle.com&lt;/td>
+&lt;td style="text-align:center">74&lt;/td>
+&lt;td style="text-align:center">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>GeeksforGeeks&lt;/td>
+&lt;td>geeksforgeeks.org&lt;/td>
+&lt;td style="text-align:center">11&lt;/td>
+&lt;td style="text-align:center">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tutorialspoint&lt;/td>
+&lt;td>tutorialspoint.com&lt;/td>
+&lt;td style="text-align:center">107&lt;/td>
+&lt;td style="text-align:center">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>CodeChef&lt;/td>
+&lt;td>codechef.com&lt;/td>
+&lt;td style="text-align:center">54&lt;/td>
+&lt;td style="text-align:center">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ideone&lt;/td>
+&lt;td>ideone.com&lt;/td>
+&lt;td style="text-align:center">62&lt;/td>
+&lt;td style="text-align:center">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Paiza&lt;/td>
+&lt;td>paiza.io&lt;/td>
+&lt;td style="text-align:center">31&lt;/td>
+&lt;td style="text-align:center">?&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>So far, I&amp;rsquo;m not happy with Replit&amp;rsquo;s &lt;!-- raw HTML omitted -->UI&lt;!-- raw HTML omitted --> on mobile devices, and Trinket has a great UI but a very limited number of supported languages. I don&amp;rsquo;t want to include a feature in my blog that will limit me in the future.&lt;/p>
+&lt;p>It may prove useful for others to have a list of IDEs and their features, but I won&amp;rsquo;t be including any in my website right now.&lt;/p>
+&lt;p>If I &lt;em>were&lt;/em> to recommend one, however, I would vouch for &lt;a class="link" href="https://replit.com" target="_blank" rel="noopener"
+>Replit&lt;/a>. I used their platform for the first two years of university and actually paid $5 a month for the Hacker plan. They&amp;rsquo;re constantly innovating and adding unique and useful features. I just hope they can improve its appearance on smaller screens. When that happens, I&amp;rsquo;ll have the difficult task of choosing between my seamless &lt;code>code tags&lt;/code> and Replit&amp;rsquo;s interactive embeddings.&lt;/p>
+&lt;p>Edit (9/25/2021) — I decided that in some cases running code is helpful, so I&amp;rsquo;m including Replit embeddings.&lt;/p></description></item><item><title>Exploring Privacy Tools</title><link>https://slc.is/archive/exploring-privacy-tools/</link><pubDate>Thu, 02 Sep 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/exploring-privacy-tools/</guid><description>&lt;img src="https://slc.is/images/eff.webp" alt="Featured image of post Exploring Privacy Tools" />&lt;p>The brain has been hacked and its security patches come slowly. In order to avoid targeted &lt;!-- raw HTML omitted -->ad&lt;!-- raw HTML omitted -->s and refining &lt;em>my&lt;/em> digital consciousness, I&amp;rsquo;m making steady progress toward respectful technology.&lt;/p>
+&lt;p>After learning more about &lt;!-- raw HTML omitted -->&lt;a class="link" href="https://slc.is/#Neural%20Networks%20From%20Scratch" >AI&lt;/a>&lt;!-- raw HTML omitted -->, I began to understand the importance of privacy. Everyone has their own reasons for protecting their data, and mine is to reduce the ability of models to fit me. This ties into preventing ad recommendations and other popular motivations broadly, but I doubt we understand the implications of modelling human behavior.&lt;/p>
+&lt;p>To limit my personal footprint, I began using Signal and Protonmail for private communication. My biggest challenge was converting my circles, but those closest to me tend to have similar interests. So after about a year and a half, I&amp;rsquo;m halfway there! I was initially content with protecting only my messages from peeping eyes; however I also began using private search.&lt;/p>
+&lt;p>My interests and experiences are reflected through what I search. Continuing along reducing my amount of training data, I began de-Googling. I haven&amp;rsquo;t completely removed Google searches from my life but DuckDuckGo has become a strong contender. Using !bangs, I&amp;rsquo;m able to search quickly when I have an idea of the category I&amp;rsquo;m looking for. When it comes to &lt;em>clueless searches&lt;/em>, though, I still rely on Google.&lt;/p>
+&lt;p>After using DuckDuckGo for around a month, I saw a blog post about their beta email program. I just happened to be looking for a better email (in terms of readability), so I immediately signed up. After 43 days on the waitlist, I was able to register &lt;a class="link" href="mailto:spence@duck.com" >spence@duck.com&lt;/a>. My friends might&amp;rsquo;ve been hesitant about transitioning messaging &lt;!-- raw HTML omitted -->app&lt;!-- raw HTML omitted -->s, but the duck email was
+a hit. Within a week of my fancy duck.com email, three friends were already waiting and hoping to claim their own name.&lt;/p>
+&lt;p>Using Signal, Protonmail, and DuckDuckGo is great, but I&amp;rsquo;m still on an iPhone. My recent drive toward privacy has been partially fueled by Apple&amp;rsquo;s personal photo hashing plans. As a way to escape the big &lt;em>i&lt;/em>, I&amp;rsquo;ve been looking into a de-Googled Fairphone. I&amp;rsquo;m not sure I&amp;rsquo;ll be able to completely sever ties with these companies&amp;rsquo; surveillance, but finding and testing alternatives seems like enough to me.&lt;/p>
+&lt;p>After Apple&amp;rsquo;s invasive proposal to scan all iCloud photos, I began to value the &lt;a class="link" href="https://www.fsf.org" target="_blank" rel="noopener"
+>Free Software&lt;/a> movement and the &lt;a class="link" href="https://www.eff.org" target="_blank" rel="noopener"
+>EFF&lt;/a>&amp;rsquo;s initiative to protect internet freedoms. I&amp;rsquo;ll move to more free software and hardware, but the going&amp;rsquo;s slow. To use linux means I need to sacrifice battery life. And to use free software means I forgo a lot of convenience.&lt;/p>
+&lt;p>I want to purchase a &lt;a class="link" href="https://www.fairphone.com" target="_blank" rel="noopener"
+>Fairphone&lt;/a> to support repairability and environmentally friendly practices. In addition, the &lt;a class="link" href="https://frame.work" target="_blank" rel="noopener"
+>Framework&lt;/a> laptop seems incredible for the same reasons&amp;hellip; but it&amp;rsquo;s sadly out of my budget for now.&lt;/p>
+&lt;p>Starting this in university is easier than after graduating and having work contacts, however, so I feel relieved about that. Throughout this process, some software has been incredibly useful in general and as alternatives.&lt;/p>
+&lt;h2 id="heres-my-list-of-_abbr-titlefree-and-open-source-softwarefossabbr_-hardware-and-software">Here&amp;rsquo;s my list of &lt;em>&lt;!-- raw HTML omitted -->FOSS&lt;!-- raw HTML omitted -->&lt;/em> hardware and software&lt;/h2>
+&lt;p>Computers:&lt;/p>
+&lt;ol>
+&lt;li>Raspberry Pi&lt;/li>
+&lt;li>Framework Laptop&lt;/li>
+&lt;/ol>
+&lt;p>Phones:&lt;/p>
+&lt;ol>
+&lt;li>PinePhone Pro&lt;/li>
+&lt;li>Fairphone&lt;/li>
+&lt;li>Google Pixel 6 with Calyx &lt;!-- raw HTML omitted -->OS&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;/ol>
+&lt;p>Operating Systems:&lt;/p>
+&lt;ol>
+&lt;li>Manjaro&lt;/li>
+&lt;li>Debian&lt;/li>
+&lt;/ol>
+&lt;p>Software:&lt;/p>
+&lt;ol>
+&lt;li>VSCodium&lt;/li>
+&lt;li>LibreOffice&lt;/li>
+&lt;li>Audacity&lt;/li>
+&lt;li>Gimp&lt;/li>
+&lt;li>&lt;!-- raw HTML omitted -->VLC&lt;!-- raw HTML omitted --> Media Player&lt;/li>
+&lt;li>&lt;a class="link" href="https://spreadprivacy.com/duckduckgrowing" target="_blank" rel="noopener"
+>DuckDuckGo&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;p>&lt;!-- raw HTML omitted -->CLI&lt;!-- raw HTML omitted -->:&lt;/p>
+&lt;ol>
+&lt;li>Python&lt;/li>
+&lt;li>Go&lt;/li>
+&lt;li>Neovim&lt;/li>
+&lt;/ol></description></item><item><title>Testing DuckDuckGo's Email</title><link>https://slc.is/archive/testing-duckduckgos-email/</link><pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/testing-duckduckgos-email/</guid><description>&lt;img src="https://slc.is/images/duckEmail.webp" alt="Featured image of post Testing DuckDuckGo's Email" />&lt;p>DuckDuckGo began releasing &lt;code>@duck.com&lt;/code> emails. These emails are currently in beta and only act as an email-forwarding account. The purpose of this post is to stess-test the service and see where it earns the &lt;code>beta&lt;/code> tag.&lt;/p>
+&lt;h2 id="duckcom-vs-duckco">Duck.com vs. Duck.co&lt;/h2>
+&lt;p>Both &lt;a class="link" href="https://duck.com" target="_blank" rel="noopener"
+>duck.com&lt;/a> and &lt;a class="link" href="https://duck.co" target="_blank" rel="noopener"
+>duck.co&lt;/a> forward to &lt;a class="link" href="https://duckduckgo.com" target="_blank" rel="noopener"
+>duckduckgo.com&lt;/a>, so I wondered if a duck.com and duck.co email forward emails identically as well. When I tried emailing &lt;code>spence@duck.co&lt;/code>, however, I received the following 550 error:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">Final-Recipient: rfc822&lt;span class="p">;&lt;/span> spence@duck.co
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Original-Recipient: rfc822&lt;span class="p">;&lt;/span>spence@duck.co
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Action: failed
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Status: 5.4.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Remote-MTA: dns&lt;span class="p">;&lt;/span> duck-co.mail.protection.outlook.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Diagnostic-Code: smtp&lt;span class="p">;&lt;/span> &lt;span class="m">550&lt;/span> 5.4.1 Recipient address rejected: Access denied.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="send-email-as-duckcom-to-duckcom">Send Email as Duck.com to Duck.com&lt;/h2>
+&lt;p>There&amp;rsquo;s a bit of set-up to test this, so I&amp;rsquo;ll outline it in a collapsible tag.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># install a mail server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install postfix
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># install an emailing wrapper&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install sendemail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># start the email server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">systemctl start postfix
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># send the email&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sendemail -f spence@duck.com -t spence@duck.com -u &lt;span class="s2">&amp;#34;Example Subject&amp;#34;&lt;/span> -m &lt;span class="s2">&amp;#34;Example Message&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;p>Interestingly, when sending an email from &lt;a class="link" href="mailto:spence@duck.com" >spence@duck.com&lt;/a> to &lt;a class="link" href="mailto:spence@duck.com" >spence@duck.com&lt;/a>, the email went through DuckDuckGo&amp;rsquo;s servers without getting flagged as spam. It might be good for DuckDuckGo to use an allow-list for filtering trusted &lt;!-- raw HTML omitted -->IP&lt;!-- raw HTML omitted -->s.&lt;/p>
+&lt;p>In addition, this might make it possible to send emails from a duck email without a valid &lt;!-- raw HTML omitted -->SSL&lt;!-- raw HTML omitted --> certificate.&lt;/p>
+&lt;h2 id="creating-a-forwarding-loop">Creating a Forwarding Loop&lt;/h2>
+&lt;p>Because it&amp;rsquo;s possible to send an email to a duck.com address from a duck.com address, it seems to be possible to create an infinite loop within the system. Obviously, a DuckDuckGo employee would need to approve one duck email forwarding to another, so it probably wouldn&amp;rsquo;t happen. Nevertheless, their back-end might not prevent it.&lt;/p>
+&lt;h2 id="send-duckcom-email-without-forwarding">Send Duck.com Email Without Forwarding&lt;/h2>
+&lt;p>Running the command from earlier:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">sendemail -f spence@duck.com -t email@example.com -u &lt;span class="s2">&amp;#34;Example Subject&amp;#34;&lt;/span> -m &lt;span class="s2">&amp;#34;Example Message&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nope, this fails&amp;hellip; Thank God.&lt;/p>
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>I think that &amp;ldquo;looking&amp;rdquo; at a sender is fine for DuckDuckGo to do, since they forward the email anyways. In their &lt;a class="link" href="https://duckduckgo.com/email/privacy-guarantees" target="_blank" rel="noopener"
+>privacy policy&lt;/a>, they only refrain from saving the email information, not looking at it. Because of this, they should prevent identical duck emails from forwarding to themselves. In addition, they should ensure no cycles appear in forwarding on their systems.&lt;/p>
+&lt;p>This was my first foray into really beta testing a system, but it was a lot of fun. Maybe I&amp;rsquo;ll keep doing things like these 🤩&lt;/p></description></item><item><title>The Best TLD is Not .com</title><link>https://slc.is/archive/the-best-tld-is-not-.com/</link><pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/the-best-tld-is-not-.com/</guid><description>&lt;img src="https://slc.is/images/eyes.webp" alt="Featured image of post The Best TLD is Not .com" />&lt;p>The TLD is controlled by its parent company or country. When choosing a TLD, consider the site to be strictly under the laws of the country that ultimate controls it. For example, if you use a &lt;!-- raw HTML omitted -->&lt;code>.ae&lt;/code>&lt;!-- raw HTML omitted --> domain, with a single query from the monarchy, your site could be completely removed. On the otherhand, if you use a domain from… well let&amp;rsquo;s get into it 😉&lt;/p>
+&lt;p>The &lt;!-- raw HTML omitted -->EFF&lt;!-- raw HTML omitted --> outlined a &lt;a class="link" href="https://www.eff.org/files/2017/08/02/domain_registry_whitepaper.pdf" target="_blank" rel="noopener"
+>comparison of TLDs&lt;/a>. They say that there isn&amp;rsquo;t a &amp;ldquo;best&amp;rdquo; TLD since different domains have varying purposes, but I&amp;rsquo;d say there&amp;rsquo;s definitely a top few to choose from. Here are a few takeaways from the report:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>.com&lt;/code> and &lt;code>.net&lt;/code> are owned by Verisign&lt;/li>
+&lt;li>Domains under Verisign, and &lt;!-- raw HTML omitted -->ICANN&lt;!-- raw HTML omitted --> in general, are controlled by the United States&lt;/li>
+&lt;li>&lt;!-- raw HTML omitted -->ccTLD&lt;!-- raw HTML omitted -->s are under the sole jurisdiction of their parent country&lt;/li>
+&lt;/ul>
+&lt;p>Now, the question naturally becomes: which countries have the best privacy and free speech laws? If the only avenue for domain takedown is through a local court, rather than through an arbitrator order or trusted notifier, that domain is only conforming to a single set of laws. Preferably those laws would be fair for the site owner.&lt;/p>
+&lt;p>The only domains that are soley controlled by federal courts are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Country&lt;/th>
+&lt;th style="text-align:right">ccTLD&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Austria&lt;/td>
+&lt;td style="text-align:right">&lt;code>.at&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Germany&lt;/td>
+&lt;td style="text-align:right">&lt;code>.de&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Iceland&lt;/td>
+&lt;td style="text-align:right">&lt;code>.is&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Russia&lt;/td>
+&lt;td style="text-align:right">&lt;code>.ru&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>World&lt;/td>
+&lt;td style="text-align:right">&lt;code>.onion&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Of these, the few with the strongest laws for individuals and outside the &lt;!-- raw HTML omitted -->EU&lt;!-- raw HTML omitted -->&amp;rsquo;s &lt;a class="link" href="https://data.consilium.europa.eu/doc/document/ST-13084-2020-REV-1/en/pdf" target="_blank" rel="noopener"
+>invasive policies&lt;/a> are:&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>.is&lt;/code>&lt;/li>
+&lt;li>&lt;code>.onion&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;p>What&amp;rsquo;s left are two options, but only one for the &lt;!-- raw HTML omitted -->WWW&lt;!-- raw HTML omitted -->. To capture the most internet users, the best option is to use a &lt;code>.is&lt;/code> TLD; however, for true anonimity and control, a &lt;code>.onion&lt;/code> is superior.&lt;/p>
+&lt;p>In most cases, the TLD you end up picking won&amp;rsquo;t be too important, but I believe it&amp;rsquo;s important to know who has the final say in a website&amp;rsquo;s fate. If the United States felt so inclined, over 60% of the internet could go offline. Take it from this site, there are tons of great and short &lt;code>.is&lt;/code> domains available, so be sure to check out &lt;a class="link" href="https://isnic.is" target="_blank" rel="noopener"
+>ISNIC&lt;/a>!&lt;/p></description></item><item><title>Grokking Go</title><link>https://slc.is/archive/grokking-go/</link><pubDate>Sun, 22 Aug 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/grokking-go/</guid><description>&lt;img src="https://slc.is/images/gocert.webp" alt="Featured image of post Grokking Go" />&lt;p>Despite an &lt;a class="link" href="https://slc.is/#Future%20of%20Blockchain%20Domains" >earlier post&lt;/a> being so optimistic about the &lt;!-- raw HTML omitted -->IPFS&lt;!-- raw HTML omitted -->, I decided to self-host this site. I&amp;rsquo;m only leaving IPFS because this site will never be popular enough to be on any node besides my own. In this way, I was already hosting from the start. It all began as a fun endeavor to apply Go, but has since led to a &lt;a class="link" href="https://github.com/splch/google-go-coursera" target="_blank" rel="noopener"
+>certificate&lt;/a> and obsessive refinement of the &lt;a class="link" href="https://observatory.mozilla.org/analyze/slc.is" target="_blank" rel="noopener"
+>server&lt;/a>.&lt;/p>
+&lt;p>Most recently, I have added the ability to edit and create posts from within this site! There&amp;rsquo;s quite a bit going on in the server&amp;hellip; particularly in one file 😳, so I should look into splitting the code into separate files: one for setting up the server, and another for parsing the markdown.&lt;/p>
+&lt;p>I am really enjoying Go, though. I&amp;rsquo;m more comfortable with interpreted languages as Python was my first; however, I am quickly converting to a statically-typed fan! Also, this is my first post using the new website editor 🤪&lt;/p>
+&lt;p>This is the code for my Go server hosted on Replit. &lt;a class="link" href="https://replit.com" target="_blank" rel="noopener"
+>Replit&lt;/a> makes for an easy hosting provider, as well. I can make updates quickly without worrying about power outages causing the site to go down. Initially, I was using the &lt;!-- raw HTML omitted -->gzip&lt;!-- raw HTML omitted --> package from Go&amp;rsquo;s standard library, but audio couldn&amp;rsquo;t be decoded. I opted to use the package by the New York Times instead. The server configuration is primarily based on three sources: &lt;a class="link" href="https://blog.cloudflare.com/exposing-go-on-the-internet/" target="_blank" rel="noopener"
+>Cloudflare&lt;/a>, &lt;a class="link" href="https://ssl-config.mozilla.org/#server=go&amp;amp;version=1.16.7&amp;amp;config=intermediate&amp;amp;guideline=5.6" target="_blank" rel="noopener"
+>Mozilla&lt;/a>, and their &lt;a class="link" href="https://observatory.mozilla.org/" target="_blank" rel="noopener"
+>observatory&lt;/a> tool.&lt;/p>
+&lt;!-- raw HTML omitted --></description></item><item><title>Summer of Quantum</title><link>https://slc.is/archive/summer-of-quantum/</link><pubDate>Thu, 15 Jul 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/summer-of-quantum/</guid><description>&lt;img src="https://slc.is/images/quantumSummer.webp" alt="Featured image of post Summer of Quantum" />&lt;p>This summer will be affectionately known as the Quantum Summer.&lt;/p>
+&lt;p>Because of a scheduling mishap, I found myself teaching three quantum courses at once:&lt;/p>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.bnl.gov/quantumcenter/" target="_blank" rel="noopener"
+>Brookhaven National Laboratory&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://qiskit.org/events/summer-school/" target="_blank" rel="noopener"
+>Qiskit Global Summer School&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.qmunity.tech/qubes-camp" target="_blank" rel="noopener"
+>QuBes Camp&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;p>This situation pushed me to balance responsibilities and make tons of quantum resources. As a result, I became inspired to buy &lt;a class="link" href="https://www.quantumforay.com" target="_blank" rel="noopener"
+>www.quantumforay.com&lt;/a>; a fun play on quantum fourier.&lt;/p>
+&lt;p>Now, equipped with the QF website, I am inspired to make an amazing quantum curriculum from determining what worked best at the three quantum schools. I will include Google Forms as graded quizzes and cover the most essential information with additional resources linked below.&lt;/p></description></item><item><title>Tools For Writing</title><link>https://slc.is/archive/tools-for-writing/</link><pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/tools-for-writing/</guid><description>&lt;img src="https://slc.is/images/blog.webp" alt="Featured image of post Tools For Writing" />&lt;p>Half a year ago, I began the process of writing my first book. This book is special to me because it attempts to teach middle schoolers and those without experience, quantum. By using fairy tales everyone is familiar with, it is easier to teach new topics. &lt;strong>I found that younger audiences were able to learn new material better when that knowledge was introduced in the context of popular stories&lt;/strong>. In this way, I will use stories from around the world to help teach many people the basics of quantum and inspire them to learn more.&lt;/p>
+&lt;h2 id="when-writing-this-book-i-found-a-few-valuable-resources-to-ensure-writing-quality-and-consistency">When writing this book, I found a few valuable resources to ensure writing quality and consistency.&lt;/h2>
+&lt;p>Google &lt;a class="link" href="https://wikipedia.org/wiki/N-gram" target="_blank" rel="noopener"
+>Ngram&lt;/a> was particularly useful as I could often find the &amp;ldquo;perfect&amp;rdquo; word for a phrase (really the most common). I also used Google Ngram to determine which words were more common, thus, writing a more timeless book. Secondly, I reduced unintentional repetition using online-utility&amp;rsquo;s word analyzer; however, this tool only reported the total frequency of each word and I needed to know if I used the same word in close proximity.&lt;/p>
+&lt;p>To handle this issue and have many tabs of the same sites, I wrote a web extension that helped with the writing process tremendously. I called it Writest — much like better to best, Writest brings you from a writer to the writest. With this extension, I could quickly analyze my book without needing to copy and paste it into three different websites. Instead, I&amp;rsquo;d click the extension and get all the information I needed:&lt;/p>
+&lt;ol>
+&lt;li>readability,&lt;/li>
+&lt;li>lexical density,&lt;/li>
+&lt;li>n-gram search,&lt;/li>
+&lt;li>phrase frequency,&lt;/li>
+&lt;li>and window frequency.&lt;/li>
+&lt;/ol>
+&lt;p>When writing a book, be sure to check out the Repetition Analyzer and Google Ngram, and if you&amp;rsquo;d like an all-in-one writing tool, my Writest extension should help.&lt;/p>
+&lt;p>When I was finally ready to have more eyes on my writing, I was grateful to have written it on Google Docs. I could simply share a link and have my friends and family make suggestions and fixes. I recommend using a word processor that allows you to share your work and collaborate easily. It made requesting help simple, encouraging me to get more edits than otherwise.&lt;/p>
+&lt;p>Finally, I needed an illustrator to bring my vision to life. I used &lt;a class="link" href="https://www.fiverr.com/" target="_blank" rel="noopener"
+>Fiverr&lt;/a> to find an incredibly talented artist and she made my book something I will always treasure.&lt;/p>
+&lt;p>Having a professional touch to your work makes you proud, but it also encourages you to continually improve it.&lt;/p>
+&lt;blockquote>
+&lt;p>It became very difficult to continue working at times; however, the illustrations reinspired me again and again.&lt;/p>
+&lt;/blockquote>
+&lt;p>I hope you found these tips helpful! I&amp;rsquo;ve linked my favorite resources below, and, in case the extension is unavailable, click &lt;!-- raw HTML omitted -->here&lt;!-- raw HTML omitted --> to download it.&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Fiverr: &lt;a class="link" href="https://www.fiverr.com/" target="_blank" rel="noopener"
+>https://www.fiverr.com/&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Google Docs: &lt;a class="link" href="https://docs.google.com/" target="_blank" rel="noopener"
+>https://docs.google.com/&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Google Ngram: &lt;a class="link" href="https://books.google.com/ngrams" target="_blank" rel="noopener"
+>https://books.google.com/ngrams&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Repetion Analyzer: &lt;a class="link" href="https://www.online-utility.org/text/analyzer.jsp" target="_blank" rel="noopener"
+>https://www.online-utility.org/text/analyzer.jsp&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Writest: &lt;a class="link" href="https://chrome.google.com/webstore/detail/writest/bicihfnmkdnfelbedknblndigjejbgcc" target="_blank" rel="noopener"
+>https://chrome.google.com/webstore/detail/writest/bicihfnmkdnfelbedknblndigjejbgcc&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>Future of Blockchain Domains</title><link>https://slc.is/archive/future-of-blockchain-domains/</link><pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/future-of-blockchain-domains/</guid><description>&lt;img src="https://slc.is/images/blockchain.webp" alt="Featured image of post Future of Blockchain Domains" />&lt;p>I bought this domain (splch.zil) today! I have a .dev/net domain, but I don&amp;rsquo;t like the idea of renting a space. When I discovered blockchain domain names and &lt;!-- raw HTML omitted -->IPFS&lt;!-- raw HTML omitted --> hosting, I knew it suited me.&lt;/p>
+&lt;h2 id="it-all-depends-on-security-and-privacy">It all depends on security and privacy&lt;/h2>
+&lt;p>Now, I don&amp;rsquo;t know what the future holds for blockchain and IPFS internet, but I think that the importance of publicly served domains will increase by considering present privacy trends. Specifically, as governments continue subpoenaing and gagging hosting services, people will move to more decentralized networks. I hope blockchain domains will be integrated into more browsers, though, because using IPFS gateways is… well, cumbersome. &lt;strong>Considering how Signal and Telegram&amp;rsquo;s growths indicate a public shift toward privacy&lt;/strong>, I do believe that more blockchain domain names will resolve in more browsers soon.&lt;/p>
+&lt;p>As for the support of the .zil domain, I&amp;rsquo;m curious what will happen… As blockchain backends improve, I wonder if .zil will become outdated. Either way, multiple blockchain &lt;!-- raw HTML omitted -->NFT&lt;!-- raw HTML omitted -->s can redirect to my website&amp;rsquo;s IPFS hash 😜 I do hope I can keep using the Zilliqa blockchain, granted they can improve transaction speeds at lower energy costs.&lt;/p>
+&lt;p>My current worry is keeping this site small enough to be held in many IPFS nodes. I preemptively made a modular loading system for my posts, but I want to include pictures and files &amp;gt;.&amp;lt; In addition, I might implement LZString compression on posts to further reduce size; however, this would mean creating a decoder when writing (maybe an add-on to vscode), which is a bit tedious.&lt;/p>
+&lt;p>Despite what the future holds for blockchain domains, this is the start of a hopefully long stream of thoughts and things I come across!&lt;/p>
+&lt;blockquote>
+&lt;p>As I stand on the edge of quantum, it only seems right that I support the new IPFS internet.&lt;/p>
+&lt;/blockquote></description></item><item><title>Converting Country Codes to Flag Emojis</title><link>https://slc.is/archive/converting-country-codes-to-flag-emojis/</link><pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate><guid>https://slc.is/archive/converting-country-codes-to-flag-emojis/</guid><description>&lt;img src="https://slc.is/images/stackAnswer.webp" alt="Featured image of post Converting Country Codes to Flag Emojis" />&lt;p>In a Flutter &lt;!-- raw HTML omitted -->app&lt;!-- raw HTML omitted --> I started — and eventually stopped — working on, I was converting country codes to their corresponding flag &lt;!-- raw HTML omitted -->emoji&lt;!-- raw HTML omitted -->s in Dart. This was a fun problem to solve and it&amp;rsquo;s actually my highest rated solution on &lt;a class="link" href="https://stackoverflow.com/a/63961112" target="_blank" rel="noopener"
+>StackOverflow&lt;/a>, so I wanted to save it here!&lt;/p>
+&lt;hr>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dart" data-lang="dart">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">String&lt;/span> &lt;span class="n">countryCode&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;us&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">String&lt;/span> &lt;span class="n">flag&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">countryCode&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">toUpperCase&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">replaceAllMapped&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">RegExp&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">r&amp;#39;[A-Z]&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="n">match&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="kt">String&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">fromCharCode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">match&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">group&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="n">codeUnitAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="m">127397&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">flag&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol>
+&lt;li>
+&lt;p>&lt;code>.toUpperCase()&lt;/code> Make all characters uppercase&lt;/p>
+&lt;ul>
+&lt;li>us → US&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>RegExp(r'[A-Z]')&lt;/code> Select each character with regex&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>.replaceAllMapped()&lt;/code> Get each matched character&lt;/p>
+&lt;ul>
+&lt;li>U&lt;/li>
+&lt;li>S&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>.codeUnitAt(0)&lt;/code> Convert each character to a rune&lt;/p>
+&lt;ul>
+&lt;li>85&lt;/li>
+&lt;li>83&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>+ 127397&lt;/code> Convert each rune to a &lt;a class="link" href="https://en.wikipedia.org/wiki/Regional_indicator_symbol" target="_blank" rel="noopener"
+>regional indicator symbol&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>127397 = 127462 (🇦&amp;rsquo;s HTML code) - 65 (A&amp;rsquo;s rune value).&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>85 + 127397 = 127482&lt;/li>
+&lt;li>83 + 127397 = 127480&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>.fromCharCode()&lt;/code> Convert the regional indicator symbols&amp;rsquo; values to a string (flag emoji)&lt;/p>
+&lt;ul>
+&lt;li>🇺 🇸 → 🇺🇸&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;p>I like this solution since each step is explained. It could be converted to any language easily, which should be the goal of any algorithm explanation.&lt;/p>
+&lt;p>Also, learning that regional indicators exist to form country flags was surprising. I did some searching and one of the earliest examples of this conversion was from &lt;a class="link" href="https://medium.com/binary-passion/lets-turn-an-iso-country-code-into-a-unicode-emoji-shall-we-870c16e05aad" target="_blank" rel="noopener"
+>neroux&lt;/a>; however, a more interesting discussion and explanation of the code comes from &lt;a class="link" href="https://bendodson.com/weblog/2016/04/26/emoji-flags-from-iso-3166-country-codes-in-swift/" target="_blank" rel="noopener"
+>Ben Dodson&amp;rsquo;s post&lt;/a>.&lt;/p></description></item><item><title>Poems</title><link>https://slc.is/archive/poems/</link><pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate><guid>https://slc.is/archive/poems/</guid><description>&lt;img src="https://slc.is/images/alexandre.jpg" alt="Featured image of post Poems" />&lt;h1 id="alexandre">Alexandre&lt;/h1>
+&lt;p>Alexandre, my trembling wings.&lt;/p>
+&lt;p>Your dead are in the fields.&lt;/p>
+&lt;p>Our fight was stretched on the forest.&lt;/p>
+&lt;p>A wealth of shadow lies beneath the woodland hills.&lt;/p>
+&lt;p>&lt;img src="https://slc.is/images/alexandre.jpg"
+loading="lazy"
+alt="An earth that is not mine"
+>&lt;/p>
+&lt;p>An earth that is not mine.&lt;/p>
+&lt;hr>
+&lt;h1 id="skies">Skies&lt;/h1>
+&lt;p>A sky became a wave,&lt;/p>
+&lt;p>and suddenly the breeze -&lt;/p>
+&lt;p>azure floating on the hills.&lt;/p>
+&lt;p>&lt;img src="https://slc.is/images/sky.jpg"
+loading="lazy"
+alt="Sky"
+>&lt;/p>
+&lt;p>Our music was not of a god or spirit, not of that colour of the sea.&lt;/p>
+&lt;hr>
+&lt;h1 id="falafel">falafel&lt;/h1>
+&lt;p>My falafel from the seas and palm-trees.&lt;/p>
+&lt;p>This magic, the stars have been held for.&lt;/p>
+&lt;p>Mysterious prophets and priests return to temptation.&lt;/p>
+&lt;p>Sleepy and strong, lay the falafel.&lt;/p></description></item></channel></rss>

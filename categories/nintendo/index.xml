@@ -1,0 +1,1589 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nintendo on SLC is</title><link>https://slc.is/categories/nintendo/</link><description>Recent content in Nintendo on SLC is</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 23 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://slc.is/categories/nintendo/index.xml" rel="self" type="application/rss+xml"/><item><title>Deep Cleaning a Game Boy Color</title><link>https://slc.is/archive/deep-cleaning-a-game-boy-color/</link><pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/deep-cleaning-a-game-boy-color/</guid><description>&lt;img src="https://slc.is/images/gbc2.webp" alt="Featured image of post Deep Cleaning a Game Boy Color" />&lt;p>I&amp;rsquo;ve been using my old Game Boy Color a lot more now that I&amp;rsquo;m programming a GB game, so I wanted to clean up the handheld! This tutorial is the culmination of a few YouTube videos from &lt;a class="link" href="https://youtu.be/fZ__K0QotW8" target="_blank" rel="noopener"
+>The Retro Future&lt;/a> and &lt;a class="link" href="https://youtu.be/2BmGMi0IEx4" target="_blank" rel="noopener"
+>Odd Tinkering&lt;/a>. I liked a lot of their tips, so I decided to add them and my own to this post.&lt;/p>
+&lt;p>&lt;img src="https://slc.is/images/gbc1.webp"
+loading="lazy"
+alt="GBC Before Cleaning"
+>&lt;/p>
+&lt;h2 id="tools">Tools:&lt;/h2>
+&lt;ul>
+&lt;li>Tri-Point Y1 Screwdriver&lt;/li>
+&lt;li>Phillips Head Screwdriver&lt;/li>
+&lt;li>Cotton Swab&lt;/li>
+&lt;li>Tooth Brush&lt;/li>
+&lt;li>99% Isopropyl Alcohol
+&lt;ul>
+&lt;li>The higher percentage, the faster the evaporation&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Vinegar&lt;/li>
+&lt;/ul>
+&lt;h2 id="disassembly">Disassembly&lt;/h2>
+&lt;ol>
+&lt;li>Unscrew the 4 Tri-Wing screws on the back of the &lt;!-- raw HTML omitted -->GBC&lt;!-- raw HTML omitted -->
+1.5. Unscrew 2 more screws under the batteries&lt;/li>
+&lt;li>Remove the back plate&lt;/li>
+&lt;li>Unscrew the 3 Phillips screws holding the motherboard&lt;/li>
+&lt;li>Disconnect the screen&amp;rsquo;s ribbon cable from the top of the motherboard&lt;/li>
+&lt;li>Lift the motherboard out of the casing&lt;/li>
+&lt;li>Slide the &lt;!-- raw HTML omitted -->IR&lt;!-- raw HTML omitted --> cover and power switch slider out of the case&lt;/li>
+&lt;li>Remove the buttons and membranes
+&lt;ul>
+&lt;li>&lt;!-- raw HTML omitted -->D&lt;!-- raw HTML omitted -->-pad&lt;/li>
+&lt;li>A + B&lt;/li>
+&lt;li>Start + Select&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Lift the screen out of the case
+&lt;ul>
+&lt;li>It comes loose by flexing the chassis back and forth&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>On the back plate, unscrew the 4 Phillips screws holding the cartridge slot&lt;/li>
+&lt;li>Slide the metal battery contact out of the case&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://slc.is/images/gbc2.webp"
+loading="lazy"
+alt="Disassembled GBC"
+>&lt;/p>
+&lt;h2 id="cleaning">Cleaning&lt;/h2>
+&lt;p>Motherboard:&lt;/p>
+&lt;ol>
+&lt;li>Dip the cotton swabs in isopropyl alcohol
+&lt;ul>
+&lt;li>If the board is really dirty, use the tooth brush to scrub with the alcohol&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Clean everything on the motherboard with the swabs
+&lt;ul>
+&lt;li>Focus on the metal connectors&lt;/li>
+&lt;li>Thoroughly clean all button contacts&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Clean the surface of the speaker&lt;/li>
+&lt;li>Dab alcohol around the volume dial and power switch
+&lt;ul>
+&lt;li>Actuate them to spread the alcohol inside&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Use alcohol to clean the headphone jack&lt;/li>
+&lt;li>Swab the battery terminal with alcohol&lt;/li>
+&lt;/ol>
+&lt;p>Case:&lt;/p>
+&lt;ol>
+&lt;li>Prepare a hot soapy water to submerge the case&lt;/li>
+&lt;li>Wash and brush the plastic in the water&lt;/li>
+&lt;li>Clean the speaker holes&lt;/li>
+&lt;li>Scrub the plastic screen protector&lt;/li>
+&lt;/ol>
+&lt;p>Buttons:&lt;/p>
+&lt;ol>
+&lt;li>Wash the buttons and their rubber membranes in the water
+&lt;ul>
+&lt;li>Use a toothbrush to clean&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Also clean the IR cover&lt;/li>
+&lt;/ol>
+&lt;p>Battery Contact:&lt;/p>
+&lt;ol>
+&lt;li>Let the metal battery contact sit in vinegar until it shines like new&lt;/li>
+&lt;/ol>
+&lt;h2 id="reassemble">Reassemble&lt;/h2>
+&lt;ol>
+&lt;li>Read the &lt;strong>Disassembly&lt;/strong> section backwards 😂&lt;/li>
+&lt;li>Screw in a &lt;a class="link" href="https://www.boltscience.com/pages/tsequence.htm" target="_blank" rel="noopener"
+>sequence&lt;/a> that evenly distributes the force&lt;/li>
+&lt;/ol>
+&lt;h2 id="enjoy">Enjoy&lt;/h2>
+&lt;p>&lt;img src="https://slc.is/images/gbc3.webp"
+loading="lazy"
+alt="GBC After Cleaning"
+>&lt;/p>
+&lt;p>Now that the GBC is all cleaned up, it should last a few more decades!&lt;/p></description></item><item><title>Comprehensive Lists of the Best Retro Nintendo Games</title><link>https://slc.is/archive/comprehensive-lists-of-the-best-retro-nintendo-games/</link><pubDate>Fri, 21 Jan 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/comprehensive-lists-of-the-best-retro-nintendo-games/</guid><description>&lt;img src="https://slc.is/images/bestNintendoGames.webp" alt="Featured image of post Comprehensive Lists of the Best Retro Nintendo Games" />&lt;p>I combed the web for &lt;em>Top 100&lt;/em> lists for the *NES and GB* and combined them to record the most beloved 975 games. This master table is helpful when making ROM libraries or finding something tried, true, and new to play.&lt;/p>
+&lt;p>Here is the &lt;a class="link" href="https://docs.google.com/spreadsheets/d/15zN6SwtHXe21jqngBEEBQZXoPVO_q0n-7LcpzdqkGxs/view" target="_blank" rel="noopener"
+>unfiltered data&lt;/a> on Google Sheets. The &lt;code>raw&lt;/code> tab has most lists in order, but some lists went from 100-91, 90-81, …, 10-1, so it&amp;rsquo;s either in order or very out of order!&lt;/p>
+&lt;p>Please enjoy the list and let me know if there&amp;rsquo;s something to change! 😊&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>NES&lt;/th>
+&lt;th>SNES&lt;/th>
+&lt;th>GB&lt;/th>
+&lt;th>GBC&lt;/th>
+&lt;th>GBA&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>1942&lt;/td>
+&lt;td>Actraiser&lt;/td>
+&lt;td>Adventure Island&lt;/td>
+&lt;td>Aladdin&lt;/td>
+&lt;td>Activision Anthology&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>A Boy And His Blob: Trouble On Blobolonia&lt;/td>
+&lt;td>Addams Family&lt;/td>
+&lt;td>Adventure Island Ii&lt;/td>
+&lt;td>Alice In Wonderland&lt;/td>
+&lt;td>Advance Guardian Heroes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Abradox&lt;/td>
+&lt;td>Adventures Of Batman &amp;amp; Robin, The&lt;/td>
+&lt;td>Adventures Of Lolo&lt;/td>
+&lt;td>Alone In The Dark: The New Nightmare&lt;/td>
+&lt;td>Advance Wars&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Addams Family&lt;/td>
+&lt;td>Aero Fighters&lt;/td>
+&lt;td>Alleyway&lt;/td>
+&lt;td>Asmik-Kun World 2&lt;/td>
+&lt;td>Advance Wars 2: Black Hole Rising&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Adventure Island&lt;/td>
+&lt;td>Aerobiz Supersonic&lt;/td>
+&lt;td>Amazing Spider-Man, The&lt;/td>
+&lt;td>Astérix: Search For Dogmatix&lt;/td>
+&lt;td>Altered Beast: Guardian Of The Realms&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Adventure Island 3&lt;/td>
+&lt;td>Aladdin&lt;/td>
+&lt;td>Arcade Classic No. 3: Galaga &amp;amp; Galaxian&lt;/td>
+&lt;td>Azure Dreams&lt;/td>
+&lt;td>Astro Boy: Omega Factor&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Adventure Island 4&lt;/td>
+&lt;td>Alien 3&lt;/td>
+&lt;td>Asmik-Kun World 2&lt;/td>
+&lt;td>Batman Beyond: Return Of The Joker&lt;/td>
+&lt;td>Banjo-Kazooie: Grunty&amp;rsquo;s Revenge&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Adventures Of Lolo&lt;/td>
+&lt;td>Aliens Vs Predator&lt;/td>
+&lt;td>Asteroids&lt;/td>
+&lt;td>Batman: Chaos In Gotham&lt;/td>
+&lt;td>Baseball Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Adventures Of Lolo 3&lt;/td>
+&lt;td>Animaniacs&lt;/td>
+&lt;td>Atomic Punk&lt;/td>
+&lt;td>Bionic Commando: Elite Forces&lt;/td>
+&lt;td>Blender Bros.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Arkanoid&lt;/td>
+&lt;td>Arcana&lt;/td>
+&lt;td>Avenging Spirit&lt;/td>
+&lt;td>Blade&lt;/td>
+&lt;td>Blue Angelo: Angels From The Shrine&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Astyanax&lt;/td>
+&lt;td>Arkanoid 2&lt;/td>
+&lt;td>Balloon Kid&lt;/td>
+&lt;td>Blaster Master: Enemy Below&lt;/td>
+&lt;td>Boktai 2: Solar Boy Django&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Balloon Fight&lt;/td>
+&lt;td>Axelay&lt;/td>
+&lt;td>Bart Simpson&amp;rsquo;s Escape From Camp Deadly&lt;/td>
+&lt;td>Bomberman&lt;/td>
+&lt;td>Boktai: The Sun Is In Your Hand&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Baseball Stars&lt;/td>
+&lt;td>Batman Returns&lt;/td>
+&lt;td>Baseball&lt;/td>
+&lt;td>Bomberman 3&lt;/td>
+&lt;td>Bomberman Max&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Base Wars&lt;/td>
+&lt;td>Battle Toads &amp;amp; Double Dragon&lt;/td>
+&lt;td>Bases Loaded&lt;/td>
+&lt;td>Bomberman Max: Blue Champion&lt;/td>
+&lt;td>Bomberman Max 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Batman&lt;/td>
+&lt;td>Battletoads In Battlemaniacs&lt;/td>
+&lt;td>Batman - Return Of The Joker&lt;/td>
+&lt;td>Bomberman Max: Red Challenger&lt;/td>
+&lt;td>Bomberman Tournament&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Batman Returns&lt;/td>
+&lt;td>Biker Mice From Mars&lt;/td>
+&lt;td>Batman - The Animated Series&lt;/td>
+&lt;td>Bomberman Quest&lt;/td>
+&lt;td>Boulder Dash Ex&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Batman: Return Of The Joker&lt;/td>
+&lt;td>Blackthorne&lt;/td>
+&lt;td>Batman Forever&lt;/td>
+&lt;td>Boxxle&lt;/td>
+&lt;td>Breath Of Fire&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Batman: The Video Game&lt;/td>
+&lt;td>Breath Of Fire&lt;/td>
+&lt;td>Batman: The Video Game&lt;/td>
+&lt;td>Bubble Bobble&lt;/td>
+&lt;td>Breath Of Fire Ii&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Battle Chess&lt;/td>
+&lt;td>Breath Of Fire Ii&lt;/td>
+&lt;td>Battle Arena Toshinden&lt;/td>
+&lt;td>Bubble Ghost&lt;/td>
+&lt;td>Broken Sword: The Shadow Of The Templars&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Battle Of Olympus&lt;/td>
+&lt;td>Bust A Move&lt;/td>
+&lt;td>Battletoads&lt;/td>
+&lt;td>Burai Fighter Deluxe&lt;/td>
+&lt;td>Bubble Bobble Old &amp;amp; New&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Battletoads&lt;/td>
+&lt;td>Captain Commando&lt;/td>
+&lt;td>Battletoads In Ragnarok&amp;rsquo;S World&lt;/td>
+&lt;td>Burgertime Deluxe&lt;/td>
+&lt;td>Car Battler Joe&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Battletoads &amp;amp; Double Dragon: The Ultimate Team&lt;/td>
+&lt;td>Castlevania: Dracula X&lt;/td>
+&lt;td>Battletoads-Double Dragon&lt;/td>
+&lt;td>Bust-A-Move 4&lt;/td>
+&lt;td>Castlevania Double Pack&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Bionic Commando&lt;/td>
+&lt;td>Chrono Trigger&lt;/td>
+&lt;td>Bionic Commando&lt;/td>
+&lt;td>Classic Bubble Bobble&lt;/td>
+&lt;td>Castlevania: Aria Of Sorrow&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Blades Of Steel&lt;/td>
+&lt;td>Clay Fighter&lt;/td>
+&lt;td>Blaster Master Boy&lt;/td>
+&lt;td>Conker&amp;rsquo;S Pocket Tales&lt;/td>
+&lt;td>Castlevania: Circle Of The Moon&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Blaster Master&lt;/td>
+&lt;td>Congo’S Caper&lt;/td>
+&lt;td>Bomberman&lt;/td>
+&lt;td>Cosmo Tank&lt;/td>
+&lt;td>Castlevania: Harmony Of Dissonance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Bomberman&lt;/td>
+&lt;td>Contra 3&lt;/td>
+&lt;td>Bonk’S Adventure&lt;/td>
+&lt;td>Croc&lt;/td>
+&lt;td>Chuchu Rocket!&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Bomberman Ii&lt;/td>
+&lt;td>Cool Spot&lt;/td>
+&lt;td>Bonk’S Revenge&lt;/td>
+&lt;td>Croc 2&lt;/td>
+&lt;td>Classic Nes Series: Super Mario Bros.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Bubble Bobble&lt;/td>
+&lt;td>Cybernator&lt;/td>
+&lt;td>Booby Boys&lt;/td>
+&lt;td>Crystalis&lt;/td>
+&lt;td>Classic Nes Series: The Legend Of Zelda&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Bucky O&amp;rsquo;Hare&lt;/td>
+&lt;td>Darius Twin&lt;/td>
+&lt;td>Bubble Bobble&lt;/td>
+&lt;td>Daikatana&lt;/td>
+&lt;td>Classic Nes Series: Zelda Ii - The Adventure Of Link&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Bugs Bunny Birthday&lt;/td>
+&lt;td>Death And Return Of Superman&lt;/td>
+&lt;td>Bugs Bunny Crazy Castle 2, The&lt;/td>
+&lt;td>Donald Duck: Goin&amp;rsquo; Quackers&lt;/td>
+&lt;td>Colin Mcrae Rally 2.0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Bugs Bunny Crazy Castle&lt;/td>
+&lt;td>Demon&amp;rsquo;s Crest&lt;/td>
+&lt;td>Bugs Bunny Crazy Castle, The&lt;/td>
+&lt;td>Donkey Kong Country&lt;/td>
+&lt;td>Columns Crown&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Captain Tsubasa Vol. Ii: Super Striker&lt;/td>
+&lt;td>Donkey Kong Country&lt;/td>
+&lt;td>Bust-A-Move 2 - Arcade Edition&lt;/td>
+&lt;td>Dragon Ball Z: Legendary Super Warriors&lt;/td>
+&lt;td>Contra Advance: The Alien Wars Ex&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Casino Kid&lt;/td>
+&lt;td>Donkey Kong Country 2: Diddy&amp;rsquo;s Kong Quest&lt;/td>
+&lt;td>Captain Tsubasa&lt;/td>
+&lt;td>Dragon Warrior I &amp;amp; Ii&lt;/td>
+&lt;td>Crash Bandicoot 2: N-Tranced&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Castlevania&lt;/td>
+&lt;td>Donkey Kong Country 3: Dixie Kong&amp;rsquo;s Double Trouble!&lt;/td>
+&lt;td>Casper&lt;/td>
+&lt;td>Dragon Warrior Iii&lt;/td>
+&lt;td>Crash Bandicoot: The Huge Adventure&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Castlevania 2&lt;/td>
+&lt;td>Doom&lt;/td>
+&lt;td>Castlevania - Legends&lt;/td>
+&lt;td>Dragon Warrior Monsters&lt;/td>
+&lt;td>Custom Robo Gx&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Castlevania 3&lt;/td>
+&lt;td>Dragon Quest I &amp;amp; Ii&lt;/td>
+&lt;td>Castlevania Ii - Belmont&amp;rsquo;s Revenge&lt;/td>
+&lt;td>Dragon Warrior Monsters 2: Tara&amp;rsquo;s Adventure &amp;amp; Cobi&amp;rsquo;S Journey&lt;/td>
+&lt;td>Dancing Sword: Senkou&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Caveman Games&lt;/td>
+&lt;td>Dragon Quest Iii&lt;/td>
+&lt;td>Castlevania Legends&lt;/td>
+&lt;td>Dragon&amp;rsquo;s Lair&lt;/td>
+&lt;td>Darius R&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Chip &amp;lsquo;N Dale: Rescue Rangers&lt;/td>
+&lt;td>Dragon Quest V&lt;/td>
+&lt;td>Castlevania: The Adventure&lt;/td>
+&lt;td>Duke Nukem&lt;/td>
+&lt;td>Dave Mirra Freestyle Bmx 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Chip &amp;lsquo;N Dale: Rescue Rangers 2&lt;/td>
+&lt;td>Dragon Quest Vi&lt;/td>
+&lt;td>Catrap&lt;/td>
+&lt;td>Earthworm Jim: Menace 2 The Galaxy&lt;/td>
+&lt;td>Demikids: Dark Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Clash At Demonhead&lt;/td>
+&lt;td>Dragon View&lt;/td>
+&lt;td>Chase Hq&lt;/td>
+&lt;td>Elevat&lt;/td>
+&lt;td>Digimon Racing&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Clu Clu Land&lt;/td>
+&lt;td>Drakkhen&lt;/td>
+&lt;td>Contra - The Alien Wars&lt;/td>
+&lt;td>Elevator Action&lt;/td>
+&lt;td>Disney&amp;rsquo;s Lilo &amp;amp; Stitch&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Cobra Triangle&lt;/td>
+&lt;td>E.V.O.: Search For Eden&lt;/td>
+&lt;td>Darkwing Duck&lt;/td>
+&lt;td>Final Fantasy Adventure&lt;/td>
+&lt;td>Dk: King Of Swing&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Commando&lt;/td>
+&lt;td>Earthbound&lt;/td>
+&lt;td>Dexterity&lt;/td>
+&lt;td>Frogger&lt;/td>
+&lt;td>Dokapon&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Contra&lt;/td>
+&lt;td>Earthworm Jim&lt;/td>
+&lt;td>Dig Dug&lt;/td>
+&lt;td>Frogger 2&lt;/td>
+&lt;td>Donkey Kong Country&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Contra Force&lt;/td>
+&lt;td>Earthworm Jim 2&lt;/td>
+&lt;td>Donkey Kong&lt;/td>
+&lt;td>Galaga: Destination Earth&lt;/td>
+&lt;td>Donkey Kong Country 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Crystalis&lt;/td>
+&lt;td>F-Zero&lt;/td>
+&lt;td>Donkey Kong Land&lt;/td>
+&lt;td>Game &amp;amp; Watch Gallery 2&lt;/td>
+&lt;td>Donkey Kong Country 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Darkwing Duck&lt;/td>
+&lt;td>Fatal Fury 2&lt;/td>
+&lt;td>Donkey Kong Land 2&lt;/td>
+&lt;td>Game &amp;amp; Watch Gallery 3&lt;/td>
+&lt;td>Doom&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Defender Of The Crown&lt;/td>
+&lt;td>Fatal Fury Special&lt;/td>
+&lt;td>Donkey Kong Land Iii&lt;/td>
+&lt;td>Genjin Land: Viva! Chikkun Oukoku&lt;/td>
+&lt;td>Doom Ii&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Demon Sword&lt;/td>
+&lt;td>Final Fantasy 2&lt;/td>
+&lt;td>Double Dragon&lt;/td>
+&lt;td>Gex 3: Deep Cover Gecko&lt;/td>
+&lt;td>Double Dragon Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Donkey Kong&lt;/td>
+&lt;td>Final Fantasy 3&lt;/td>
+&lt;td>Double Dragon 3: The Arcade Game&lt;/td>
+&lt;td>Gex: Enter The Gecko&lt;/td>
+&lt;td>Dragon Ball Z: Buu&amp;rsquo;s Fury&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Donkey Kong 3&lt;/td>
+&lt;td>Final Fantasy Iv&lt;/td>
+&lt;td>Double Dragon Ii&lt;/td>
+&lt;td>Ghosts &amp;lsquo;N Goblins&lt;/td>
+&lt;td>Dragon Ball Z: Supersonic Warriors&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Donkey Kong Classics&lt;/td>
+&lt;td>Final Fantasy V&lt;/td>
+&lt;td>Dr. Mario&lt;/td>
+&lt;td>Grand Theft Auto&lt;/td>
+&lt;td>Dragon Ball Z: The Legacy Of Goku&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Donkey Kong Jr.&lt;/td>
+&lt;td>Final Fantasy Vi&lt;/td>
+&lt;td>Dragon Ball Z - Gokuu Hishouden&lt;/td>
+&lt;td>Grand Theft Auto 2&lt;/td>
+&lt;td>Dragon Ball Z: The Legacy Of Goku Ii&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Double Dragon&lt;/td>
+&lt;td>Final Fantasy: Mystic Quest&lt;/td>
+&lt;td>Dragon&amp;rsquo;s Lair - The Legend&lt;/td>
+&lt;td>Hammerin&amp;rsquo; Harry: Ghost Building Company&lt;/td>
+&lt;td>Dragon Ball: Advanced Adventure&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Double Dragon 2&lt;/td>
+&lt;td>Final Fight&lt;/td>
+&lt;td>DuckTales&lt;/td>
+&lt;td>Hamtaro: Ham-Hams Unite!&lt;/td>
+&lt;td>Drill Dozer&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Double Dragon 3 - The Sacred Stones&lt;/td>
+&lt;td>Final Fight 2&lt;/td>
+&lt;td>Ducktales 2&lt;/td>
+&lt;td>Harry Potter And The Chamber Of Secrets&lt;/td>
+&lt;td>Duke Nukem Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Double Dribble&lt;/td>
+&lt;td>Final Fight 3&lt;/td>
+&lt;td>Earthworm Jim&lt;/td>
+&lt;td>Harry Potter And The Sorcerer&amp;rsquo;s Stone&lt;/td>
+&lt;td>Ecks Vs. Sever&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Dr. Mario&lt;/td>
+&lt;td>Flashback: The Quest For Identity&lt;/td>
+&lt;td>Elevator Action&lt;/td>
+&lt;td>Harvest Moon&lt;/td>
+&lt;td>Elevator Action Old &amp;amp; New&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Dragon Warrior&lt;/td>
+&lt;td>Goof Troop&lt;/td>
+&lt;td>F-1 Race&lt;/td>
+&lt;td>Harvest Moon 2&lt;/td>
+&lt;td>F-Zero Climax&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Dragon Warrior Ii&lt;/td>
+&lt;td>Gradius 3&lt;/td>
+&lt;td>Faceball 2000&lt;/td>
+&lt;td>Harvest Moon 3&lt;/td>
+&lt;td>F-Zero: Gp Legend&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Dragon Warrior Iii&lt;/td>
+&lt;td>Hagane: The Final Conflict&lt;/td>
+&lt;td>Final Fantasy Adventure&lt;/td>
+&lt;td>Heiankyo Alien&lt;/td>
+&lt;td>F-Zero: Maximum Velocity&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Dragon Warrior Iv&lt;/td>
+&lt;td>Harvest Moon&lt;/td>
+&lt;td>Final Fantasy Legend Ii&lt;/td>
+&lt;td>Heroes Of Might And Magic&lt;/td>
+&lt;td>Final Fantasy I &amp;amp; Ii: Dawn Of Souls&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Duck Hunt&lt;/td>
+&lt;td>Illusion Of Gaia&lt;/td>
+&lt;td>Final Fantasy Legend Iii&lt;/td>
+&lt;td>Heroes Of Might And Magic Ii&lt;/td>
+&lt;td>Final Fantasy Iv Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>DuckTales&lt;/td>
+&lt;td>Indiana Jones’ Greatest Adventures&lt;/td>
+&lt;td>Flipull&lt;/td>
+&lt;td>Ikari No Yousai 2&lt;/td>
+&lt;td>Final Fantasy Tactics Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>DuckTales 2&lt;/td>
+&lt;td>International Superstar Soccer&lt;/td>
+&lt;td>Fortified Zone&lt;/td>
+&lt;td>Inspector Gadget: Operation Madkactus&lt;/td>
+&lt;td>Final Fantasy V Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Déjà Vu&lt;/td>
+&lt;td>International Superstar Soccer Deluxe&lt;/td>
+&lt;td>Game Boy Camera&lt;/td>
+&lt;td>Joe &amp;amp; Mac: Caveman Ninja&lt;/td>
+&lt;td>Final Fantasy Vi Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Earthbound Beginnings&lt;/td>
+&lt;td>Joe &amp;amp; Mac&lt;/td>
+&lt;td>Gargoyle&amp;rsquo;s Quest&lt;/td>
+&lt;td>Kaeru No Tame Ni Kane Wa Naru&lt;/td>
+&lt;td>Final Fight One&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Earthbound Zero&lt;/td>
+&lt;td>Joe &amp;amp; Mac 2: Lost In The Tropics&lt;/td>
+&lt;td>Gauntlet Ii&lt;/td>
+&lt;td>Kirby Tilt &amp;lsquo;N&amp;rsquo; Tumble&lt;/td>
+&lt;td>Fire Emblem: The Binding Blade&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ExciteBike&lt;/td>
+&lt;td>Jungle Strike&lt;/td>
+&lt;td>Genjin&lt;/td>
+&lt;td>Konami Gb Collection Vol.1&lt;/td>
+&lt;td>Fire Emblem: The Sacred Stones&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Famicom Wars&lt;/td>
+&lt;td>Jurassic Park&lt;/td>
+&lt;td>Genjin Land: Viva! Chikkun Ōkoku&lt;/td>
+&lt;td>Kung-Fu Master&lt;/td>
+&lt;td>Fire Pro Wrestling&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Faxanadu&lt;/td>
+&lt;td>Ken Griffey Jr. Presents Major League Baseball&lt;/td>
+&lt;td>Ghostbusters Ii&lt;/td>
+&lt;td>Kwirk&lt;/td>
+&lt;td>Futari Wa Precure: Arienai! Yume No Kuni Wa Daimeikyuu&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Fester&amp;rsquo;S Quest&lt;/td>
+&lt;td>Ken Griffey, Jr.&amp;rsquo;s Winning Run&lt;/td>
+&lt;td>Go! Go! Tank&lt;/td>
+&lt;td>Legend Of The River King&lt;/td>
+&lt;td>Gadget Racers&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Final Fantasy&lt;/td>
+&lt;td>Killer Instinct&lt;/td>
+&lt;td>Godzilla&lt;/td>
+&lt;td>Legend Of The River King 2&lt;/td>
+&lt;td>Gekido Advance: Kintaro&amp;rsquo;s Revenge&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Final Fantasy Ii&lt;/td>
+&lt;td>King Of Dragons&lt;/td>
+&lt;td>Golf&lt;/td>
+&lt;td>Legend Of Zelda, The: Link&amp;rsquo;s Awakening DX&lt;/td>
+&lt;td>Goemon: New Age Shutsudou!&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Final Fantasy Iii&lt;/td>
+&lt;td>Kirby Super Star&lt;/td>
+&lt;td>Gradius: The Interstellar Assault&lt;/td>
+&lt;td>Legend Of Zelda, The: Oracle Of Ages&lt;/td>
+&lt;td>Golden Sun&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Fire Emblem Gaiden&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Avalanche&lt;/td>
+&lt;td>Great Greed&lt;/td>
+&lt;td>Legend Of Zelda, The: Oracle Of Seasons&lt;/td>
+&lt;td>Golden Sun: The Lost Age&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Fire Emblem: Shadow Dragon And The Blade Of Light&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Dream Course&lt;/td>
+&lt;td>Hammerin’ Harry: Ghost Building Company&lt;/td>
+&lt;td>Little Magic&lt;/td>
+&lt;td>Grand Theft Auto Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Friday The 13Th&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Dream Land 3&lt;/td>
+&lt;td>Harvest Moon&lt;/td>
+&lt;td>Lock ‘N’ Chase&lt;/td>
+&lt;td>Gt Advance Championship Racing&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Galaga: Demons Of Death&lt;/td>
+&lt;td>Knights Of The Round&lt;/td>
+&lt;td>Hudson Hawk&lt;/td>
+&lt;td>Looney Tunes&lt;/td>
+&lt;td>Gunstar Super Heroes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Gargoyle&amp;rsquo;s Quest 2&lt;/td>
+&lt;td>Krusty’S Fun House&lt;/td>
+&lt;td>Hyper Lode Runner&lt;/td>
+&lt;td>Lufia: The Legend Returns&lt;/td>
+&lt;td>Guru Logic Champ&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ghosts &amp;amp; Goblins&lt;/td>
+&lt;td>Legend Of The Mystical Ninja&lt;/td>
+&lt;td>Ikari No Yōsai 2&lt;/td>
+&lt;td>Magi Nation&lt;/td>
+&lt;td>Harvest Moon: Friends Of Mineral Town&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Golgo 13&lt;/td>
+&lt;td>Legend Of Zelda - Link To The Past&lt;/td>
+&lt;td>James Bond 007&lt;/td>
+&lt;td>Magical Chase&lt;/td>
+&lt;td>Harvest Moon: More Friends Of Mineral Town&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Goonies 2&lt;/td>
+&lt;td>Lemmings&lt;/td>
+&lt;td>Joe And Mac&lt;/td>
+&lt;td>Mario Golf&lt;/td>
+&lt;td>Karnaaj Rally&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Gradius&lt;/td>
+&lt;td>Lion King&lt;/td>
+&lt;td>Jurassic Park&lt;/td>
+&lt;td>Mario Tennis&lt;/td>
+&lt;td>Kingdom Hearts: Chain Of Memories&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Guardian Legend&lt;/td>
+&lt;td>Looney Tunes B-Ball&lt;/td>
+&lt;td>Jurassic Park Part 2: The Chaos Continues&lt;/td>
+&lt;td>Mario’S Picross&lt;/td>
+&lt;td>Kirby &amp;amp; The Amazing Mirror&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Gun.Smoke&lt;/td>
+&lt;td>Lufia &amp;amp; The Fortress Of Doom&lt;/td>
+&lt;td>Kaeru No Tame Ni Kane Wa Naru&lt;/td>
+&lt;td>Maru&amp;rsquo;s Mission&lt;/td>
+&lt;td>Kirby: Nightmare In Dream Land&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Hogans Alley&lt;/td>
+&lt;td>Lufia Ii: Rise Of The Sinistrals&lt;/td>
+&lt;td>Kid Dracula&lt;/td>
+&lt;td>Mega Man Xtreme 2&lt;/td>
+&lt;td>Klonoa 2: Dream Champ Tournament&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ice Climber&lt;/td>
+&lt;td>Madden 95&lt;/td>
+&lt;td>Kid Icarus - Of Myths And Monsters&lt;/td>
+&lt;td>Mega Man Xtreme&lt;/td>
+&lt;td>Klonoa: Empire Of Dreams&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ice Hockey&lt;/td>
+&lt;td>Madden Nfl &amp;lsquo;94&lt;/td>
+&lt;td>Killer Instinct&lt;/td>
+&lt;td>Mercenary Force&lt;/td>
+&lt;td>Konami Krazy Racers&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ikari Warriors&lt;/td>
+&lt;td>Magical Quest Starring Mickey Mouse&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Block Ball&lt;/td>
+&lt;td>Metal Gear Solid&lt;/td>
+&lt;td>Kururin Paradise&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ironsword: Wizards &amp;amp; Warriors Ii&lt;/td>
+&lt;td>Mario Paint&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Dream Land&lt;/td>
+&lt;td>Metal Walker&lt;/td>
+&lt;td>Legend Of Zelda, The: A Link To The Past &amp;amp; Four Swords&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Jackal&lt;/td>
+&lt;td>Marvel Super Heroes In War Of The Gems&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Dream Land 2&lt;/td>
+&lt;td>Mickey’S Dangerous Chase&lt;/td>
+&lt;td>Legend Of Zelda, The: The Minish Cap&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Jackie Chan&lt;/td>
+&lt;td>Mega Man 7&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Pinball Land&lt;/td>
+&lt;td>Mole Mania&lt;/td>
+&lt;td>Lufia: The Ruins Of Lore&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Joe &amp;amp; Mac&lt;/td>
+&lt;td>Mega Man X&lt;/td>
+&lt;td>Kirby&amp;rsquo;s Star Stacker&lt;/td>
+&lt;td>Mortal Kombat 4&lt;/td>
+&lt;td>Lunar Legend&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Journey To Silius&lt;/td>
+&lt;td>Mega Man X2&lt;/td>
+&lt;td>Legend Of The River King&lt;/td>
+&lt;td>Motocross Maniacs 2&lt;/td>
+&lt;td>Magical Vacation&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Karnov&lt;/td>
+&lt;td>Mega Man X3&lt;/td>
+&lt;td>Legend Of Zelda, The: Link&amp;rsquo;s Awakening&lt;/td>
+&lt;td>Mr. Driller&lt;/td>
+&lt;td>Mario &amp;amp; Luigi: Superstar Saga&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Kickle Cubicle&lt;/td>
+&lt;td>Metal Warriors&lt;/td>
+&lt;td>Lemmings&lt;/td>
+&lt;td>Mr. Nutz&lt;/td>
+&lt;td>Mario Golf: Advance Tour&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Kid Icarus&lt;/td>
+&lt;td>Mortal Kombat&lt;/td>
+&lt;td>Madden 97&lt;/td>
+&lt;td>Nekketsu Kouha Kunio-Kun – Bangai Rantou-Hen&lt;/td>
+&lt;td>Mario Kart: Super Circuit&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Kid Niki: Radical Ninja&lt;/td>
+&lt;td>Mortal Kombat 2&lt;/td>
+&lt;td>Mario &amp;amp; Yoshi&lt;/td>
+&lt;td>Nemesis&lt;/td>
+&lt;td>Mario Party Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Kirby&amp;rsquo;s Adventure&lt;/td>
+&lt;td>Mortal Kombat 3&lt;/td>
+&lt;td>Mario Land 2&lt;/td>
+&lt;td>Nintendo World Cup&lt;/td>
+&lt;td>Mario Pinball Land&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Kiwi Kraze&lt;/td>
+&lt;td>Nba Hangtime&lt;/td>
+&lt;td>Mario&amp;rsquo;s Picross&lt;/td>
+&lt;td>Noobow&lt;/td>
+&lt;td>Mario Tennis: Power Tour&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Klax&lt;/td>
+&lt;td>Nba Jam&lt;/td>
+&lt;td>Maru’s Mission&lt;/td>
+&lt;td>Pac-Man: Special Color Edition&lt;/td>
+&lt;td>Mario Vs. Donkey Kong&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Kung Fu&lt;/td>
+&lt;td>Nba Jam Tournament Edition&lt;/td>
+&lt;td>Mega Man Ii&lt;/td>
+&lt;td>Perfect Dark&lt;/td>
+&lt;td>Mech Platoon&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Legendary Wings&lt;/td>
+&lt;td>Nhl &amp;lsquo;94&lt;/td>
+&lt;td>Mega Man Iii&lt;/td>
+&lt;td>Pocket Bomberman&lt;/td>
+&lt;td>Medabots Ax: Rokusho/Metabee&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Life Force&lt;/td>
+&lt;td>Nhl 96&lt;/td>
+&lt;td>Mega Man Iv&lt;/td>
+&lt;td>Pokemon Pinball&lt;/td>
+&lt;td>Medal Of Honor Infiltrator&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Little Nemo: The Dream Master&lt;/td>
+&lt;td>Ninja Gaiden Trilogy&lt;/td>
+&lt;td>Mega Man V&lt;/td>
+&lt;td>Pokemon Puzzle Challenge&lt;/td>
+&lt;td>Mega Man &amp;amp; Bass&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Little Samson&lt;/td>
+&lt;td>Ninja Warrior&lt;/td>
+&lt;td>Mega Man: Dr. Wily&amp;rsquo;s Revenge&lt;/td>
+&lt;td>Pokemon Trading Card Game&lt;/td>
+&lt;td>Mega Man Battle Network&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Lode Runner&lt;/td>
+&lt;td>Ogre Battle: The March Of The Black Queen&lt;/td>
+&lt;td>Metroid Ii: Return Of Samus&lt;/td>
+&lt;td>Pokemon Yellow Version: Special Pikachu Edition&lt;/td>
+&lt;td>Mega Man Battle Network 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Magic Of Scheherazade&lt;/td>
+&lt;td>Out Of This World&lt;/td>
+&lt;td>Mickey Mouse: Magic Wands!&lt;/td>
+&lt;td>Pokemon: Crystal Version&lt;/td>
+&lt;td>Mega Man Battle Network 3: Blue Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Maniac Mansion&lt;/td>
+&lt;td>Pilotwings&lt;/td>
+&lt;td>Mickey&amp;rsquo;s Dangerous Chase&lt;/td>
+&lt;td>Pokemon: Gold Version&lt;/td>
+&lt;td>Mega Man Battle Network 3: White Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mappy Land&lt;/td>
+&lt;td>Pocky &amp;amp; Rocky&lt;/td>
+&lt;td>Micro Machines 2&lt;/td>
+&lt;td>Pokemon: Silver Version&lt;/td>
+&lt;td>Mega Man Battle Network 4: Blue Moon&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Marble Madness&lt;/td>
+&lt;td>Pocky &amp;amp; Rocky 2&lt;/td>
+&lt;td>Mighty Morphin Power Rangers&lt;/td>
+&lt;td>Pop&amp;rsquo;N Twinbee&lt;/td>
+&lt;td>Mega Man Battle Network 4: Red Sun&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mario Bros.&lt;/td>
+&lt;td>Populous&lt;/td>
+&lt;td>Missile Command&lt;/td>
+&lt;td>Power Quest&lt;/td>
+&lt;td>Mega Man Battle Network 5: Team Colonel&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mario Is Missing!&lt;/td>
+&lt;td>Prehistorik Man&lt;/td>
+&lt;td>Mole Mania&lt;/td>
+&lt;td>Project S-11&lt;/td>
+&lt;td>Mega Man Battle Network 6: Cybeast Falzar&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mega Man&lt;/td>
+&lt;td>Primal Rage&lt;/td>
+&lt;td>Mortal Kombat&lt;/td>
+&lt;td>Qix&lt;/td>
+&lt;td>Mega Man Battle Network 6: Cybeast Gregar&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mega Man 2&lt;/td>
+&lt;td>Prince Of Persia&lt;/td>
+&lt;td>Mortal Kombat 2&lt;/td>
+&lt;td>Quarth&lt;/td>
+&lt;td>Mega Man Zero&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mega Man 3&lt;/td>
+&lt;td>R-Type Iii: The Third Lightning&lt;/td>
+&lt;td>Mortal Kombat 3&lt;/td>
+&lt;td>R-Type Dx&lt;/td>
+&lt;td>Mega Man Zero 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mega Man 4&lt;/td>
+&lt;td>Ranma 1/2: Hard Battle&lt;/td>
+&lt;td>Motocross Maniacs&lt;/td>
+&lt;td>Radar Mission&lt;/td>
+&lt;td>Mega Man Zero 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mega Man 5&lt;/td>
+&lt;td>Robotrek&lt;/td>
+&lt;td>Mr. Do!&lt;/td>
+&lt;td>Rayman&lt;/td>
+&lt;td>Mega Man Zero 4&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mega Man 6&lt;/td>
+&lt;td>Rock N&amp;rsquo; Roll Racing&lt;/td>
+&lt;td>Ms. Pac-Man&lt;/td>
+&lt;td>Rayman 2&lt;/td>
+&lt;td>Metal Slug Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Metal Gear&lt;/td>
+&lt;td>Romance Of The Three Kingdoms 3&lt;/td>
+&lt;td>Mystical Ninja Starring Goemon&lt;/td>
+&lt;td>Resident Evil Gaiden&lt;/td>
+&lt;td>Metalgun Slinger&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Metal Storm&lt;/td>
+&lt;td>Secret Of Evermore&lt;/td>
+&lt;td>Ninja Gaiden Shadow&lt;/td>
+&lt;td>Return Of The Ninja&lt;/td>
+&lt;td>Metroid Fusion&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Metroid&lt;/td>
+&lt;td>Secret Of Mana&lt;/td>
+&lt;td>Ninja Spirit&lt;/td>
+&lt;td>Revelations: The Demon Slayer&lt;/td>
+&lt;td>Metroid: Zero Mission&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mickey Mousecapade&lt;/td>
+&lt;td>Seiken Densetsu 3&lt;/td>
+&lt;td>Ninja Taro&lt;/td>
+&lt;td>Revenge Of The ‘Gator&lt;/td>
+&lt;td>Mobile Suit Gundam Seed: Battle Assault&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Micro Machines&lt;/td>
+&lt;td>Shadowrun&lt;/td>
+&lt;td>Noobow&lt;/td>
+&lt;td>Shadowgate Classic&lt;/td>
+&lt;td>Monster Rancher Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mike Tyson&amp;rsquo;s Punch-Out!!&lt;/td>
+&lt;td>Shaq Fu&lt;/td>
+&lt;td>Operation C&lt;/td>
+&lt;td>Shantae&lt;/td>
+&lt;td>Monster Rancher Advance 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ms. Pac-Man&lt;/td>
+&lt;td>Shin Megami Tensei&lt;/td>
+&lt;td>Pac-Man&lt;/td>
+&lt;td>Simpsons, The: Night Of The Living Treehouse Of Horror&lt;/td>
+&lt;td>Mortal Kombat: Deadly Alliance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ninja Gaiden&lt;/td>
+&lt;td>Sid Meier’S Civilization&lt;/td>
+&lt;td>Paperboy&lt;/td>
+&lt;td>Space Invaders&lt;/td>
+&lt;td>Mother 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ninja Gaiden 2: The Dark Sword Of Chaos&lt;/td>
+&lt;td>Side Pocket&lt;/td>
+&lt;td>Parodius&lt;/td>
+&lt;td>Space Invaders X&lt;/td>
+&lt;td>Moto Racer Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ninja Gaiden 3: The Ancient Ship Of Doom&lt;/td>
+&lt;td>Simcity&lt;/td>
+&lt;td>Picross 2&lt;/td>
+&lt;td>Spawn&lt;/td>
+&lt;td>Motocross Maniacs Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>North &amp;amp; South&lt;/td>
+&lt;td>Simcity 2000&lt;/td>
+&lt;td>Pinball - Revenge Of The Gator&lt;/td>
+&lt;td>Speedy Gonzales&lt;/td>
+&lt;td>Mr. Driller 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Pac-Man (Namco)&lt;/td>
+&lt;td>Soul Blazer&lt;/td>
+&lt;td>Pocket Bomberman&lt;/td>
+&lt;td>Spider-Man&lt;/td>
+&lt;td>Namco Museum&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Paper Boy&lt;/td>
+&lt;td>Sparkster&lt;/td>
+&lt;td>Pokemon: Blue Version&lt;/td>
+&lt;td>Spider-Man 2: The Sinister Six&lt;/td>
+&lt;td>Ninja Five-0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Pinball&lt;/td>
+&lt;td>Spider-Man And Venom: Maximum Carnage&lt;/td>
+&lt;td>Pokemon: Red Version&lt;/td>
+&lt;td>Spongebob Squarepants: Legend Of The Lost Spatula&lt;/td>
+&lt;td>Oriental Blue: Ao No Tengai&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Pirates&lt;/td>
+&lt;td>Spiderman Vs Venom&lt;/td>
+&lt;td>Pokemon: Yellow Version - Special Pikachu Edition&lt;/td>
+&lt;td>Spud&amp;rsquo;s Adventure&lt;/td>
+&lt;td>Pac-Man Collection&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Power Blade&lt;/td>
+&lt;td>Star Fox&lt;/td>
+&lt;td>Pokémon Pinball&lt;/td>
+&lt;td>Star Trek: 25th Anniversary&lt;/td>
+&lt;td>Pocky &amp;amp; Rocky With Becky&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Prince Of Persia&lt;/td>
+&lt;td>Star Fox 2&lt;/td>
+&lt;td>Popeye 2&lt;/td>
+&lt;td>Star Trek: The Next Generation&lt;/td>
+&lt;td>Pokemon Firered Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Pro Wrestling&lt;/td>
+&lt;td>Star Ocean&lt;/td>
+&lt;td>Pop’N Twinbee&lt;/td>
+&lt;td>Star Wars Episode I: Obi-Wan&amp;rsquo;s Adventures&lt;/td>
+&lt;td>Pokemon Leafgreen Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Punch-Out!!&lt;/td>
+&lt;td>Street Fighter Alpha 2&lt;/td>
+&lt;td>Primal Rage&lt;/td>
+&lt;td>Star Wars Episode I: Racer&lt;/td>
+&lt;td>Pokemon Mystery Dungeon: Red Rescue Team&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Q-Bert&lt;/td>
+&lt;td>Street Fighter Ii&lt;/td>
+&lt;td>Prince Of Persia&lt;/td>
+&lt;td>Star Wars: Yoda Stories&lt;/td>
+&lt;td>Pokemon Pinball: Ruby &amp;amp; Sapphire&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Qix&lt;/td>
+&lt;td>Street Fighter Ii Turbo&lt;/td>
+&lt;td>Q Billion&lt;/td>
+&lt;td>Street Fighter Alpha: Warriors&amp;rsquo; Dreams&lt;/td>
+&lt;td>Pokemon Ruby Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R.C. Pro-Am&lt;/td>
+&lt;td>Street Fighter Ii: Hyper Fighting&lt;/td>
+&lt;td>Qix&lt;/td>
+&lt;td>Super Mario Bros. Deluxe&lt;/td>
+&lt;td>Pokemon: Emerald Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Rad Racer&lt;/td>
+&lt;td>Street Fighter Ii: The World Warrior&lt;/td>
+&lt;td>R-Type&lt;/td>
+&lt;td>Survival Kids&lt;/td>
+&lt;td>Pokemon: Sapphire Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Rampage&lt;/td>
+&lt;td>Strike Gunner S.T.G&lt;/td>
+&lt;td>Ring Rage&lt;/td>
+&lt;td>Teenage Mutant Ninja Turtles Iii: Radical Rescue&lt;/td>
+&lt;td>Puyo Pop&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R.B.I. Baseball&lt;/td>
+&lt;td>Stunt Race Fx&lt;/td>
+&lt;td>Rolan’S Curse&lt;/td>
+&lt;td>Tennis&lt;/td>
+&lt;td>Racing Gears Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ring King&lt;/td>
+&lt;td>Sunset Riders&lt;/td>
+&lt;td>Rolan’S Curse Ii&lt;/td>
+&lt;td>Tetris Dx&lt;/td>
+&lt;td>Rave Master: Special Attack Force!&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>River City Ransom&lt;/td>
+&lt;td>Super Adventure Island&lt;/td>
+&lt;td>Samurai Shodown&lt;/td>
+&lt;td>The King Of Fighters &amp;lsquo;95&lt;/td>
+&lt;td>Rayman 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Robin Hood&lt;/td>
+&lt;td>Super Bomberman&lt;/td>
+&lt;td>Serpent&lt;/td>
+&lt;td>The King Of Fighters ’96&lt;/td>
+&lt;td>Rayman Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Robocop&lt;/td>
+&lt;td>Super Bomberman 2&lt;/td>
+&lt;td>Shanghai&lt;/td>
+&lt;td>The Smurfs&lt;/td>
+&lt;td>Road Trip: Shifting Gears&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Romance Of The Three Kingdoms&lt;/td>
+&lt;td>Super Bonk&lt;/td>
+&lt;td>Snow Bros. Jr&lt;/td>
+&lt;td>The Sword Of Hope&lt;/td>
+&lt;td>Robopon 2: Cross/Ring Version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Rush N Attack&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>SolarStriker&lt;/td>
+&lt;td>Toki Tori&lt;/td>
+&lt;td>Rock &amp;lsquo;N Roll Racing&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Rygar&lt;/td>
+&lt;td>Super Castlevania Iv&lt;/td>
+&lt;td>Solomon’S Club&lt;/td>
+&lt;td>Tomb Raider&lt;/td>
+&lt;td>Samurai Deeper Kyo&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Section Z&lt;/td>
+&lt;td>Super Double Dragon&lt;/td>
+&lt;td>Space Invaders&lt;/td>
+&lt;td>Tomb Raider: Curse Of The Sword&lt;/td>
+&lt;td>Shining Force: Resurrection Of The Dark Dragon&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Shadowgate&lt;/td>
+&lt;td>Super Ghouls &amp;lsquo;N Ghosts&lt;/td>
+&lt;td>Spider-Man 2&lt;/td>
+&lt;td>Tony Hawk&amp;rsquo;s Pro Skater 2&lt;/td>
+&lt;td>Shining Soul&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Silver Surfer&lt;/td>
+&lt;td>Super Mario All-Stars&lt;/td>
+&lt;td>Spider-Man 3: Invasion Of The Spider-Slayers&lt;/td>
+&lt;td>Top Gear Pocket 2&lt;/td>
+&lt;td>Shining Soul Ii&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Simpsons, The: Bart Vs. The Space Mutants&lt;/td>
+&lt;td>Super Mario All-Stars + Super Mario World&lt;/td>
+&lt;td>Spider-Man And The X-Men In Arcade&amp;rsquo;s Revenge&lt;/td>
+&lt;td>Warlocked&lt;/td>
+&lt;td>Sigma Star Saga&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Skate Or Die 2: The Search For Double Trouble&lt;/td>
+&lt;td>Super Mario Kart&lt;/td>
+&lt;td>Star Trek - Generations - Beyond The Nexus&lt;/td>
+&lt;td>Wendy: Every Witch Way&lt;/td>
+&lt;td>Sonic Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Snake Rattle &amp;lsquo;N&amp;rsquo; Roll&lt;/td>
+&lt;td>Super Mario Rpg: Legend Of The Seven Stars&lt;/td>
+&lt;td>Star Wars&lt;/td>
+&lt;td>World Heroes 2 Jet&lt;/td>
+&lt;td>Sonic Advance 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Snake’S Revenge&lt;/td>
+&lt;td>Super Mario World&lt;/td>
+&lt;td>Star Wars: The Empire Strikes Back&lt;/td>
+&lt;td>X-Men: Mutant Academy&lt;/td>
+&lt;td>Sonic Advance 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Solomon’S Key&lt;/td>
+&lt;td>Super Mario World 2&lt;/td>
+&lt;td>Street Fighter 2&lt;/td>
+&lt;td>X-Men: Mutant Wars&lt;/td>
+&lt;td>Sonic Battle&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Solstice&lt;/td>
+&lt;td>Super Metroid&lt;/td>
+&lt;td>Street Racer&lt;/td>
+&lt;td>X-Men: Wolverine&amp;rsquo;s Rage&lt;/td>
+&lt;td>Sonic The Hedgehog: Genesis&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Spiritual Warfare&lt;/td>
+&lt;td>Super Offroad&lt;/td>
+&lt;td>Super Mario Land&lt;/td>
+&lt;td>Yu-Gi-Oh! Dark Duel Stories&lt;/td>
+&lt;td>Spider-Man: Mysterio&amp;rsquo;s Menace&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Spy Hunter&lt;/td>
+&lt;td>Super Punch-Out!!&lt;/td>
+&lt;td>Super Mario Land 2: 6 Golden Coins&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Spyro 2: Season Of Flame&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Startropics&lt;/td>
+&lt;td>Super R-Type&lt;/td>
+&lt;td>Super R.C. Pro-Am&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Street Fighter Alpha 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Startropics Ii: Zoda’S Revenge&lt;/td>
+&lt;td>Super Star Wars&lt;/td>
+&lt;td>Super Star Wars: Return Of The Jedi&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Summon Night: Swordcraft Story&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Stinger&lt;/td>
+&lt;td>Super Star Wars: Return Of The Jedi&lt;/td>
+&lt;td>Superman&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Summon Night: Swordcraft Story 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Strider&lt;/td>
+&lt;td>Super Star Wars: The Empire Strikes Back&lt;/td>
+&lt;td>Sword Of Hope Ii, The&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Dodge Ball Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Super C&lt;/td>
+&lt;td>Super Street Fighter Ii&lt;/td>
+&lt;td>Sword Of Hope, The&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Mario Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Super Dodge Ball&lt;/td>
+&lt;td>Super Tennis&lt;/td>
+&lt;td>T2 - The Arcade Game&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Mario Advance 2: Super Mario World&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Super Mario Bros.&lt;/td>
+&lt;td>Super Turrican 2&lt;/td>
+&lt;td>Tail ‘Gator&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Mario Advance 3: Yoshi&amp;rsquo;s Island&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Super Mario Bros. 2&lt;/td>
+&lt;td>Tales Of Phantasia&lt;/td>
+&lt;td>Tamagotchi&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Mario Advance 4: Super Mario Bros. 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Super Mario Bros. 3&lt;/td>
+&lt;td>Tecmo Super Bowl&lt;/td>
+&lt;td>Tarzan&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Mario World: Super Mario Advance 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Super Cars&lt;/td>
+&lt;td>Teenage Mutant Ninja Turtles - Tournament Fighters&lt;/td>
+&lt;td>Tecmo Bowl&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Monkey Ball Jr.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>TaleSpin&lt;/td>
+&lt;td>Teenage Mutant Ninja Turtles Iv - Turtles In Time&lt;/td>
+&lt;td>Teenage Mutant Ninja Turtles Ii: Back From The Sewers&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Puzzle Fighter Ii&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tecmo Bowl&lt;/td>
+&lt;td>Terranigma&lt;/td>
+&lt;td>Teenage Mutant Ninja Turtles Iii - Radical Rescue&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Robot Taisen Original Generation&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tecmo Super Bowl&lt;/td>
+&lt;td>Tetris &amp;amp; Dr. Mario&lt;/td>
+&lt;td>Teenage Mutant Ninja Turtles: Fall Of The Foot Clan&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Robot Taisen: Original Generation 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tecmo World Wrestling&lt;/td>
+&lt;td>Tetris Attack&lt;/td>
+&lt;td>Tennis&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Super Street Fighter Ii: Turbo Revival&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Teenage Mutant Ninja Turtles&lt;/td>
+&lt;td>The King Of Dragons&lt;/td>
+&lt;td>Tetris&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Sword Of Mana&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Teenage Mutant Ninja Turtles Ii: The Arcade Game&lt;/td>
+&lt;td>The Lost Vikings&lt;/td>
+&lt;td>Tetris 2&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tactics Ogre: The Knight Of Lodis&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Teenage Mutant Ninja Turtles Iii: The Manhattan Project&lt;/td>
+&lt;td>The Simpsons: Bart’S Nightmare&lt;/td>
+&lt;td>Tetris Attack&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tak And The Power Of Juju&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tetris (Nintendo)&lt;/td>
+&lt;td>Tiny Toon Adventures: Buster Busts Loose!&lt;/td>
+&lt;td>Tetris Blast&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tang Tang&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tetris (Tengen)&lt;/td>
+&lt;td>Tiny Toon Adventures: Wacky Sports Challenge&lt;/td>
+&lt;td>Tetris Plus&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tekken Advance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tetris 2&lt;/td>
+&lt;td>Top Gear&lt;/td>
+&lt;td>The Addams Family - Pugsley&amp;rsquo;s Scavenger Hunt&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tetris Worlds&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>The Legend Of Zelda&lt;/td>
+&lt;td>Top Gear 2&lt;/td>
+&lt;td>The Final Fantasy Legend&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>The King Of Fighters Ex2: Howling Blood&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>The Three Stooges&lt;/td>
+&lt;td>Top Gear 3000&lt;/td>
+&lt;td>The Kick Boxing&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>The King Of Fighters Ex: Neo Blood&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tiny Toon Adventures&lt;/td>
+&lt;td>Toy Story&lt;/td>
+&lt;td>The King Of Fighters &amp;lsquo;95&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>The Legend Of Zelda: A Link To The Past&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Tombs &amp;amp; Treasure&lt;/td>
+&lt;td>Ultimate Fighter&lt;/td>
+&lt;td>The Little Mermaid&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>The Legend Of Zelda: The Minish Cap&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ufouria: The Saga&lt;/td>
+&lt;td>Ultimate Mortal Kombat 3&lt;/td>
+&lt;td>The Ren &amp;amp; Stimpy Show - Space Cadet Adventures&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>The Pinball Of The Dead&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ultima Iv&lt;/td>
+&lt;td>Un Squadron&lt;/td>
+&lt;td>The Simpsons - Bart &amp;amp; The Beanstalk&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tmnt&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Vice: Project Doom&lt;/td>
+&lt;td>Uncharted Waters 2: New Horizons&lt;/td>
+&lt;td>The Smurfs&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tony Hawk&amp;rsquo;s Pro Skater 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Wario&amp;rsquo;s Woods&lt;/td>
+&lt;td>Uniracers&lt;/td>
+&lt;td>Tiny Toon Adventures 2&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tony Hawk&amp;rsquo;s Pro Skater 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Willow&lt;/td>
+&lt;td>Wario&amp;rsquo;s Woods&lt;/td>
+&lt;td>Tiny Toon Adventures: Babs&amp;rsquo; Big Break&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tony Hawk&amp;rsquo;s Pro Skater 4&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Wizards &amp;amp; Warriors&lt;/td>
+&lt;td>Wild Guns&lt;/td>
+&lt;td>Trax&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Tony Hawk&amp;rsquo;s Underground&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Wizards &amp;amp; Warriors 2&lt;/td>
+&lt;td>Wolfenstein 3D&lt;/td>
+&lt;td>Trip World&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Toy Robo Force&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Wrath Of The Black Manta&lt;/td>
+&lt;td>X-Men: Mutant Apocalypse&lt;/td>
+&lt;td>Turok - Battle Of The Bionosaurs&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Ultimate Brain Games&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Yo! Noid&lt;/td>
+&lt;td>Yoshi&amp;rsquo;s Cookie&lt;/td>
+&lt;td>Ultra Golf&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Ultimate Muscle: The Kinnikuman Legacy - The Path Of The Superhero&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Yoshi&lt;/td>
+&lt;td>Yoshi&amp;rsquo;s Safari&lt;/td>
+&lt;td>Uno 2 - Small World&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>V-Rally 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Zelda 2&lt;/td>
+&lt;td>Zero The Kamikaze Squirrel&lt;/td>
+&lt;td>Wario Blast Featuring Bomberman!&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Virtua Tennis&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Zombie Nation&lt;/td>
+&lt;td>Zombies Ate My Neighbors&lt;/td>
+&lt;td>Wario Land 3&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Wario Land 4&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Wario Land Ii&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Warioware Twisted!&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Wave Race&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Warioware, Inc.: Mega Microgame$!&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Wcw Main Event&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yoshi Topsy-Turvy&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Who Framed Roger Rabbit&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yoshi&amp;rsquo;s Island: Super Mario Advance 3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Worms&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yu-Gi-Oh!: The Eternal Duelist Soul&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yakuman&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Zatch Bell! Electric Arena&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yoshi&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Zone Of The Enders: The Fist Of Mars&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yoshi&amp;rsquo;s Cookie&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yuu Yuu Hakusho&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Zen - Intergalactic Ninja&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Zoop&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item></channel></rss>

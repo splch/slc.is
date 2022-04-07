@@ -1,0 +1,224 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Avalanche breakdown and quantum are two methods for generating true random numbers. Here, we&amp;rsquo;ll compare them for feasibility and quality. The feasibility of a TRNGis how many bits per second it can produce while remaining random. And that leads us into quality which will be determined according to the NIST&amp;rsquo;s STS. We&amp;rsquo;ll also compare these methods against the computer&amp;rsquo;s default RNG as a baseline.
+I&amp;rsquo;m using the Arcetri Team&amp;rsquo;s implementation of the STS."><title>Quantum versus Avalanche Breakdown Randomness</title><link rel=canonical href=https://slc.is/archive/quantum-versus-avalanche-breakdown-randomness/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="Quantum versus Avalanche Breakdown Randomness"><meta property="og:description" content="Avalanche breakdown and quantum are two methods for generating true random numbers. Here, we&amp;rsquo;ll compare them for feasibility and quality. The feasibility of a TRNGis how many bits per second it can produce while remaining random. And that leads us into quality which will be determined according to the NIST&amp;rsquo;s STS. We&amp;rsquo;ll also compare these methods against the computer&amp;rsquo;s default RNG as a baseline.
+I&amp;rsquo;m using the Arcetri Team&amp;rsquo;s implementation of the STS."><meta property="og:url" content="https://slc.is/archive/quantum-versus-avalanche-breakdown-randomness/"><meta property="og:site_name" content="SLC is"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Randomness"><meta property="article:tag" content="Qiskit"><meta property="article:published_time" content="2021-12-08T00:00:00+00:00"><meta property="article:modified_time" content="2021-12-08T00:00:00+00:00"><meta property="og:image" content="https://slc.is/images/onerng.webp"><meta name=twitter:title content="Quantum versus Avalanche Breakdown Randomness"><meta name=twitter:description content="Avalanche breakdown and quantum are two methods for generating true random numbers. Here, we&amp;rsquo;ll compare them for feasibility and quality. The feasibility of a TRNGis how many bits per second it can produce while remaining random. And that leads us into quality which will be determined according to the NIST&amp;rsquo;s STS. We&amp;rsquo;ll also compare these methods against the computer&amp;rsquo;s default RNG as a baseline.
+I&amp;rsquo;m using the Arcetri Team&amp;rsquo;s implementation of the STS."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://slc.is/images/onerng.webp"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><div class=site-meta><h1 class=site-name><a href=/>SLC is</a></h1><h2 class=site-description>⚛️ Big on quantum</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/archive/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archive</span></a></li><li><a href=/music/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Music</span></a></li><li><a href=/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/archive/quantum-versus-avalanche-breakdown-randomness/><img src=/images/onerng.webp loading=lazy alt="Featured image of post Quantum versus Avalanche Breakdown Randomness"></a></div><div class=article-details><header class=article-category><a href=/categories/quantum/ style=background-color:#6929c4;color:#fff>Quantum</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/archive/quantum-versus-avalanche-breakdown-randomness/>Quantum versus Avalanche Breakdown Randomness</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Dec 08, 2021</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>10 minute read</time></div></footer></div></header><section class=article-content><p>Avalanche breakdown and quantum are two methods for generating true random numbers. Here, we&rsquo;ll compare them for feasibility and quality. The feasibility of a TRNG is how many bits per second it can produce while remaining random. And that leads us into quality which will be determined according to the NIST&rsquo;s <a class=link href=https://www.nist.gov/publications/statistical-test-suite-random-and-pseudorandom-number-generators-cryptographic target=_blank rel=noopener>STS</a>. We&rsquo;ll also compare these methods against the computer&rsquo;s default RNG as a baseline.</p><p>I&rsquo;m using the Arcetri Team&rsquo;s <a class=link href=https://github.com/arcetri/sts target=_blank rel=noopener>implementation</a> of the STS. Building it just required running <code>make</code> in the repo.</p><p>We&rsquo;ll read around 100 MB of random data to perform the tests on. STS defaults to measuring bitsreams of 1 megabit per iteration, so we&rsquo;ll run 800 iterations (8 bits = 1 byte).</p><p>A useful way to record the random numbers and the speed of their generation is with the <a class=link href=https://wikipedia.org/wiki/Dd_%28Unix%29 target=_blank rel=noopener><code>dd</code></a> command.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>~# dd <span class=k>if</span><span class=o>=</span>/path/to/random <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>of</span><span class=o>=</span>/copy/of/random <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>bs</span><span class=o>=</span><span class=m>104857600</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>count</span><span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>iflag</span><span class=o>=</span>fullblock
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=m>104857600</span> bytes <span class=o>(</span><span class=m>105</span> MB, <span class=m>100</span> MiB<span class=o>)</span> copied, X.X s, X B/s
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>I&rsquo;m also saving the data and reports under a <code>reports</code> directory — so, create that if you need.</p></blockquote><h2 id=baseline>Baseline</h2><p>Reading from <a class=link href=https://linuxhint.com/dev_random_vs_dev_urandom/ target=_blank rel=noopener>random or urandom</a> seems to be a surprisingly controversial subject, but the only nearly-standard difference I found was that <code>urandom</code> (which stands for unblocked random) won&rsquo;t block read access when there isn&rsquo;t enough randomness while <code>random</code> will. I&rsquo;m only looking at the best each method has to offer, so I&rsquo;ll be accessing <code>/dev/random</code> for this data.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>~# dd <span class=k>if</span><span class=o>=</span>/dev/random <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>of</span><span class=o>=</span>reports/random <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>bs</span><span class=o>=</span><span class=m>104857600</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>count</span><span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>iflag</span><span class=o>=</span>fullblock
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=m>104857600</span> bytes <span class=o>(</span><span class=m>105</span> MB, <span class=m>100</span> MiB<span class=o>)</span> copied, 0.637875 s, <span class=m>164</span> MB/s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>~# ./sts -v <span class=m>1</span> -i <span class=m>800</span> -w reports/ -F r reports/random
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Testing data from file: reports/random
+</span></span><span class=line><span class=cl>Start of init phase
+</span></span><span class=line><span class=cl>End of init phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of iterate phase
+</span></span><span class=line><span class=cl>End of iterate phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of assess phase
+</span></span><span class=line><span class=cl>End of assess phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of destroy phase
+</span></span><span class=line><span class=cl>End of destroy phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Execution completed!
+</span></span><span class=line><span class=cl>Check the random.txt file <span class=k>for</span> the results
+</span></span></code></pre></td></tr></table></div></div><p>The collapsed details above summarize how many STS random tests the data passed. Running these tests on different data will change the results; however, we&rsquo;re testing 800 iterations of $2^{20}=1,048,576$ bits, so the results are statistically significant.</p><p>This report is included in the zip linked in the conclusion along with the data used to derive the score.</p><p>A total of 188 tests (some of the 15 tests actually consist of multiple sub-tests) were conducted to evaluate the randomness of 800 bitstreams of 1048576 bits from:</p><pre><code>reports/random
+</code></pre><hr><p>The numerous empirical results of these tests were then interpreted with an examination of the proportion of sequences that pass a statistical test (proportion analysis) and the distribution of p-values to check for uniformity (uniformity analysis). The results were the following:</p><pre><code>187/188 tests passed successfully both the analyses.
+1/188 tests did not pass successfully both the analyses.
+</code></pre><hr><p>Here are the results of the single tests:</p><ul><li><p>The &ldquo;Frequency&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Block Frequency&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Cumulative Sums&rdquo; (forward) test passed both the analyses.
+The &ldquo;Cumulative Sums&rdquo; (backward) test passed both the analyses.</p></li><li><p>The &ldquo;Runs&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Longest Run of Ones&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Binary Matrix Rank&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Discrete Fourier Transform&rdquo; test passed both the analyses.</p></li><li><p>147/148 of the &ldquo;Non-overlapping Template Matching&rdquo; tests passed both the analyses.
+1/148 of the &ldquo;Non-overlapping Template Matching&rdquo; tests FAILED the proportion analysis.</p></li><li><p>The &ldquo;Overlapping Template Matching&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Maurer&rsquo;s Universal Statistical&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Approximate Entropy&rdquo; test passed both the analyses.</p></li><li><p>8/8 of the &ldquo;Random Excursions&rdquo; tests passed both the analyses.</p></li><li><p>18/18 of the &ldquo;Random Excursions Variant&rdquo; tests passed both the analyses.</p></li><li><p>The &ldquo;Serial&rdquo; (first) test passed both the analyses.
+The &ldquo;Serial&rdquo; (second) test passed both the analyses.</p></li><li><p>The &ldquo;Linear Complexity&rdquo; test passed both the analyses.</p></li></ul><hr><p>To begin our comparison, we&rsquo;ll evaluate avalanche breakdown.</p><h2 id=avalanche-breakdown>Avalanche Breakdown</h2><p>This step is unique since we need to initialize the avalanche device to be read as a bitstream on *nix.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>~# dmesg <span class=p>|</span> grep cdc_acm<span class=se>\ </span><span class=m>1</span> <span class=p>|</span> tail -1
+</span></span><span class=line><span class=cl>cdc_acm 1-2.3.2.4.2.4:1.0: ttyACM0: USB ACM device
+</span></span><span class=line><span class=cl>~# stty raw -echo &lt;/dev/ttyACM0 <span class=c1># put the tty device into raw mode</span>
+</span></span><span class=line><span class=cl>~# <span class=nb>echo</span> cmd0 &gt;/dev/ttyACM0 <span class=c1># put the device into the avalanche/whitening mode</span>
+</span></span><span class=line><span class=cl>~# <span class=nb>echo</span> cmdO &gt;/dev/ttyACM0 <span class=c1># turn on the feed to the USB</span>
+</span></span></code></pre></td></tr></table></div></div><p>Running the command below should dim the LED, indicating a loss in entropy.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>~# dd <span class=k>if</span><span class=o>=</span>/dev/ttyACM0 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>of</span><span class=o>=</span>reports/avalanche <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>bs</span><span class=o>=</span><span class=m>104857600</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>count</span><span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      <span class=nv>iflag</span><span class=o>=</span>fullblock
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=m>104857600</span> bytes <span class=o>(</span><span class=m>105</span> MB, <span class=m>100</span> MiB<span class=o>)</span> copied, 1829.86 s, 57.3 kB/s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>~# ./sts -v <span class=m>1</span> -i <span class=m>800</span> -w reports/ -F r reports/avalanche
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Testing data from file: reports/avalanche
+</span></span><span class=line><span class=cl>Start of init phase
+</span></span><span class=line><span class=cl>End of init phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of iterate phase
+</span></span><span class=line><span class=cl>End of iterate phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of assess phase
+</span></span><span class=line><span class=cl>End of assess phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of destroy phase
+</span></span><span class=line><span class=cl>End of destroy phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Execution completed!
+</span></span><span class=line><span class=cl>Check the avalanche.txt file <span class=k>for</span> the results
+</span></span></code></pre></td></tr></table></div></div><p>A total of 188 tests (some of the 15 tests actually consist of multiple sub-tests) were conducted to evaluate the randomness of 800 bitstreams of 1048576 bits from:</p><pre><code>reports/avalanche
+</code></pre><hr><p>The numerous empirical results of these tests were then interpreted with an examination of the proportion of sequences that pass a statistical test (proportion analysis) and the distribution of p-values to check for uniformity (uniformity analysis). The results were the following:</p><pre><code>183/188 tests passed successfully both the analyses.
+5/188 tests did not pass successfully both the analyses.
+</code></pre><hr><p>Here are the results of the single tests:</p><ul><li><p>The &ldquo;Frequency&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Block Frequency&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Cumulative Sums&rdquo; (forward) test passed both the analyses.
+The &ldquo;Cumulative Sums&rdquo; (backward) test passed both the analyses.</p></li><li><p>The &ldquo;Runs&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Longest Run of Ones&rdquo; test FAILED both the analyses.</p></li><li><p>The &ldquo;Binary Matrix Rank&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Discrete Fourier Transform&rdquo; test passed both the analyses.</p></li><li><p>146/148 of the &ldquo;Non-overlapping Template Matching&rdquo; tests passed both the analyses.
+2/148 of the &ldquo;Non-overlapping Template Matching&rdquo; tests FAILED both the analyses.</p></li><li><p>The &ldquo;Overlapping Template Matching&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Maurer&rsquo;s Universal Statistical&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Approximate Entropy&rdquo; test passed both the analyses.</p></li><li><p>8/8 of the &ldquo;Random Excursions&rdquo; tests passed both the analyses.</p></li><li><p>18/18 of the &ldquo;Random Excursions Variant&rdquo; tests passed both the analyses.</p></li><li><p>The &ldquo;Serial&rdquo; (first) test FAILED both the analyses.
+The &ldquo;Serial&rdquo; (second) test FAILED both the analyses.</p></li><li><p>The &ldquo;Linear Complexity&rdquo; test passed both the analyses.</p></li></ul><hr><h2 id=quantum-computer>Quantum Computer</h2><p>You can either collect your own quantum data or download dumps from <a class=link href=https://cloudstor.aarnet.edu.au/plus/s/9Ik6roa7ACFyWL4 target=_blank rel=noopener>ANU</a>. For any reasonable length, just download a pre-collected dump which the bash code will help with.</p><h3 id=code-to-collect-data>Code to Collect Data</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>requests</span> <span class=kn>import</span> <span class=n>get</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>tqdm</span> <span class=kn>import</span> <span class=n>trange</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>os</span> <span class=kn>import</span> <span class=n>path</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>p</span> <span class=o>=</span> <span class=s1>&#39;reports/quantum&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>p</span><span class=p>,</span> <span class=s1>&#39;ab&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=n>trange</span><span class=p>(</span><span class=nb>int</span><span class=p>(</span><span class=mf>2e6</span><span class=p>)</span> <span class=o>-</span> <span class=n>path</span><span class=o>.</span><span class=n>getsize</span><span class=p>(</span><span class=n>p</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>        <span class=n>bin_str</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;https://qrng.anu.edu.au/wp-content/plugins/colours-plugin/get_one_binary.php&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>text</span>
+</span></span><span class=line><span class=cl>        <span class=n>b</span> <span class=o>=</span> <span class=nb>int</span><span class=p>(</span><span class=n>bin_str</span><span class=p>,</span> <span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>((</span><span class=n>b</span><span class=p>)</span><span class=o>.</span><span class=n>to_bytes</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=n>byteorder</span><span class=o>=</span><span class=s1>&#39;big&#39;</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>~# <span class=c1># download 100 MB of quantum data from ANU</span>
+</span></span><span class=line><span class=cl>~# curl -o reports/.quantum <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        <span class=s2>&#34;https://cloudstor.aarnet.edu.au/plus/s/9Ik6roa7ACFyWL4/download?path=%2FANU_23Oct2017_5000MB&amp;files=ANU_23Oct2017_100MB_1&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span></span><span class=line><span class=cl>                                 Dload  Upload   Total   Spent    Left  Speed
+</span></span><span class=line><span class=cl><span class=m>100</span>  100M  <span class=m>100</span>  100M    <span class=m>0</span>     <span class=m>0</span>  5587k      <span class=m>0</span>  0:00:18  0:00:18 --:--:-- 6108k
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>~# ./sts -v <span class=m>1</span> -i <span class=m>800</span> -w ./reports/ -F r reports/quantum
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Testing data from file: reports/quantum
+</span></span><span class=line><span class=cl>Start of init phase
+</span></span><span class=line><span class=cl>End of init phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of iterate phase
+</span></span><span class=line><span class=cl>End of iterate phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of assess phase
+</span></span><span class=line><span class=cl>End of assess phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Start of destroy phase
+</span></span><span class=line><span class=cl>End of destroy phase
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Execution completed!
+</span></span><span class=line><span class=cl>Check the quantum.txt file <span class=k>for</span> the results
+</span></span></code></pre></td></tr></table></div></div><p>A total of 188 tests (some of the 15 tests actually consist of multiple sub-tests) were conducted to evaluate the randomness of 800 bitstreams of 1048576 bits from:</p><pre><code>reports/quantum
+</code></pre><hr><p>The numerous empirical results of these tests were then interpreted with an examination of the proportion of sequences that pass a statistical test (proportion analysis) and the distribution of p-values to check for uniformity (uniformity analysis). The results were the following:</p><pre><code>188/188 tests passed successfully both the analyses.
+0/188 tests did not pass successfully both the analyses.
+</code></pre><hr><p>Here are the results of the single tests:</p><ul><li><p>The &ldquo;Frequency&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Block Frequency&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Cumulative Sums&rdquo; (forward) test passed both the analyses.
+The &ldquo;Cumulative Sums&rdquo; (backward) test passed both the analyses.</p></li><li><p>The &ldquo;Runs&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Longest Run of Ones&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Binary Matrix Rank&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Discrete Fourier Transform&rdquo; test passed both the analyses.</p></li><li><p>148/148 of the &ldquo;Non-overlapping Template Matching&rdquo; tests passed both the analyses.</p></li><li><p>The &ldquo;Overlapping Template Matching&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Maurer&rsquo;s Universal Statistical&rdquo; test passed both the analyses.</p></li><li><p>The &ldquo;Approximate Entropy&rdquo; test passed both the analyses.</p></li><li><p>8/8 of the &ldquo;Random Excursions&rdquo; tests passed both the analyses.</p></li><li><p>18/18 of the &ldquo;Random Excursions Variant&rdquo; tests passed both the analyses.</p></li><li><p>The &ldquo;Serial&rdquo; (first) test passed both the analyses.
+The &ldquo;Serial&rdquo; (second) test passed both the analyses.</p></li><li><p>The &ldquo;Linear Complexity&rdquo; test passed both the analyses.</p></li></ul><hr><h2 id=conclusion>Conclusion</h2><p>Here&rsquo;s a summary of results.</p><div class=table-wrapper><table><thead><tr><th>Type</th><th style=text-align:center>Randomness</th><th style=text-align:center>Speed</th></tr></thead><tbody><tr><td>Random</td><td style=text-align:center>187/188</td><td style=text-align:center>164 MB/s</td></tr><tr><td>Avalanche</td><td style=text-align:center>183/188</td><td style=text-align:center>57.3 kB/s</td></tr><tr><td>Quantum</td><td style=text-align:center>188/188</td><td style=text-align:center><a class=link href=https://qrng.anu.edu.au/contact/faq/ target=_blank rel=noopener>5.7 Gb/s</a></td></tr></tbody></table></div><p>The built-in random entropy is the most common source of random numbers, and is almost perfectly statistically random. Obviously, the computer is not truly random, but the <a class=link href=https://unix.stackexchange.com/a/324210 target=_blank rel=noopener>algorithms used</a> are made to score highly on these tests. For fast and affordable random numbers, built-in generators are the way to go, especially since they&rsquo;re constantly seeded with conditions surrounding the machine.</p><p>Avalanche diode breakdown has by far the slowest generation speed but boasts true random number generation. Interestingly, this generation scored the lowest in both randomness and speed, so the primary use-case for avalanche breakdown would be seeding the computer&rsquo;s built-in <code>random</code>. In that way, the computer will take entropy from the diode without depleting it and offering fast generation. When generating SSL certificates and private keys in general for websites, SSH, or even crypto wallets, the risk of using pseudo-random numbers is too high, in my opinion. If what you&rsquo;re working on isn&rsquo;t worth ~$40.00, then use <code>random</code>, but if it&rsquo;s worth more than that, invest in a avalanche breakdown device. I spent $40.00 and picked up the <a class=link href=https://onerng.info/ target=_blank rel=noopener>OneRNG V3</a> pictured above.</p><p>Quantum random numbers are blisteringly fast and truly random. This will most likely be a huge use-case for quantum in the future. As crypto becomes more widespread on the internet, I&rsquo;m sure companies or individuals will want true randomness for generating their keys. As of right now, though, they&rsquo;re simply too expensive to buy.</p><p>The best option for securely generating random numbers is to seed the computer&rsquo;s entropy with a source of true randomness. If this is something you were considering, know that despite the high 187 score that <code>random</code> achieved, it is not truly random, meaning the numbers will always be the same if the initial conditions are replicated. Depending on your use-case, that might be fine. For example, running a Monte Carlo simulation or initializing random weights to a neural network. But if you&rsquo;re working with sensitive information, a true source of random numbers, even just as a seed to the machine, is always safer.</p><p>If you&rsquo;d like to confirm these results, you can <a class=link href=/data/randomReports.zip>download</a> the random data and reports for each respective binary blob. As expected for random data, zip couldn&rsquo;t compress the three 100 MB files, so it is over 300 MB! Sadly I can&rsquo;t upload that to GitHub, so I&rsquo;m uploading a 100 MB version instead. If you&rsquo;d <em>really</em> like the 300 MB version, email me and I&rsquo;ll send it over.</p><p>Based on the results from the smaller sample, it seems that the <a class=link href=https://wikipedia.org/wiki/Law_of_large_numbers target=_blank rel=noopener>Law of Large Numbers</a> applies most to avalanche diode breakdown and least to the built-in pseudo-random number generator. Quantum in somewhere in the middle. This is only from a few tests though, so it&rsquo;s by no means as significant as the results from 800 tests.</p></section><footer class=article-footer><section class=article-tags><a href=/tags/randomness/>Randomness</a>
+<a href=/tags/qiskit/>Qiskit</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css integrity=sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js integrity=sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js integrity=sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article class=has-image><a href=/archive/degrees-of-randomness-and-the-law-of-large-numbers/><div class=article-image><img src=/images/randomCoefficients.webp loading=lazy data-key data-hash=/images/randomCoefficients.webp></div><div class=article-details><h2 class=article-title>Degrees of Randomness and the Law of Large Numbers</h2></div></a></article><article class=has-image><a href=/archive/custom-gates-in-qiskit-with-pulse/><div class=article-image><img src=/images/pulseVisual3.webp loading=lazy data-key data-hash=/images/pulseVisual3.webp></div><div class=article-details><h2 class=article-title>Custom Gates in Qiskit with Pulse</h2></div></a></article><article class=has-image><a href=/archive/quantum-tales/><div class=article-image><img src=/images/quantumTales.webp loading=lazy data-key data-hash=/images/quantumTales.webp></div><div class=article-details><h2 class=article-title>Quantum Tales</h2></div></a></article><article class=has-image><a href=/archive/pgp/><div class=article-image><img src=/images/pgp.webp loading=lazy data-key=pgp data-hash=/images/pgp.webp></div><div class=article-details><h2 class=article-title>Generating a PGP Key</h2></div></a></article><article class=has-image><a href=/archive/quantum-physics-i/><div class=article-image><img src=/images/ocw1.webp loading=lazy data-key data-hash=/images/ocw1.webp></div><div class=article-details><h2 class=article-title>Quantum Physics I</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy; 2021 - 2022 SLC is</section><section class=powerby></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#baseline>Baseline</a></li><li><a href=#avalanche-breakdown>Avalanche Breakdown</a></li><li><a href=#quantum-computer>Quantum Computer</a><ol><li><a href=#code-to-collect-data>Code to Collect Data</a></li></ol></li><li><a href=#conclusion>Conclusion</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

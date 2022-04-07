@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Randomness on SLC is</title><link>https://slc.is/tags/randomness/</link><description>Recent content in Randomness on SLC is</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://slc.is/tags/randomness/index.xml" rel="self" type="application/rss+xml"/><item><title>Degrees of Randomness and the Law of Large Numbers</title><link>https://slc.is/archive/degrees-of-randomness-and-the-law-of-large-numbers/</link><pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/degrees-of-randomness-and-the-law-of-large-numbers/</guid><description>&lt;img src="https://slc.is/images/randomCoefficients.webp" alt="Featured image of post Degrees of Randomness and the Law of Large Numbers" />&lt;p>In a previous post comparing quantum and avalanche diode methods of true random number generation, an interesting pattern emerged. The quantum random numbers would pass more STS tests than avalanche diode random numbers. Seemingly, the quantum RNG converges to a mean before the diode RNG.&lt;/p>
+&lt;p>This should not be the case since both methods produce true random numbers, so this post will be exploring if this is actually occurring and why.&lt;/p>
+&lt;h2 id="code">Code&lt;/h2>
+&lt;p>We&amp;rsquo;ll be using &lt;code>C&lt;/code> to do this analysis since it&amp;rsquo;s fast enough for the scale I need.&lt;/p>
+&lt;p>The first task will be opening a file of random data by variable amounts. The &lt;a class="link" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/fread.html#tag_16_164" target="_blank" rel="noopener"
+>&lt;code>fread&lt;/code>&lt;/a> command takes a filename and number of bytes to read as arguments, so that&amp;rsquo;ll work well.&lt;/p>
+&lt;p>Specifically, the file (let&amp;rsquo;s call it &lt;code>random&lt;/code>) needs to be read in incrementing amounts, so the code will look like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define MAX_READ 5
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define FILE_NAME &amp;#34;random&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">…&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FILE&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">stream&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">FILE_NAME&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;r&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">buffer&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">bytes&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fread&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">buffer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">char&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This is storing some number of bytes in a buffer array. Now we can iterate through that array to determine the mean. Keep in mind that the theoretical mean is 0.5, so this is eventually going to compare the rates at which quantum and avalanche diode RNGs converge to the theoretical mean.&lt;/p>
+&lt;p>We&amp;rsquo;re iterating through 8 bits at a time, so to find each binary mean, we&amp;rsquo;ll count the number of ones in binary and divide by 8.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">static&lt;/span> &lt;span class="kr">inline&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="nf">binaryMean&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">char&lt;/span> &lt;span class="n">byte&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// https://stackoverflow.com/a/698183
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">byte&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mo">01001001001ULL&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="mo">042104210421ULL&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">%&lt;/span> &lt;span class="mo">017&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mf">8.0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The remainder is just reading multiple files and parsing the data as a &lt;!-- raw HTML omitted -->CSV&lt;!-- raw HTML omitted -->.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define MAX_READ 1000
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">long&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">static&lt;/span> &lt;span class="kr">inline&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="nf">binaryMean&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">byte&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">byte&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mo">01001001001ULL&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="mo">042104210421ULL&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="mo">017&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mf">8.0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">filenum&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FILE&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">stream&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;r&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">buffer&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">bytes&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fread&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">buffer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">char&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">long&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">mean&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mean&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">binaryMean&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">buffer&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">filenum&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">bytes&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mean&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fclose&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/quantum&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/avalanche&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Theoretical Mean,Quantum Mean,Avalanche Diode Mean&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;0.5,%Lf,%Lf&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The astute among us 🔴 will notice that I&amp;rsquo;m printing the data to stout; however, I&amp;rsquo;ll actually pull a *nix and piping the output to gnuplot.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gcc -c -o main.o main.c &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gcc ./main.o -o main &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> ./main &lt;span class="p">|&lt;/span> cat &amp;gt; /tmp/gnuplotdata.csv &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gnuplot -p -e &lt;span class="s2">&amp;#34;set title &amp;#39;Quantum vs. Avalanche&amp;#39;;set xlabel &amp;#39;Average Length&amp;#39;;set ylabel &amp;#39;Average&amp;#39;;set datafile separator &amp;#39;,&amp;#39;;plot for [col=1:3] &amp;#39;/tmp/gnuplotdata.csv&amp;#39; using col with lines title columnheader;pause -1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>That&amp;rsquo;s &lt;em>sus&lt;/em> but why have pipes if you never use them? Anyways, we can now begin comparing convergence.&lt;/p>
+&lt;h2 id="analysis">Analysis&lt;/h2>
+&lt;p>&lt;img src="https://slc.is/images/quantumAvalanchePlot.webp"
+loading="lazy"
+alt="Gnuplot Mean Convergence Plot"
+>&lt;/p>
+&lt;p>This is the plot outputted by gnuplot and it looks like both RNGs converge to 0.5 at equal rates.&lt;/p>
+&lt;blockquote>
+&lt;p>The differing rates to randomness is deeper than approaching the mean.&lt;/p>
+&lt;/blockquote>
+&lt;p>I&amp;rsquo;ll now be using the &lt;a class="link" href="https://www.fourmilab.ch/random/" target="_blank" rel="noopener"
+>ent&lt;/a> tool for statistical testing.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">dd &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>../../randomReports/randomData &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">104857601&lt;/span> &lt;span class="nv">count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">8&lt;/span> &lt;span class="nv">iflag&lt;/span>&lt;span class="o">=&lt;/span>fullblock 2&amp;gt;/dev/null &lt;span class="p">|&lt;/span> ent -b
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>Entropy = 1.000000 bits per bit.&lt;/p>
+&lt;p>Optimum compression would reduce the size
+of this 838860800 bit file by 0 percent.&lt;/p>
+&lt;p>Chi square distribution for 838860800 samples is 1.41, and randomly would exceed this value 23.50 percent of the times.&lt;/p>
+&lt;p>Arithmetic mean value of data bits is 0.5000 (0.5 = random).&lt;/p>
+&lt;p>Monte Carlo value for Pi is 3.141312452 (error 0.01 percent).&lt;/p>
+&lt;p>Serial correlation coefficient is -0.000014 (totally uncorrelated = 0.0).&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>Entropy = 1.000000 bits per bit.&lt;/p>
+&lt;p>Optimum compression would reduce the size
+of this 838860800 bit file by 0 percent.&lt;/p>
+&lt;p>Chi square distribution for 838860800 samples is 3.09, and randomly would exceed this value 7.88 percent of the times.&lt;/p>
+&lt;p>Arithmetic mean value of data bits is 0.5000 (0.5 = random).&lt;/p>
+&lt;p>Monte Carlo value for Pi is 3.141780515 (error 0.01 percent).&lt;/p>
+&lt;p>Serial correlation coefficient is -0.000027 (totally uncorrelated = 0.0).&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>Entropy = 1.000000 bits per bit.&lt;/p>
+&lt;p>Optimum compression would reduce the size
+of this 838860800 bit file by 0 percent.&lt;/p>
+&lt;p>Chi square distribution for 838860800 samples is 0.62, and randomly would exceed this value 43.12 percent of the times.&lt;/p>
+&lt;p>Arithmetic mean value of data bits is 0.5000 (0.5 = random).&lt;/p>
+&lt;p>Monte Carlo value for Pi is 3.141913953 (error 0.01 percent).&lt;/p>
+&lt;p>Serial correlation coefficient is 0.000048 (totally uncorrelated = 0.0).&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>When applied to all three files, these are the results we get:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Type&lt;/th>
+&lt;th style="text-align:center">Chi Square&lt;/th>
+&lt;th style="text-align:center">Monte Carlo Difference&lt;/th>
+&lt;th style="text-align:center">Serial Correlation Coefficient&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Quantum&lt;/td>
+&lt;td style="text-align:center">1.41&lt;/td>
+&lt;td style="text-align:center">0.000280202&lt;/td>
+&lt;td style="text-align:center">-0.000014&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Avalanche Diode&lt;/td>
+&lt;td style="text-align:center">3.09&lt;/td>
+&lt;td style="text-align:center">-0.000187861&lt;/td>
+&lt;td style="text-align:center">-0.000027&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Pseudorandom Generator&lt;/td>
+&lt;td style="text-align:center">0.62&lt;/td>
+&lt;td style="text-align:center">-0.000321299&lt;/td>
+&lt;td style="text-align:center">0.000048&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>We know that the &lt;!-- raw HTML omitted -->PRNG&lt;!-- raw HTML omitted --> is the least random, so if there are any tests that the PRNG does best, that test can not be used.&lt;/p>
+&lt;p>Unsurprisingly, the PRNG performs worst in every test. Avalanche diode outperforms quantum in Chi Square &lt;em>and&lt;/em> estimating Pi. Quantum only outperformed Avalanche diode in Serial Correlation Coefficient. Since the goal is to observe convergence of randomness, serial correlation makes the most sense to use.&lt;/p>
+&lt;p>What we&amp;rsquo;ll do now is observe the serial correlation coefficients of quantum and avalanche diode as the number of trials increases.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define MAX_READ 2500
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">long&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">filenum&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FILE&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// I increased the array sizes because a memory
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// leak and I didn&amp;#39;t care to track it down
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">output&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1035&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">path&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1000&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">snprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;%s%s%s&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;dd if=&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34; bs=&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">byteString&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">21&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">snprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">byteString&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">21&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;%lu&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">command&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2560&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">snprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;%s%s%s&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">path&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">byteString&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34; count=8 iflag=fullblock 2&amp;gt;/dev/null | ent -b | tail &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;-1 | cut -c 35-43 | xargs&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">popen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;r&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">fgets&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">output&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">output&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">filenum&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">bytes&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">strtold&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">output&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/quantum&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/avalanche&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Theoretical Coefficient,Quantum Coefficient,Avalanche Diode &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;Coefficient&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;0,%Lf,%Lf&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, much like before, we&amp;rsquo;ll pipe this output into gnuplot.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gcc -c -o main.o main.c &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gcc ./main.o -o main &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> ./main &lt;span class="p">|&lt;/span> cat &amp;gt; /tmp/gnuplotdata.csv &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gnuplot -p -e &lt;span class="s2">&amp;#34;set title &amp;#39;Quantum vs. Avalanche&amp;#39;;set xlabel &amp;#39;Size (Bytes)&amp;#39;;set ylabel &amp;#39;Serial Correlation Coefficient&amp;#39;;set datafile separator &amp;#39;,&amp;#39;;plot for [col=1:3] &amp;#39;/tmp/gnuplotdata.csv&amp;#39; using col with lines title columnheader;pause -1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://slc.is/images/randomCoefficients.webp"
+loading="lazy"
+alt="Gnuplot Coefficient Convergence Plot"
+>&lt;/p>
+&lt;p>Well, this is interesting.&lt;/p>
+&lt;h2 id="explanation">Explanation&lt;/h2>
+&lt;p>I have a couple theories for why these two methods of &lt;!-- raw HTML omitted -->TRNG&lt;!-- raw HTML omitted --> approach correlation coefficients of 0 at different rates.&lt;/p>
+&lt;ol>
+&lt;li>Partial Measurements
+&lt;ul>
+&lt;li>In a more &lt;!-- raw HTML omitted -->complex&lt;!-- raw HTML omitted --> system, there are more opportunities to be entangled with the environment which might increase correlation between measurements.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Faulty Hardware
+&lt;ul>
+&lt;li>The hardware might have some issue which causes data correlation&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;p>Obviously, the first explanation is more flashy, so I&amp;rsquo;m hoping something along those lines is occurring. With the avalanche diode method, electrons will be entangled with the enclosure which is weakly entangled with everything around it. This additional entanglement could reduce the randomness of the sequence. Quantum methods of generation should, therefore, have varying rates of discorrelation based on their amounts of interaction with the environment.&lt;/p>
+&lt;p>I&amp;rsquo;ll try to compare these rates with more precise avalanche diode machines and superconducting, photonic, nuclear magnetic resonance, dot, and other quantum methods.&lt;/p></description></item><item><title>Quantum versus Avalanche Breakdown Randomness</title><link>https://slc.is/archive/quantum-versus-avalanche-breakdown-randomness/</link><pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/quantum-versus-avalanche-breakdown-randomness/</guid><description>&lt;img src="https://slc.is/images/onerng.webp" alt="Featured image of post Quantum versus Avalanche Breakdown Randomness" />&lt;p>Avalanche breakdown and quantum are two methods for generating true random numbers. Here, we&amp;rsquo;ll compare them for feasibility and quality. The feasibility of a &lt;!-- raw HTML omitted -->TRNG&lt;!-- raw HTML omitted --> is how many bits per second it can produce while remaining random. And that leads us into quality which will be determined according to the NIST&amp;rsquo;s &lt;a class="link" href="https://www.nist.gov/publications/statistical-test-suite-random-and-pseudorandom-number-generators-cryptographic" target="_blank" rel="noopener"
+>&lt;!-- raw HTML omitted -->STS&lt;!-- raw HTML omitted -->&lt;/a>. We&amp;rsquo;ll also compare these methods against the computer&amp;rsquo;s default RNG as a baseline.&lt;/p>
+&lt;p>I&amp;rsquo;m using the Arcetri Team&amp;rsquo;s &lt;a class="link" href="https://github.com/arcetri/sts" target="_blank" rel="noopener"
+>implementation&lt;/a> of the STS. Building it just required running &lt;code>make&lt;/code> in the repo.&lt;/p>
+&lt;p>We&amp;rsquo;ll read around 100 &lt;!-- raw HTML omitted -->MB&lt;!-- raw HTML omitted --> of random data to perform the tests on. STS defaults to measuring bitsreams of 1 megabit per iteration, so we&amp;rsquo;ll run 800 iterations (8 bits = 1 byte).&lt;/p>
+&lt;p>A useful way to record the random numbers and the speed of their generation is with the &lt;a class="link" href="https://wikipedia.org/wiki/Dd_%28Unix%29" target="_blank" rel="noopener"
+>&lt;code>dd&lt;/code>&lt;/a> command.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~# dd &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>/path/to/random &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">of&lt;/span>&lt;span class="o">=&lt;/span>/copy/of/random &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">104857600&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">iflag&lt;/span>&lt;span class="o">=&lt;/span>fullblock
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">104857600&lt;/span> bytes &lt;span class="o">(&lt;/span>&lt;span class="m">105&lt;/span> MB, &lt;span class="m">100&lt;/span> MiB&lt;span class="o">)&lt;/span> copied, X.X s, X B/s
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>I&amp;rsquo;m also saving the data and reports under a &lt;code>reports&lt;/code> directory — so, create that if you need.&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="baseline">Baseline&lt;/h2>
+&lt;p>Reading from &lt;a class="link" href="https://linuxhint.com/dev_random_vs_dev_urandom/" target="_blank" rel="noopener"
+>random or urandom&lt;/a> seems to be a surprisingly controversial subject, but the only nearly-standard difference I found was that &lt;code>urandom&lt;/code> (which stands for unblocked random) won&amp;rsquo;t block read access when there isn&amp;rsquo;t enough randomness while &lt;code>random&lt;/code> will. I&amp;rsquo;m only looking at the best each method has to offer, so I&amp;rsquo;ll be accessing &lt;code>/dev/random&lt;/code> for this data.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~# dd &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>/dev/random &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">of&lt;/span>&lt;span class="o">=&lt;/span>reports/random &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">104857600&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">iflag&lt;/span>&lt;span class="o">=&lt;/span>fullblock
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">104857600&lt;/span> bytes &lt;span class="o">(&lt;/span>&lt;span class="m">105&lt;/span> MB, &lt;span class="m">100&lt;/span> MiB&lt;span class="o">)&lt;/span> copied, 0.637875 s, &lt;span class="m">164&lt;/span> MB/s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~# ./sts -v &lt;span class="m">1&lt;/span> -i &lt;span class="m">800&lt;/span> -w reports/ -F r reports/random
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Testing data from file: reports/random
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of init phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of init phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of iterate phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of iterate phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of assess phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of assess phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of destroy phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of destroy phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Execution completed!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Check the random.txt file &lt;span class="k">for&lt;/span> the results
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The collapsed details above summarize how many STS random tests the data passed. Running these tests on different data will change the results; however, we&amp;rsquo;re testing 800 iterations of $2^{20}=1,048,576$ bits, so the results are statistically significant.&lt;/p>
+&lt;p>This report is included in the zip linked in the conclusion along with the data used to derive the score.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>A total of 188 tests (some of the 15 tests actually consist of multiple sub-tests) were conducted to evaluate the randomness of 800 bitstreams of 1048576 bits from:&lt;/p>
+&lt;pre>&lt;code>reports/random
+&lt;/code>&lt;/pre>
+&lt;hr>
+&lt;p>The numerous empirical results of these tests were then interpreted with an examination of the proportion of sequences that pass a statistical test (proportion analysis) and the distribution of p-values to check for uniformity (uniformity analysis). The results were the following:&lt;/p>
+&lt;pre>&lt;code>187/188 tests passed successfully both the analyses.
+1/188 tests did not pass successfully both the analyses.
+&lt;/code>&lt;/pre>
+&lt;hr>
+&lt;p>Here are the results of the single tests:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>The &amp;ldquo;Frequency&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Block Frequency&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Cumulative Sums&amp;rdquo; (forward) test passed both the analyses.
+The &amp;ldquo;Cumulative Sums&amp;rdquo; (backward) test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Runs&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Longest Run of Ones&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Binary Matrix Rank&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Discrete Fourier Transform&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>147/148 of the &amp;ldquo;Non-overlapping Template Matching&amp;rdquo; tests passed both the analyses.
+1/148 of the &amp;ldquo;Non-overlapping Template Matching&amp;rdquo; tests FAILED the proportion analysis.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Overlapping Template Matching&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Maurer&amp;rsquo;s Universal Statistical&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Approximate Entropy&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>8/8 of the &amp;ldquo;Random Excursions&amp;rdquo; tests passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>18/18 of the &amp;ldquo;Random Excursions Variant&amp;rdquo; tests passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Serial&amp;rdquo; (first) test passed both the analyses.
+The &amp;ldquo;Serial&amp;rdquo; (second) test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Linear Complexity&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;!-- raw HTML omitted -->
+&lt;p>To begin our comparison, we&amp;rsquo;ll evaluate avalanche breakdown.&lt;/p>
+&lt;h2 id="avalanche-breakdown">Avalanche Breakdown&lt;/h2>
+&lt;p>This step is unique since we need to initialize the avalanche device to be read as a bitstream on &lt;!-- raw HTML omitted -->*nix&lt;!-- raw HTML omitted -->.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~# dmesg &lt;span class="p">|&lt;/span> grep cdc_acm&lt;span class="se">\ &lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="p">|&lt;/span> tail -1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cdc_acm 1-2.3.2.4.2.4:1.0: ttyACM0: USB ACM device
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~# stty raw -echo &amp;lt;/dev/ttyACM0 &lt;span class="c1"># put the tty device into raw mode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~# &lt;span class="nb">echo&lt;/span> cmd0 &amp;gt;/dev/ttyACM0 &lt;span class="c1"># put the device into the avalanche/whitening mode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~# &lt;span class="nb">echo&lt;/span> cmdO &amp;gt;/dev/ttyACM0 &lt;span class="c1"># turn on the feed to the USB&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Running the command below should dim the &lt;!-- raw HTML omitted -->LED&lt;!-- raw HTML omitted -->, indicating a loss in entropy.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~# dd &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>/dev/ttyACM0 &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">of&lt;/span>&lt;span class="o">=&lt;/span>reports/avalanche &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">104857600&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="nv">iflag&lt;/span>&lt;span class="o">=&lt;/span>fullblock
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">104857600&lt;/span> bytes &lt;span class="o">(&lt;/span>&lt;span class="m">105&lt;/span> MB, &lt;span class="m">100&lt;/span> MiB&lt;span class="o">)&lt;/span> copied, 1829.86 s, 57.3 kB/s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~# ./sts -v &lt;span class="m">1&lt;/span> -i &lt;span class="m">800&lt;/span> -w reports/ -F r reports/avalanche
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Testing data from file: reports/avalanche
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of init phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of init phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of iterate phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of iterate phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of assess phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of assess phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of destroy phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of destroy phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Execution completed!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Check the avalanche.txt file &lt;span class="k">for&lt;/span> the results
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>A total of 188 tests (some of the 15 tests actually consist of multiple sub-tests) were conducted to evaluate the randomness of 800 bitstreams of 1048576 bits from:&lt;/p>
+&lt;pre>&lt;code>reports/avalanche
+&lt;/code>&lt;/pre>
+&lt;hr>
+&lt;p>The numerous empirical results of these tests were then interpreted with an examination of the proportion of sequences that pass a statistical test (proportion analysis) and the distribution of p-values to check for uniformity (uniformity analysis). The results were the following:&lt;/p>
+&lt;pre>&lt;code>183/188 tests passed successfully both the analyses.
+5/188 tests did not pass successfully both the analyses.
+&lt;/code>&lt;/pre>
+&lt;hr>
+&lt;p>Here are the results of the single tests:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>The &amp;ldquo;Frequency&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Block Frequency&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Cumulative Sums&amp;rdquo; (forward) test passed both the analyses.
+The &amp;ldquo;Cumulative Sums&amp;rdquo; (backward) test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Runs&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Longest Run of Ones&amp;rdquo; test FAILED both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Binary Matrix Rank&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Discrete Fourier Transform&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>146/148 of the &amp;ldquo;Non-overlapping Template Matching&amp;rdquo; tests passed both the analyses.
+2/148 of the &amp;ldquo;Non-overlapping Template Matching&amp;rdquo; tests FAILED both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Overlapping Template Matching&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Maurer&amp;rsquo;s Universal Statistical&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Approximate Entropy&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>8/8 of the &amp;ldquo;Random Excursions&amp;rdquo; tests passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>18/18 of the &amp;ldquo;Random Excursions Variant&amp;rdquo; tests passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Serial&amp;rdquo; (first) test FAILED both the analyses.
+The &amp;ldquo;Serial&amp;rdquo; (second) test FAILED both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Linear Complexity&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;!-- raw HTML omitted -->
+&lt;h2 id="quantum-computer">Quantum Computer&lt;/h2>
+&lt;p>You can either collect your own quantum data or download dumps from &lt;a class="link" href="https://cloudstor.aarnet.edu.au/plus/s/9Ik6roa7ACFyWL4" target="_blank" rel="noopener"
+>ANU&lt;/a>. For any reasonable length, just download a pre-collected dump which the bash code will help with.&lt;/p>
+&lt;h3 id="code-to-collect-data">Code to Collect Data&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">requests&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">get&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">tqdm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">trange&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">os&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">path&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;reports/quantum&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">with&lt;/span> &lt;span class="nb">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;ab&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">trange&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">2e6&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">path&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">getsize&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="p">)):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">bin_str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;https://qrng.anu.edu.au/wp-content/plugins/colours-plugin/get_one_binary.php&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">text&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">bin_str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">write&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">to_bytes&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">byteorder&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;big&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~# &lt;span class="c1"># download 100 MB of quantum data from ANU&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~# curl -o reports/.quantum &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;https://cloudstor.aarnet.edu.au/plus/s/9Ik6roa7ACFyWL4/download?path=%2FANU_23Oct2017_5000MB&amp;amp;files=ANU_23Oct2017_100MB_1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> % Total % Received % Xferd Average Speed Time Time Time Current
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Dload Upload Total Spent Left Speed
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">100&lt;/span> 100M &lt;span class="m">100&lt;/span> 100M &lt;span class="m">0&lt;/span> &lt;span class="m">0&lt;/span> 5587k &lt;span class="m">0&lt;/span> 0:00:18 0:00:18 --:--:-- 6108k
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~# ./sts -v &lt;span class="m">1&lt;/span> -i &lt;span class="m">800&lt;/span> -w ./reports/ -F r reports/quantum
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Testing data from file: reports/quantum
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of init phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of init phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of iterate phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of iterate phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of assess phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of assess phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Start of destroy phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">End of destroy phase
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Execution completed!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Check the quantum.txt file &lt;span class="k">for&lt;/span> the results
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>A total of 188 tests (some of the 15 tests actually consist of multiple sub-tests) were conducted to evaluate the randomness of 800 bitstreams of 1048576 bits from:&lt;/p>
+&lt;pre>&lt;code>reports/quantum
+&lt;/code>&lt;/pre>
+&lt;hr>
+&lt;p>The numerous empirical results of these tests were then interpreted with an examination of the proportion of sequences that pass a statistical test (proportion analysis) and the distribution of p-values to check for uniformity (uniformity analysis). The results were the following:&lt;/p>
+&lt;pre>&lt;code>188/188 tests passed successfully both the analyses.
+0/188 tests did not pass successfully both the analyses.
+&lt;/code>&lt;/pre>
+&lt;hr>
+&lt;p>Here are the results of the single tests:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>The &amp;ldquo;Frequency&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Block Frequency&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Cumulative Sums&amp;rdquo; (forward) test passed both the analyses.
+The &amp;ldquo;Cumulative Sums&amp;rdquo; (backward) test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Runs&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Longest Run of Ones&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Binary Matrix Rank&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Discrete Fourier Transform&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>148/148 of the &amp;ldquo;Non-overlapping Template Matching&amp;rdquo; tests passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Overlapping Template Matching&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Maurer&amp;rsquo;s Universal Statistical&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Approximate Entropy&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>8/8 of the &amp;ldquo;Random Excursions&amp;rdquo; tests passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>18/18 of the &amp;ldquo;Random Excursions Variant&amp;rdquo; tests passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Serial&amp;rdquo; (first) test passed both the analyses.
+The &amp;ldquo;Serial&amp;rdquo; (second) test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>The &amp;ldquo;Linear Complexity&amp;rdquo; test passed both the analyses.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;!-- raw HTML omitted -->
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>Here&amp;rsquo;s a summary of results.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Type&lt;/th>
+&lt;th style="text-align:center">Randomness&lt;/th>
+&lt;th style="text-align:center">Speed&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Random&lt;/td>
+&lt;td style="text-align:center">187/188&lt;/td>
+&lt;td style="text-align:center">164 MB/s&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Avalanche&lt;/td>
+&lt;td style="text-align:center">183/188&lt;/td>
+&lt;td style="text-align:center">57.3 kB/s&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Quantum&lt;/td>
+&lt;td style="text-align:center">188/188&lt;/td>
+&lt;td style="text-align:center">&lt;a class="link" href="https://qrng.anu.edu.au/contact/faq/" target="_blank" rel="noopener"
+>5.7 Gb/s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The built-in random entropy is the most common source of random numbers, and is almost perfectly statistically random. Obviously, the computer is not truly random, but the &lt;a class="link" href="https://unix.stackexchange.com/a/324210" target="_blank" rel="noopener"
+>algorithms used&lt;/a> are made to score highly on these tests. For fast and affordable random numbers, built-in generators are the way to go, especially since they&amp;rsquo;re constantly seeded with conditions surrounding the machine.&lt;/p>
+&lt;p>Avalanche diode breakdown has by far the slowest generation speed but boasts true random number generation. Interestingly, this generation scored the lowest in both randomness and speed, so the primary use-case for avalanche breakdown would be seeding the computer&amp;rsquo;s built-in &lt;code>random&lt;/code>. In that way, the computer will take entropy from the diode without depleting it and offering fast generation. When generating SSL certificates and private keys in general for websites, SSH, or even &lt;!-- raw HTML omitted -->crypto&lt;!-- raw HTML omitted --> wallets, the risk of using pseudo-random numbers is too high, in my opinion. If what you&amp;rsquo;re working on isn&amp;rsquo;t worth ~$40.00, then use &lt;code>random&lt;/code>, but if it&amp;rsquo;s worth more than that, invest in a avalanche breakdown device. I spent $40.00 and picked up the &lt;a class="link" href="https://onerng.info/" target="_blank" rel="noopener"
+>OneRNG V3&lt;/a> pictured above.&lt;/p>
+&lt;p>Quantum random numbers are blisteringly fast and truly random. This will most likely be a huge use-case for quantum in the future. As crypto becomes more widespread on the internet, I&amp;rsquo;m sure companies or individuals will want true randomness for generating their keys. As of right now, though, they&amp;rsquo;re simply too expensive to buy.&lt;/p>
+&lt;p>The best option for securely generating random numbers is to seed the computer&amp;rsquo;s entropy with a source of true randomness. If this is something you were considering, know that despite the high 187 score that &lt;code>random&lt;/code> achieved, it is not truly random, meaning the numbers will always be the same if the initial conditions are replicated. Depending on your use-case, that might be fine. For example, running a Monte Carlo simulation or initializing random weights to a neural network. But if you&amp;rsquo;re working with sensitive information, a true source of random numbers, even just as a seed to the machine, is always safer.&lt;/p>
+&lt;p>If you&amp;rsquo;d like to confirm these results, you can &lt;a class="link" href="https://slc.is/data/randomReports.zip" >download&lt;/a> the random data and reports for each respective binary blob. As expected for random data, zip couldn&amp;rsquo;t compress the three 100 MB files, so it is over 300 MB! Sadly I can&amp;rsquo;t upload that to GitHub, so I&amp;rsquo;m uploading a 100 MB version instead. If you&amp;rsquo;d &lt;em>really&lt;/em> like the 300 MB version, email me and I&amp;rsquo;ll send it over.&lt;/p>
+&lt;p>Based on the results from the smaller sample, it seems that the &lt;a class="link" href="https://wikipedia.org/wiki/Law_of_large_numbers" target="_blank" rel="noopener"
+>Law of Large Numbers&lt;/a> applies most to avalanche diode breakdown and least to the built-in pseudo-random number generator. Quantum in somewhere in the middle. This is only from a few tests though, so it&amp;rsquo;s by no means as significant as the results from 800 tests.&lt;/p></description></item></channel></rss>

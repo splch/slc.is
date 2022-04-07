@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on SLC is</title><link>https://slc.is/page/</link><description>Recent content in Pages on SLC is</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://slc.is/page/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://slc.is/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://slc.is/about/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~$ whoami
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Spencer Churchill
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="feel-free-to-contact-me-at-spenceduckcom">Feel free to contact me at &lt;a class="link" href="mailto:spence@duck.com" >spence@duck.com&lt;/a>&lt;/h2>
+&lt;ul>
+&lt;li>Download my &lt;a class="link" href="https://keys.mailvelope.com/pks/lookup?op=get&amp;amp;search=spence@duck.com" target="_blank" rel="noopener"
+>PGP Key&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>I&amp;rsquo;m a student at the University of California, Irvine and majoring in computer science. I enjoy studying at the edge of the field, so I&amp;rsquo;ve found quantum computing and &lt;a class="link" href="https://wikipedia.org/wiki/Artificial_general_intelligence#%22Strong_AI%22_as_defined_in_philosophy" target="_blank" rel="noopener"
+>artificial intelligence&lt;/a> to be exciting areas!&lt;/p>
+&lt;p>I&amp;rsquo;m always listening to or making music. But when I&amp;rsquo;m up for a challenge, I like to code all sorts of things. I make &lt;a class="link" href="https://chrome.google.com/webstore/search/splch?_category=extensions" target="_blank" rel="noopener"
+>chrome extensions&lt;/a> when I need tools and work on quantum and &lt;!-- raw HTML omitted -->AI&lt;!-- raw HTML omitted --> projects when I want to push myself.&lt;/p>
+&lt;p>My current research interest is why different methods of &lt;!-- raw HTML omitted -->TRNG&lt;!-- raw HTML omitted --> approach correlation coefficients of 0 at different rates. A future goal of mine is to study how quantum will change optimizations like gradient decent. I&amp;rsquo;m actively involved in &lt;a class="link" href="https://qiskit.org/" target="_blank" rel="noopener"
+>Qiskit&lt;/a> but still need to study different methods of minimum finding.&lt;/p>
+&lt;hr>
+&lt;p>Languages I&amp;rsquo;m Using:&lt;/p>
+&lt;ul>
+&lt;li>Python&lt;/li>
+&lt;li>C&lt;/li>
+&lt;li>&lt;!-- raw HTML omitted -->HTML&lt;!-- raw HTML omitted --> / &lt;!-- raw HTML omitted -->CSS&lt;!-- raw HTML omitted --> / &lt;!-- raw HTML omitted -->JS&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>Go&lt;/li>
+&lt;/ul>
+&lt;p>Languages I&amp;rsquo;m Learning:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://tryhaskell.org/" target="_blank" rel="noopener"
+>Haskell&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="http://www.6502asm.com/" target="_blank" rel="noopener"
+>6502 Assembly&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;!-- raw HTML omitted -->
+&lt;h1 id="résumédataresumeresumepdf">&lt;a class="link" href="https://slc.is/data/resume/resume.pdf" >Résumé&lt;/a>&lt;/h1></description></item><item><title>Archive</title><link>https://slc.is/archive/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://slc.is/archive/</guid><description/></item><item><title>Music</title><link>https://slc.is/music/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://slc.is/music/</guid><description>&lt;h2 id="recordings">Recordings&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/nuvole%20bianche.mp3" >Nuvole Bianche&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/la%20vie%20en%20rose.mp3" >La Vie En Rose&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/someone%20you%20loved.mp3" >Someone You Loved&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/river.mp3" >River Flows In You&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/kiss%20the%20rain.mp3" >Kiss the Rain&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/mononoke.mp3" >Princess Mononoke&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/howl.mp3" >Howl&amp;rsquo;s Moving Castle&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="midi">MIDI&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/rondo.mp3" >Variations on Rondo Alla Turca&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/Steam%20City.mp3" >Steam City&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="partials">Partials&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/path%20of%20the%20wind.mp3" >Path of the Wind&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/bubbly.mp3" >Bubbly&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/cancion.mp3" >Canción del Mariachi&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://slc.is/data/music/such%20a%20fool.mp3" >Such a Fool&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Search</title><link>https://slc.is/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://slc.is/search/</guid><description/></item></channel></rss>

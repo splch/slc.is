@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Math on SLC is</title><link>https://slc.is/categories/math/</link><description>Recent content in Math on SLC is</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 24 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://slc.is/categories/math/index.xml" rel="self" type="application/rss+xml"/><item><title>The Meanest Color</title><link>https://slc.is/archive/meancolor/</link><pubDate>Thu, 24 Mar 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/meancolor/</guid><description>&lt;img src="https://slc.is/images/purple.webp" alt="Featured image of post The Meanest Color" />&lt;p>Have you ever wanted to know what the most mean color is? Red might come to mind — a fiery and belligerent color. But I&amp;rsquo;ll do one better! I&amp;rsquo;ll give you the color vector that&amp;rsquo;s closest to every other color vector.&lt;/p>
+&lt;p>Here, the most average and mean color can be determined with &lt;a class="link" href="https://radimrehurek.com/gensim/index.html" target="_blank" rel="noopener"
+>word2vec&lt;/a> and vector averaging.&lt;/p>
+&lt;h1 id="process">Process&lt;/h1>
+&lt;ol>
+&lt;li>Load the word2vec model&lt;/li>
+&lt;li>Load the list of colors&lt;/li>
+&lt;li>Sum the vectors of each color together&lt;/li>
+&lt;li>Divide by the number of colors&lt;/li>
+&lt;li>Find the color vector with the largest cosine similarity to that vector&lt;/li>
+&lt;/ol>
+&lt;h1 id="python">Python&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="n">gensim&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">numpy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">gensim.downloader&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">queen_values&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">gensim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">downloader&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">()[&lt;/span>&lt;span class="s1">&amp;#39;models&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">keys&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">model&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">gensim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">downloader&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">t&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_similar&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">positive&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;king&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;woman&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">negative&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;man&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">v&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">t&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;queen&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">queen_values&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">v&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">t&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">except&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">pass&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;pre>&lt;code>('queen', 0.7786749005317688)
+('queen', 0.7118193507194519)
+('queen', 0.8523604273796082)
+('queen', 0.7698540687561035)
+('queen', 0.6978678107261658)
+('queen', 0.6713277101516724)
+('meets', 0.8841924071311951)
+('prince', 0.759779691696167)
+('queen', 0.7052316069602966)
+('queen', 0.6820898056030273)
+&lt;/code>&lt;/pre>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">best_model&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">queen_values&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">queen_values&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reverse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">best_model&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">model&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">gensim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">downloader&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">best_model&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;pre>&lt;code> glove-wiki-gigaword-50
+&lt;/code>&lt;/pre>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">colors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;white&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;black&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;silver&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;red&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;maroon&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;purple&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;orange&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;brown&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;beige&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;yellow&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;gold&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;tan&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;green&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;lime&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;olive&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;blue&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;cyan&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;teal&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;indigo&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;lavender&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;pink&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;violet&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;magenta&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;fuchsia&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># start by averaging grays&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">avg_vector&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;gray&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;grey&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">color&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">colors&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">avg_vector&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># divide by the number of colors&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">avg_vector&lt;/span> &lt;span class="o">/=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">colors&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">avg_colors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">color&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">colors&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sim&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">numpy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dot&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">avg_vector&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">/&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="n">numpy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">linalg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">norm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">avg_vector&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">numpy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">linalg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">norm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">model&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">]))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">avg_colors&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sim&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">color&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">avg_colors&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">avg_colors&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reverse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\t\t&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">avg_colors&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">color&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;pre>&lt;code>purple 0.92791396
+pink 0.9113098
+blue 0.9093884
+yellow 0.88690674
+red 0.872676
+green 0.8654766
+orange 0.84672266
+black 0.83403736
+white 0.8287787
+lavender 0.81729794
+maroon 0.7757962
+fuchsia 0.7409902
+brown 0.7358376
+olive 0.73582804
+magenta 0.68170786
+violet 0.6786235
+silver 0.6677471
+beige 0.66110957
+lime 0.6299113
+indigo 0.5789356
+gold 0.56747013
+tan 0.5436225
+teal 0.517831
+cyan 0.5167587
+&lt;/code>&lt;/pre>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>There isn&amp;rsquo;t any purpose for this post, but it&amp;rsquo;s interesting to know that the meanest color is &lt;strong>purple&lt;/strong>. I mostly wanted to start thinking about fun ways to use word2vec. I think I&amp;rsquo;d like to make a tool to assist writers in some way. I&amp;rsquo;m not sure what I&amp;rsquo;ll do with it, but I&amp;rsquo;m sure it&amp;rsquo;ll be fun.&lt;/p></description></item><item><title>Generating a PGP Key</title><link>https://slc.is/archive/pgp/</link><pubDate>Wed, 23 Mar 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/pgp/</guid><description>&lt;img src="https://slc.is/images/pgp.webp" alt="Featured image of post Generating a PGP Key" />&lt;p>This is an extreme guide to generating a PGP key. A simple tutorial will suffice; however, this will help generate the most secure key possible.&lt;/p>
+&lt;h1 id="quantum-background">Quantum Background&lt;/h1>
+&lt;p>The NIST compared the &lt;a class="link" href="https://csrc.nist.gov/CSRC/media/Presentations/NIST-Status-Update-on-Elliptic-Curves-and-Post-Qua/images-media/moody-dustin-threshold-crypto-workshop-March-2019.pdf" target="_blank" rel="noopener"
+>security of RSA and ECC keys&lt;/a> and concluded that, with sufficient lengths in key complexity, either standard will suffice.&lt;/p>
+&lt;p>Shor&amp;rsquo;s algorithm factors coprime numbers, thus is able to recreate the private key to any RSA-generated public key. This NIST paper, however, asserts that Grover&amp;rsquo;s algorithm can be used to recreate the private key to any ECC-generated public key. While true, this is the same as a brute-force solution since Grover&amp;rsquo;s search would still need $\sqrt{N}$ qubits to find the private key. Shor&amp;rsquo;s algorithm has a complexity of around $O(\log{(N)}^3)$ while Grover&amp;rsquo;s has a complexity of $O(\sqrt{N})$.&lt;/p>
+&lt;p>Considering the difference in algorithmic complexity between Shor&amp;rsquo;s and Grover&amp;rsquo;s algorithms, Shor&amp;rsquo;s poses a more significant threat to RSA encryption than Grover&amp;rsquo;s does to Ed25519. Because of this, I recommend using Ed25519 for a PGP key pair. There are some unsupported theories that elliptic curve cryptography is not secure, but no evidence has been provided for this whatsoever.&lt;/p>
+&lt;h1 id="truly-random-key-seeds">Truly Random Key Seeds&lt;/h1>
+&lt;p>Since this post is already looking ahead many decades, the next recommendation will be seeding more entropy into the PRNG that is used to generate the PGP key pair. The elliptic curve generation will pick a random slope for a line to intersect the elliptic curve.&lt;/p>
+&lt;p>&lt;img src="https://slc.is/images/ecc.webp"
+loading="lazy"
+alt="https://www.desmos.com/calculator/hhqdcaiv7p"
+>&lt;/p>
+&lt;p>In theory, unless your computer is using a truly random source of entropy, the slope of the line could be rederived and the private key could be recreated. This is absurdly unlikely, but the solution is easily implemented, and the time it takes to generate the private key is negligible considering the duration you&amp;rsquo;ll use the key.&lt;/p>
+&lt;p>Using a true random source of entropy could be counting the number of times a geiger counter clicks in a given time frame, or using a hardware random source of entropy like the &lt;a class="link" href="https://onerng.info/" target="_blank" rel="noopener"
+>OneRNG V3&lt;/a>. I already have a OneRNG USB, so I&amp;rsquo;ll seed my random numbers with that.&lt;/p>
+&lt;h1 id="generating-a-pgp-key-pair">Generating a PGP Key Pair&lt;/h1>
+&lt;p>First, install &lt;a class="link" href="https://gnupg.org/" target="_blank" rel="noopener"
+>GnuPG&lt;/a>. This is a free software that can be used to generate PGP keys. It&amp;rsquo;s best to use an open source and offline tool to generate keys since websites and servers could use a variety of methods to store or recreate your private key. Additionally, using a device you know is secure and private is a necessity. A simple way to handle trust is to use a live USB, then assume that there&amp;rsquo;s no hardware-level surveillance on your device.&lt;/p>
+&lt;p>On the download page, it supports common operating systems like Windows, MacOS, and Linux, as well as other platforms.&lt;/p>
+&lt;h2 id="seed-the-prng">Seed the PRNG&lt;/h2>
+&lt;p>Find what entropy source GnuPG uses on your operating system. On Linux and MacOS, for example, it&amp;rsquo;s &lt;code>/dev/random&lt;/code>. To add entropy to the PRNG, use something like the following command:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">rngd -r /path/to/true/randomness
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="run-gnupg">Run GnuPG&lt;/h2>
+&lt;p>Once you have installed GnuPG, run &lt;code>gpg --full-generate-key&lt;/code> to generate a key pair.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~$ gpg --full-generate-key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpg &lt;span class="o">(&lt;/span>GnuPG&lt;span class="o">)&lt;/span> 2.3.4&lt;span class="p">;&lt;/span> Copyright &lt;span class="o">(&lt;/span>C&lt;span class="o">)&lt;/span> &lt;span class="m">2021&lt;/span> Free Software Foundation, Inc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">This is free software: you are free to change and redistribute it.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">There is NO WARRANTY, to the extent permitted by law.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please &lt;span class="k">select&lt;/span> what kind of key you want:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>1&lt;span class="o">)&lt;/span> RSA and RSA
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>2&lt;span class="o">)&lt;/span> DSA and Elgamal
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>3&lt;span class="o">)&lt;/span> DSA &lt;span class="o">(&lt;/span>sign only&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>4&lt;span class="o">)&lt;/span> RSA &lt;span class="o">(&lt;/span>sign only&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>9&lt;span class="o">)&lt;/span> ECC &lt;span class="o">(&lt;/span>sign and encrypt&lt;span class="o">)&lt;/span> *default*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>10&lt;span class="o">)&lt;/span> ECC &lt;span class="o">(&lt;/span>sign only&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>14&lt;span class="o">)&lt;/span> Existing key from card
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Your selection? &lt;span class="m">9&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please &lt;span class="k">select&lt;/span> which elliptic curve you want:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>1&lt;span class="o">)&lt;/span> Curve &lt;span class="m">25519&lt;/span> *default*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>4&lt;span class="o">)&lt;/span> NIST P-384
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">(&lt;/span>6&lt;span class="o">)&lt;/span> Brainpool P-256
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Your selection? &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please specify how long the key should be valid.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">0&lt;/span> &lt;span class="o">=&lt;/span> key does not expire
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;n&amp;gt; &lt;span class="o">=&lt;/span> key expires in n days
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;n&amp;gt;w &lt;span class="o">=&lt;/span> key expires in n weeks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;n&amp;gt;m &lt;span class="o">=&lt;/span> key expires in n months
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;n&amp;gt;y &lt;span class="o">=&lt;/span> key expires in n years
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Key is valid &lt;span class="k">for&lt;/span>? &lt;span class="o">(&lt;/span>0&lt;span class="o">)&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Key does not expire at all
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Is this correct? &lt;span class="o">(&lt;/span>y/N&lt;span class="o">)&lt;/span> y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">GnuPG needs to construct a user ID to identify your key.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Real name: name
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Email address: name@example.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Comment: hello, world
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You selected this USER-ID:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;name (hello, world) &amp;lt;name@example.org&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Change &lt;span class="o">(&lt;/span>N&lt;span class="o">)&lt;/span>ame, &lt;span class="o">(&lt;/span>C&lt;span class="o">)&lt;/span>omment, &lt;span class="o">(&lt;/span>E&lt;span class="o">)&lt;/span>mail or &lt;span class="o">(&lt;/span>O&lt;span class="o">)&lt;/span>kay/&lt;span class="o">(&lt;/span>Q&lt;span class="o">)&lt;/span>uit? O
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">We need to generate a lot of random bytes. It is a good idea to perform
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">some other action &lt;span class="o">(&lt;/span>&lt;span class="nb">type&lt;/span> on the keyboard, move the mouse, utilize the
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">disks&lt;span class="o">)&lt;/span> during the prime generation&lt;span class="p">;&lt;/span> this gives the random number
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">generator a better chance to gain enough entropy.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpg: directory &lt;span class="s1">&amp;#39;~/name/.gnupg/openpgp-revocs.d&amp;#39;&lt;/span> created
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpg: revocation certificate stored as &lt;span class="s1">&amp;#39;~/name/.gnupg/openpgp-revocs.d/ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789.rev&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">public and secret key created and signed.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pub ed25519 2022-03-24 &lt;span class="o">[&lt;/span>SC&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uid name &lt;span class="o">(&lt;/span>hello, world&lt;span class="o">)&lt;/span> &amp;lt;name@example.org&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sub cv25519 2022-03-24 &lt;span class="o">[&lt;/span>E&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>It&amp;rsquo;s reassuring to see that the recommended settings are what we decided on too! Before moving on, confirm that you now have a PGP key pair. Run &lt;code>--list-keys&lt;/code> to view the generated key information.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~$ gpg --list-keys
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpg: checking the trustdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpg: marginals needed: &lt;span class="m">3&lt;/span> completes needed: &lt;span class="m">1&lt;/span> trust model: pgp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpg: depth: &lt;span class="m">0&lt;/span> valid: &lt;span class="m">1&lt;/span> signed: &lt;span class="m">0&lt;/span> trust: 0-, 0q, 0n, 0m, 0f, 1u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">~/name/.gnupg/pubring.kbx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">--------------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pub ed25519 2022-03-24 &lt;span class="o">[&lt;/span>SC&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uid &lt;span class="o">[&lt;/span>ultimate&lt;span class="o">]&lt;/span> name &lt;span class="o">(&lt;/span>hello, world&lt;span class="o">)&lt;/span> &amp;lt;name@example.org&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sub cv25519 2022-03-24 &lt;span class="o">[&lt;/span>E&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The &lt;code>KEY-ID&lt;/code> is the 40 character long fingerprint for the key pair. That ID will be used to specify the key when using it.&lt;/p>
+&lt;h1 id="distributing-your-public-key">Distributing your &lt;strong>public&lt;/strong> key&lt;/h1>
+&lt;p>You might&amp;rsquo;ve seen people link their public key when sharing their email or other contact services. You can distribute your public key in any way you&amp;rsquo;d like, but a good way to do this is to use a PGP key server.&lt;/p>
+&lt;p>There are a few key servers out there, but the most popular are:&lt;/p>
+&lt;ol>
+&lt;li>pgp.mit.edu&lt;/li>
+&lt;li>keyserver.ubuntu.com&lt;/li>
+&lt;li>keybase.io&lt;/li>
+&lt;li>keys.openpgp.org&lt;/li>
+&lt;li>keys.mailvelope.com&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>Key servers use pooling to distribute keys, so you can tend to upload a key once and have it distributed to many people.&lt;/p>
+&lt;/blockquote>
+&lt;p>By running &lt;code>gpg --send-keys&lt;/code> on your key pair, you can export your public key.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gpg --send-keys ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This will export your public key to &lt;a class="link" href="https://keys.openpgp.org/" target="_blank" rel="noopener"
+>keys.openpgp.org&lt;/a>. The other sites also have an upload pages, so feel free to upload there as well.&lt;/p>
+&lt;p>To easily copy your public key, you can use &lt;code>gpg --export --armor&lt;/code>. The &lt;code>--armor&lt;/code> flag will export the key in ASCII armored format.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~$ gpg --export --armor ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----BEGIN PGP PUBLIC KEY BLOCK-----
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xjMEYkAMlhYJKwYBBAHaRw8BAQdAija76hmp8YHmr0zHw+Qv1nMNsrqcsRQW
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cqSlqOEoHCrNHVNwZW5jZXIgQ2h1cmNoaWxsIDxtZUBzbGMuaXM+wqoEExYK
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ADsWIQQQICP7jXDvYysbVVUKmHynkTkZlQUCYkAMlgIbAwULCQgHAgMiAgEG
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">FQoJCAsCAxYCAQIeBwIXgAAhCRAKmHynkTkZlRYhBBAgI/uNcO9jKxtVVQqY
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">fKeRORmVyFAA/3tWetkYc5XKA8yDYyAeZk8cI0Cy7+1Afm/p2mQQnzXvAQCq
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">QzdsI4owKGbHudz/DKsVKkWDCZ1yfg0FRq52qMnGAM0jU3BlbmNlciBDaHVy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Y2hpbGwgPHNwZW5jZUBkdWNrLmNvbT7CqgQTFgoAOxYhBBAgI/uNcO9jKxtV
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">VQqYfKeRORmVBQJiQBKFAhsDBQsJCAcCAyICAQYVCgkICwIDFgIBAh4HAheA
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ACEJEAqYfKeRORmVFiEEECAj+41w72MrG1VVCph8p5E5GZX5vwEAlCwXoyAp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">3bjz6x+rH1N7lqB/oIW4uPwc2bEKu43+POQA/1iqNPNTHjNsewlF19pGLljA
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xn946DQzWw02ulFqz5sKzjgEYkAMlhIKKwYBBAGXVQEFAQEHQNfziQppiMhw
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ieGfPpIMopxsvTe/scnI6G7WhoMUPbNEAwEIB8KPBBgWCgAgFiEEECAj+41w
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">72MrG1VVCph8p5E5GZUFAmJADJYCGwwAIQkQCph8p5E5GZUWIQQQICP7jXDv
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">YysbVVUKmHynkTkZlf+MAQCQByuimb5r1gEPoPQ0+dg0GQP16WYE/EF4WhC3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kJ8QuQD+OW350m6xUU9djl7gmlnBeoNZB7EyoPuGs301bL1v6A8&lt;span class="o">=&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">=&lt;/span>QfAK
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----END PGP PUBLIC KEY BLOCK-----
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="encrypting-and-decrypting-data">Encrypting and Decrypting Data&lt;/h2>
+&lt;p>To encrypt, run &lt;code>--encrypt&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gpg --encrypt --recipient ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789 /path/to/file
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>That will output a file named &lt;code>/path/to/file.gpg&lt;/code>. Only you can decrypt that file with your private key. To do that use &lt;code>--decrypt&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gpg --decrypt --recipient ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789 /path/to/file.gpg &amp;gt; /path/to/file
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="backing-up-your-private-key">Backing up your private key&lt;/h1>
+&lt;p>To backup your private key, run &lt;code>--export-secret-keys&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">~$ gpg --export-secret-key --armor ABCDEFGHIJKLMNOPQRSTUVWXYANDZ01223456789
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----BEGIN PGP PRIVATE KEY BLOCK-----
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">lFgEYjw1xhYJKwYBBAHaRw8BAQdAwl9GSoOR4E7wUpe1A+Evd+ViiavBUvpvw4nf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">JLVtm3EAAQCTHWqtqmI1D6ODctaR3UGOLLsGZjUe1WTPP5BDQkVC9w5DtCZuYW1l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ciAoaGVsbG8sIHdvcmwpIDxuYW1lQGV4YW1wbGUuY29tPoiUBBMWCgA8FiEE6Vs9
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vE0RXucZDtSi9KkIHalB430FAmI8NcYCGwMFCwkIBwIDIgIBBhUKCQgLAgQWAgMB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Ah4HAheAAAoJEPSpCB2pQeN967EBANgog1cMEPpNYjXTZzSiOFSK4BmlwV1vghTB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">0xq7cLv4APsEmzZK8djumlIAD1Ur0/tgoXVk3Mt6TFibmOpMec2IA5xdBGI8NcYS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CisGAQQBl1UBBQEBB0BAsR6gXGOwPgWrfmltMAh7EIZ5J8GYE206qsVhwXzhdgMB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CAcAAP9G0xraBqKnhlP5pkjuaxl/qOS+5m4NtJZm4YeJ/o91qBMCiHgEGBYKACAW
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">IQTpWz28TRFe5xkO1KL0qQgdqUHjfQUCYjw1xgIbDAAKCRD0qQgdqUHjfR1RAP9R
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Lm53gMSLaAAyonnsV49TSK8Lunv9ochw4LlmDc0/wQD8CUO687SXXpAVrJCvcbqu
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">aXfYuB1XxWxcgI5phcv/VAw&lt;span class="o">=&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">=&lt;/span>LAxH
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----END PGP PRIVATE KEY BLOCK-----
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Again, you can pipe this into a file or copy it into a notebook.&lt;/p>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>PGP key generation can be as simple (from generating and managing keys from within Mailvelope) to as complex as you&amp;rsquo;d like. The benefit with more engaged generation is you only need to do it once. After the first time, you can use the same key for any communication. I hope this tutorial is helpful in getting started with or improving your PGP keys.&lt;/p></description></item><item><title>RGB for Average Contrast</title><link>https://slc.is/archive/averagergb/</link><pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/averagergb/</guid><description>&lt;img src="https://slc.is/images/rgb.webp" alt="Featured image of post RGB for Average Contrast" />&lt;p>I&amp;rsquo;m working on an interpreted assembly-like language called &lt;a class="link" href="https://asm.la/" target="_blank" rel="noopener"
+>Bee Assembly&lt;/a>, and the editor&amp;rsquo;s background will change from a light or dark color depending on the user&amp;rsquo;s preference. It uses &lt;a class="link" href="https://simplecss.org/" target="_blank" rel="noopener"
+>Simple.css&lt;/a> to style the page, so I wanted to avoid adding additional CSS rules. Instead, I opted to find the best red, green, and blue values to maximize the contrast between the white and black backgrounds, and the text. I also found the average gray value. If others want to compute more colors, I&amp;rsquo;ll add them to the list below.&lt;/p>
+&lt;p>In the browser&amp;rsquo;s developer tools, you can hover over elements with the selector and see the contrast rating under Accessability. I simply adjusted the color values to minimize the difference between contrasts over white and black backgrounds.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Color&lt;/th>
+&lt;th>Value&lt;/th>
+&lt;th>Contrast&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Red (Communist)&lt;/td>
+&lt;td>#ec0000&lt;/td>
+&lt;td>4.575&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Green (Almost Not Green Anymore)&lt;/td>
+&lt;td>#008900&lt;/td>
+&lt;td>4.575&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Blue (Historical Baby Powder)&lt;/td>
+&lt;td>#5f5fff&lt;/td>
+&lt;td>4.575&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Gray (Sonic Silver)&lt;/td>
+&lt;td>#757575&lt;/td>
+&lt;td>4.575&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Interestingly, the average contrast of gray isn&amp;rsquo;t the average of #000000 and #ffffff. I was expecting &lt;code>rgb(255 / 2, 255 / 2, 255 / 2)&lt;/code>, so &lt;code>#7f7f7f&lt;/code> or &lt;code>#808080&lt;/code>, but it&amp;rsquo;s &lt;code>rgb(117, 117, 117)&lt;/code>. Also, blue required adding red and green to reduce the contrast difference since it&amp;rsquo;s practically unreadable without. Red and green could carry their own without mixing. I&amp;rsquo;m curious why these things occur and how they&amp;rsquo;re related.&lt;/p>
+&lt;p>I also found a fun site called &lt;a class="link" href="https://colornames.org/" target="_blank" rel="noopener"
+>COLORNAMES&lt;/a> that aims to name every hex color. I used it to find the top names for these colors. As of writing this post, 2,896,184 colors have been named, so only $256^3-2,896,184=13,881,032$ are left to go! I took this opportunity to add another color to the list 😉. Should be finished by 2043, so act quick!&lt;/p>
+&lt;p>Back on topic, I figured these colors might be useful for some people who just want a single coloring scheme for their website regardless of background colors. Obviously, if the site isn&amp;rsquo;t using a light or dark background, it won&amp;rsquo;t be a good idea to use this, though.&lt;/p></description></item><item><title>Degrees of Randomness and the Law of Large Numbers</title><link>https://slc.is/archive/degrees-of-randomness-and-the-law-of-large-numbers/</link><pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate><guid>https://slc.is/archive/degrees-of-randomness-and-the-law-of-large-numbers/</guid><description>&lt;img src="https://slc.is/images/randomCoefficients.webp" alt="Featured image of post Degrees of Randomness and the Law of Large Numbers" />&lt;p>In a previous post comparing quantum and avalanche diode methods of true random number generation, an interesting pattern emerged. The quantum random numbers would pass more STS tests than avalanche diode random numbers. Seemingly, the quantum RNG converges to a mean before the diode RNG.&lt;/p>
+&lt;p>This should not be the case since both methods produce true random numbers, so this post will be exploring if this is actually occurring and why.&lt;/p>
+&lt;h2 id="code">Code&lt;/h2>
+&lt;p>We&amp;rsquo;ll be using &lt;code>C&lt;/code> to do this analysis since it&amp;rsquo;s fast enough for the scale I need.&lt;/p>
+&lt;p>The first task will be opening a file of random data by variable amounts. The &lt;a class="link" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/fread.html#tag_16_164" target="_blank" rel="noopener"
+>&lt;code>fread&lt;/code>&lt;/a> command takes a filename and number of bytes to read as arguments, so that&amp;rsquo;ll work well.&lt;/p>
+&lt;p>Specifically, the file (let&amp;rsquo;s call it &lt;code>random&lt;/code>) needs to be read in incrementing amounts, so the code will look like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define MAX_READ 5
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define FILE_NAME &amp;#34;random&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">…&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FILE&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">stream&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">FILE_NAME&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;r&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">buffer&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">bytes&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fread&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">buffer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">char&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This is storing some number of bytes in a buffer array. Now we can iterate through that array to determine the mean. Keep in mind that the theoretical mean is 0.5, so this is eventually going to compare the rates at which quantum and avalanche diode RNGs converge to the theoretical mean.&lt;/p>
+&lt;p>We&amp;rsquo;re iterating through 8 bits at a time, so to find each binary mean, we&amp;rsquo;ll count the number of ones in binary and divide by 8.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="k">static&lt;/span> &lt;span class="kr">inline&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="nf">binaryMean&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">char&lt;/span> &lt;span class="n">byte&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// https://stackoverflow.com/a/698183
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">byte&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mo">01001001001ULL&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="mo">042104210421ULL&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">%&lt;/span> &lt;span class="mo">017&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mf">8.0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The remainder is just reading multiple files and parsing the data as a &lt;!-- raw HTML omitted -->CSV&lt;!-- raw HTML omitted -->.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define MAX_READ 1000
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">long&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">static&lt;/span> &lt;span class="kr">inline&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="nf">binaryMean&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">byte&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">byte&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mo">01001001001ULL&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="mo">042104210421ULL&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="mo">017&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mf">8.0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">filenum&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FILE&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">stream&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;r&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">buffer&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">bytes&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fread&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">buffer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">char&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">long&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">mean&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mean&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">binaryMean&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">buffer&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">filenum&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">bytes&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mean&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fclose&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">stream&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/quantum&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/avalanche&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Theoretical Mean,Quantum Mean,Avalanche Diode Mean&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;0.5,%Lf,%Lf&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The astute among us 🔴 will notice that I&amp;rsquo;m printing the data to stout; however, I&amp;rsquo;ll actually pull a *nix and piping the output to gnuplot.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gcc -c -o main.o main.c &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gcc ./main.o -o main &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> ./main &lt;span class="p">|&lt;/span> cat &amp;gt; /tmp/gnuplotdata.csv &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gnuplot -p -e &lt;span class="s2">&amp;#34;set title &amp;#39;Quantum vs. Avalanche&amp;#39;;set xlabel &amp;#39;Average Length&amp;#39;;set ylabel &amp;#39;Average&amp;#39;;set datafile separator &amp;#39;,&amp;#39;;plot for [col=1:3] &amp;#39;/tmp/gnuplotdata.csv&amp;#39; using col with lines title columnheader;pause -1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>That&amp;rsquo;s &lt;em>sus&lt;/em> but why have pipes if you never use them? Anyways, we can now begin comparing convergence.&lt;/p>
+&lt;h2 id="analysis">Analysis&lt;/h2>
+&lt;p>&lt;img src="https://slc.is/images/quantumAvalanchePlot.webp"
+loading="lazy"
+alt="Gnuplot Mean Convergence Plot"
+>&lt;/p>
+&lt;p>This is the plot outputted by gnuplot and it looks like both RNGs converge to 0.5 at equal rates.&lt;/p>
+&lt;blockquote>
+&lt;p>The differing rates to randomness is deeper than approaching the mean.&lt;/p>
+&lt;/blockquote>
+&lt;p>I&amp;rsquo;ll now be using the &lt;a class="link" href="https://www.fourmilab.ch/random/" target="_blank" rel="noopener"
+>ent&lt;/a> tool for statistical testing.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">dd &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>../../randomReports/randomData &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">104857601&lt;/span> &lt;span class="nv">count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">8&lt;/span> &lt;span class="nv">iflag&lt;/span>&lt;span class="o">=&lt;/span>fullblock 2&amp;gt;/dev/null &lt;span class="p">|&lt;/span> ent -b
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>Entropy = 1.000000 bits per bit.&lt;/p>
+&lt;p>Optimum compression would reduce the size
+of this 838860800 bit file by 0 percent.&lt;/p>
+&lt;p>Chi square distribution for 838860800 samples is 1.41, and randomly would exceed this value 23.50 percent of the times.&lt;/p>
+&lt;p>Arithmetic mean value of data bits is 0.5000 (0.5 = random).&lt;/p>
+&lt;p>Monte Carlo value for Pi is 3.141312452 (error 0.01 percent).&lt;/p>
+&lt;p>Serial correlation coefficient is -0.000014 (totally uncorrelated = 0.0).&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>Entropy = 1.000000 bits per bit.&lt;/p>
+&lt;p>Optimum compression would reduce the size
+of this 838860800 bit file by 0 percent.&lt;/p>
+&lt;p>Chi square distribution for 838860800 samples is 3.09, and randomly would exceed this value 7.88 percent of the times.&lt;/p>
+&lt;p>Arithmetic mean value of data bits is 0.5000 (0.5 = random).&lt;/p>
+&lt;p>Monte Carlo value for Pi is 3.141780515 (error 0.01 percent).&lt;/p>
+&lt;p>Serial correlation coefficient is -0.000027 (totally uncorrelated = 0.0).&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>Entropy = 1.000000 bits per bit.&lt;/p>
+&lt;p>Optimum compression would reduce the size
+of this 838860800 bit file by 0 percent.&lt;/p>
+&lt;p>Chi square distribution for 838860800 samples is 0.62, and randomly would exceed this value 43.12 percent of the times.&lt;/p>
+&lt;p>Arithmetic mean value of data bits is 0.5000 (0.5 = random).&lt;/p>
+&lt;p>Monte Carlo value for Pi is 3.141913953 (error 0.01 percent).&lt;/p>
+&lt;p>Serial correlation coefficient is 0.000048 (totally uncorrelated = 0.0).&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>When applied to all three files, these are the results we get:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Type&lt;/th>
+&lt;th style="text-align:center">Chi Square&lt;/th>
+&lt;th style="text-align:center">Monte Carlo Difference&lt;/th>
+&lt;th style="text-align:center">Serial Correlation Coefficient&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Quantum&lt;/td>
+&lt;td style="text-align:center">1.41&lt;/td>
+&lt;td style="text-align:center">0.000280202&lt;/td>
+&lt;td style="text-align:center">-0.000014&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Avalanche Diode&lt;/td>
+&lt;td style="text-align:center">3.09&lt;/td>
+&lt;td style="text-align:center">-0.000187861&lt;/td>
+&lt;td style="text-align:center">-0.000027&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Pseudorandom Generator&lt;/td>
+&lt;td style="text-align:center">0.62&lt;/td>
+&lt;td style="text-align:center">-0.000321299&lt;/td>
+&lt;td style="text-align:center">0.000048&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>We know that the &lt;!-- raw HTML omitted -->PRNG&lt;!-- raw HTML omitted --> is the least random, so if there are any tests that the PRNG does best, that test can not be used.&lt;/p>
+&lt;p>Unsurprisingly, the PRNG performs worst in every test. Avalanche diode outperforms quantum in Chi Square &lt;em>and&lt;/em> estimating Pi. Quantum only outperformed Avalanche diode in Serial Correlation Coefficient. Since the goal is to observe convergence of randomness, serial correlation makes the most sense to use.&lt;/p>
+&lt;p>What we&amp;rsquo;ll do now is observe the serial correlation coefficients of quantum and avalanche diode as the number of trials increases.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define MAX_READ 2500
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">long&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">filenum&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FILE&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// I increased the array sizes because a memory
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1">// leak and I didn&amp;#39;t care to track it down
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">output&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1035&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">path&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1000&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">snprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;%s%s%s&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;dd if=&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34; bs=&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">byteString&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">21&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">snprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">byteString&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">21&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;%lu&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">bytes&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">char&lt;/span> &lt;span class="n">command&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2560&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">snprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;%s%s%s&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">path&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">byteString&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34; count=8 iflag=fullblock 2&amp;gt;/dev/null | ent -b | tail &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;-1 | cut -c 35-43 | xargs&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">popen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;r&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">fgets&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">output&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">output&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">filenum&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">bytes&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">strtold&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">output&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">NULL&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/quantum&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">analyzeFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;../../randomReports/avalanche&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Theoretical Coefficient,Quantum Coefficient,Avalanche Diode &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;Coefficient&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">MAX_READ&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">line&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;0,%Lf,%Lf&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">array&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, much like before, we&amp;rsquo;ll pipe this output into gnuplot.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">gcc -c -o main.o main.c &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gcc ./main.o -o main &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> ./main &lt;span class="p">|&lt;/span> cat &amp;gt; /tmp/gnuplotdata.csv &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> gnuplot -p -e &lt;span class="s2">&amp;#34;set title &amp;#39;Quantum vs. Avalanche&amp;#39;;set xlabel &amp;#39;Size (Bytes)&amp;#39;;set ylabel &amp;#39;Serial Correlation Coefficient&amp;#39;;set datafile separator &amp;#39;,&amp;#39;;plot for [col=1:3] &amp;#39;/tmp/gnuplotdata.csv&amp;#39; using col with lines title columnheader;pause -1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://slc.is/images/randomCoefficients.webp"
+loading="lazy"
+alt="Gnuplot Coefficient Convergence Plot"
+>&lt;/p>
+&lt;p>Well, this is interesting.&lt;/p>
+&lt;h2 id="explanation">Explanation&lt;/h2>
+&lt;p>I have a couple theories for why these two methods of &lt;!-- raw HTML omitted -->TRNG&lt;!-- raw HTML omitted --> approach correlation coefficients of 0 at different rates.&lt;/p>
+&lt;ol>
+&lt;li>Partial Measurements
+&lt;ul>
+&lt;li>In a more &lt;!-- raw HTML omitted -->complex&lt;!-- raw HTML omitted --> system, there are more opportunities to be entangled with the environment which might increase correlation between measurements.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Faulty Hardware
+&lt;ul>
+&lt;li>The hardware might have some issue which causes data correlation&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;p>Obviously, the first explanation is more flashy, so I&amp;rsquo;m hoping something along those lines is occurring. With the avalanche diode method, electrons will be entangled with the enclosure which is weakly entangled with everything around it. This additional entanglement could reduce the randomness of the sequence. Quantum methods of generation should, therefore, have varying rates of discorrelation based on their amounts of interaction with the environment.&lt;/p>
+&lt;p>I&amp;rsquo;ll try to compare these rates with more precise avalanche diode machines and superconducting, photonic, nuclear magnetic resonance, dot, and other quantum methods.&lt;/p></description></item><item><title>Quantum Physics I</title><link>https://slc.is/archive/quantum-physics-i/</link><pubDate>Mon, 23 Aug 2021 00:00:00 +0000</pubDate><guid>https://slc.is/archive/quantum-physics-i/</guid><description>&lt;img src="https://slc.is/images/ocw1.webp" alt="Featured image of post Quantum Physics I" />&lt;p>I began learning quantum mechanics with Professor Allan Adams on &lt;a class="link" href="https://ocw.mit.edu/8-04S13" target="_blank" rel="noopener"
+>MIT OpenCourseWare&lt;/a>! This will be an ongoing post about interesting things I learn, as a way to share a computer scientist&amp;rsquo;s perspective on quantum physics as well as to hold myself accountable in finishing the course.&lt;/p>
+&lt;blockquote>
+&lt;p>The miracle is not that electrons behave oddly. The miracle is that when you take $10^{26}$ electrons, they behave like cheese! 🧀&lt;/p>
+&lt;/blockquote>
+&lt;p>The first lecture taught me something fundamental about the term &lt;em>superposition&lt;/em>. As I used quantum computers, I thought about the &lt;!-- raw HTML omitted -->qubit&lt;!-- raw HTML omitted -->s as being both 0 and 1 while in superposition; however, this is &lt;strong>false&lt;/strong>. The qubit is in no meaningful state: not 0, not 1, not both, and not neither.&lt;/p>
+&lt;p>In the second lecture, this idea of superposition is again reiterated by the famous double-slit experiment, where an electron neither passes through the top nor bottom slits, neither both nor no slits. Contuining to experimentally demonstrate quantum properties, Professor Adams then proved &lt;a class="link" href="https://https://wikipedia.org/wiki/Bell%27s_theorem" target="_blank" rel="noopener"
+>Bell&amp;rsquo;s Inequality&lt;/a> very simply as $P(a \cup \overline{b}) + P(b \cup \overline{c}) \geq P(a \cup \overline{c})$. Perhaps unsurprisingly at this point, electrons&amp;rsquo; angular momenta in the &lt;em>x&lt;/em>, &lt;em>y&lt;/em>, and &lt;em>z&lt;/em> axes, which are either up or down, do not abide by Bell&amp;rsquo;s Inequality. However, this &lt;strong>is&lt;/strong> very surprising, because simple logic and integers must be flawed at a fundamental sense to not accurately describe quantum properties.&lt;/p>
+&lt;p>&lt;img src="https://slc.is/images/ocw2.webp"
+loading="lazy"
+alt="OCW"
+>&lt;/p>
+&lt;p>I&amp;rsquo;m tempted to take a &lt;a class="link" href="https://online.stanford.edu/courses/soe-yeeqmse01-quantum-mechanics-scientists-and-engineers" target="_blank" rel="noopener"
+>course&lt;/a> now, because doing problem sets for a course designed to be taken in-person is tedious. I also want a certificate😮‍💨. If the OpenCourseWare site is down, click &lt;!-- raw HTML omitted -->here&lt;!-- raw HTML omitted --> to download the lecture materials.&lt;/p></description></item></channel></rss>
