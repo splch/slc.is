@@ -7,6 +7,16 @@
   --avg-gray: #808080;
 }
 
+@media print {
+  body {
+    font-size: 12px !important;
+  }
+
+  nav {
+    display: none;
+  }
+}
+
 /* dark theme */
 @media (prefers-color-scheme: dark) {
   :root {
