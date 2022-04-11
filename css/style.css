@@ -25,6 +25,7 @@
 
   body {
     font-size: 12pt;
+    padding: 1em;
   }
 
   footer,
@@ -49,11 +50,12 @@ body {
   background-color: var(--bg-color);
   color: var(--txt-color);
   font-family: Verdana, Arial, sans-serif;
-  font-size: 16pt;
+  font-size: 14pt;
   line-height: 1.5;
   margin: auto;
   /* 60 characters per line for readability */
   max-width: 60ch;
+  padding: 1em;
 }
 
 code {
@@ -65,7 +67,8 @@ nav {
   user-select: none;
 }
 
-header h1 {
+header h1,
+nav+h1 {
   text-align: center;
 }
 
@@ -82,17 +85,21 @@ table {
 nav {
   display: flex;
   justify-content: space-around;
+  padding-top: 1em;
   text-decoration: none;
 }
 
 nav a {
   font-size: larger;
-  padding-top: 1em;
   text-decoration: none;
 }
 
 p code {
   background-color: var(--avg-green);
+}
+
+pre {
+  padding: 1em;
 }
 
 summary {
@@ -107,8 +114,4 @@ tbody tr:nth-child(odd) {
   border-radius: 5px;
   max-width: 100%;
   overflow: auto;
-}
-
-*:active {
-  outline: none;
 }
