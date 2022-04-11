@@ -1,3 +1,4 @@
+/* default colors are equally readable */
 :root {
   --bg-color: #ffffff;
   --txt-color: #000000;
@@ -91,7 +92,7 @@ nav a {
 }
 
 p code {
-  background-color: var(--avg-gray);
+  background-color: var(--avg-green);
 }
 
 summary {
@@ -102,7 +103,7 @@ tbody tr:nth-child(odd) {
   background-color: var(--avg-gray);
 }
 
-:not(body, li, ul) {
+:not(body, pre code, li, ul) {
   border-radius: 5px;
   max-width: 100%;
   overflow: auto;
