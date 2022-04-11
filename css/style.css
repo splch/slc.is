@@ -103,6 +103,7 @@ pre {
 }
 
 summary {
+  color: var(--avg-red);
   cursor: pointer;
 }
 
