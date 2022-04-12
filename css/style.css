@@ -111,7 +111,7 @@ tbody tr:nth-child(odd) {
   background-color: var(--avg-gray);
 }
 
-:not(body, pre code, li, ul) {
+:not(body, code span, li, ul) {
   border-radius: 5px;
   max-width: 100%;
   overflow: auto;
