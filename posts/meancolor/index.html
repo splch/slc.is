@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>The Meanest Color | SLC is</title><meta name=description content="Sharpest corner of the IPFS."><link rel=stylesheet href=/css/simple.css/simple.min.css media=all onload='this.media="all",this.onload=null'></head><body><header><nav><a href=/>Home</a>
+<a href=/posts/>Posts</a>
+<a href=/music/>Music</a>
+<a href=/about/>About</a></nav><h1>The Meanest Color</h1><i>2022/03/24</i></header><main><p><img src=/images/purple.webp alt=Purple></p><p>Have you ever wanted to know what the most mean color is? Red might come to mind — a fiery and belligerent color. But I&rsquo;ll do one better! I&rsquo;ll give you the color vector that&rsquo;s closest to every other color vector.</p><p>Here, the most average and mean color can be determined with <a href=https://radimrehurek.com/gensim/index.html>word2vec</a> and vector averaging.</p><h1 id=process>Process</h1><ol><li>Load the word2vec model</li><li>Load the list of colors</li><li>Sum the vectors of each color together</li><li>Divide by the number of colors</li><li>Find the color vector with the largest cosine similarity to that vector</li></ol><h1 id=python>Python</h1><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>pip install gensim
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> numpy
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> gensim.downloader
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>queen_values <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> name <span style=color:#f92672>in</span> gensim<span style=color:#f92672>.</span>downloader<span style=color:#f92672>.</span>info()[<span style=color:#e6db74>&#39;models&#39;</span>]<span style=color:#f92672>.</span>keys():
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        model <span style=color:#f92672>=</span> gensim<span style=color:#f92672>.</span>downloader<span style=color:#f92672>.</span>load(name)
+</span></span><span style=display:flex><span>        t <span style=color:#f92672>=</span> model<span style=color:#f92672>.</span>most_similar(positive<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;king&#39;</span>, <span style=color:#e6db74>&#39;woman&#39;</span>], negative<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;man&#39;</span>])
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> n, v <span style=color:#f92672>in</span> t:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> n <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;queen&#39;</span>:
+</span></span><span style=display:flex><span>                queen_values[name] <span style=color:#f92672>=</span> v
+</span></span><span style=display:flex><span>        print(t[<span style=color:#ae81ff>0</span>])
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span>:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>pass</span>
+</span></span></code></pre></div><pre><code>('queen', 0.7786749005317688)
+('queen', 0.7118193507194519)
+('queen', 0.8523604273796082)
+('queen', 0.7698540687561035)
+('queen', 0.6978678107261658)
+('queen', 0.6713277101516724)
+('meets', 0.8841924071311951)
+('prince', 0.759779691696167)
+('queen', 0.7052316069602966)
+('queen', 0.6820898056030273)
+</code></pre><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>best_model <span style=color:#f92672>=</span> sorted(queen_values, key<span style=color:#f92672>=</span>queen_values<span style=color:#f92672>.</span>get, reverse<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)[<span style=color:#ae81ff>0</span>]
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#39;</span>, best_model)
+</span></span><span style=display:flex><span>model <span style=color:#f92672>=</span> gensim<span style=color:#f92672>.</span>downloader<span style=color:#f92672>.</span>load(best_model)
+</span></span></code></pre></div><pre><code> glove-wiki-gigaword-50
+</code></pre><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>colors <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;white&#39;</span>, <span style=color:#e6db74>&#39;black&#39;</span>, <span style=color:#e6db74>&#39;silver&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;red&#39;</span>, <span style=color:#e6db74>&#39;maroon&#39;</span>, <span style=color:#e6db74>&#39;purple&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;orange&#39;</span>, <span style=color:#e6db74>&#39;brown&#39;</span>, <span style=color:#e6db74>&#39;beige&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;yellow&#39;</span>, <span style=color:#e6db74>&#39;gold&#39;</span>, <span style=color:#e6db74>&#39;tan&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;green&#39;</span>, <span style=color:#e6db74>&#39;lime&#39;</span>, <span style=color:#e6db74>&#39;olive&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;blue&#39;</span>, <span style=color:#e6db74>&#39;cyan&#39;</span>, <span style=color:#e6db74>&#39;teal&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;indigo&#39;</span>, <span style=color:#e6db74>&#39;lavender&#39;</span>, <span style=color:#e6db74>&#39;pink&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;violet&#39;</span>, <span style=color:#e6db74>&#39;magenta&#39;</span>, <span style=color:#e6db74>&#39;fuchsia&#39;</span>,
+</span></span><span style=display:flex><span>]
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># start by averaging grays</span>
+</span></span><span style=display:flex><span>avg_vector <span style=color:#f92672>=</span> (model[<span style=color:#e6db74>&#39;gray&#39;</span>] <span style=color:#f92672>+</span> model[<span style=color:#e6db74>&#39;grey&#39;</span>]) <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> color <span style=color:#f92672>in</span> colors:
+</span></span><span style=display:flex><span>    avg_vector <span style=color:#f92672>+=</span> model[color]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># divide by the number of colors</span>
+</span></span><span style=display:flex><span>avg_vector <span style=color:#f92672>/=</span> (len(colors) <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>avg_colors <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> color <span style=color:#f92672>in</span> colors:
+</span></span><span style=display:flex><span>    sim <span style=color:#f92672>=</span> numpy<span style=color:#f92672>.</span>dot(avg_vector, model[color]) <span style=color:#f92672>/</span> \
+</span></span><span style=display:flex><span>        (numpy<span style=color:#f92672>.</span>linalg<span style=color:#f92672>.</span>norm(avg_vector) <span style=color:#f92672>*</span> numpy<span style=color:#f92672>.</span>linalg<span style=color:#f92672>.</span>norm(model[color]))
+</span></span><span style=display:flex><span>    avg_colors[color] <span style=color:#f92672>=</span> sim
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>for</span> color <span style=color:#f92672>in</span> sorted(avg_colors, key<span style=color:#f92672>=</span>avg_colors<span style=color:#f92672>.</span>get, reverse<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>):
+</span></span><span style=display:flex><span>    print(color, <span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\t\t</span><span style=color:#e6db74>&#39;</span>, avg_colors[color])
+</span></span></code></pre></div><pre><code>purple		0.92791396
+pink		0.9113098
+blue		0.9093884
+yellow		0.88690674
+red		0.872676
+green		0.8654766
+orange		0.84672266
+black		0.83403736
+white		0.8287787
+lavender	0.81729794
+maroon		0.7757962
+fuchsia		0.7409902
+brown		0.7358376
+olive		0.73582804
+magenta		0.68170786
+violet		0.6786235
+silver		0.6677471
+beige		0.66110957
+lime		0.6299113
+indigo		0.5789356
+gold		0.56747013
+tan		0.5436225
+teal		0.517831
+cyan		0.5167587
+</code></pre><h1 id=conclusion>Conclusion</h1><p>There isn&rsquo;t any purpose for this post, but it&rsquo;s interesting to know that the meanest color is <strong>purple</strong>. I mostly wanted to start thinking about fun ways to use word2vec. I think I&rsquo;d like to make a tool to assist writers in some way. I&rsquo;m not sure what I&rsquo;ll do with it, but I&rsquo;m sure it&rsquo;ll be fun.</p></main><footer><small>Thanks to <a href=https://gohugo.io/>Hugo</a> for building and <a href=https://simplecss.org/>SimpleCSS</a>
+for styling
+♡</small><br></footer></body></html>
